@@ -1,22 +1,26 @@
 import 'package:jaspr/dom.dart';
-import 'package:jaspr/jaspr.dart';
+import 'package:jaspr/server.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
 import '../components/content_page.dart';
+import '../components/portable_text_view.dart';
+import '../sanity/content_repository.dart';
 
-class About extends StatelessComponent {
+// The link grid stays hardcoded — it's site navigation/structure, not
+// editorial content, so it belongs in Jaspr rather than Sanity (see
+// CLAUDE.md's content boundary). Only the intro copy comes from Sanity.
+class About extends AsyncStatelessComponent {
   const About({super.key});
 
   @override
-  Component build(BuildContext context) {
+  Future<Component> build(BuildContext context) async {
+    final page = await contentRepository.getPage('about');
+
     return ContentPage(
       breadcrumb: 'About Us',
-      title: 'About Us',
-      lede:
-          'The Hagedorn Little Village School, Jack Joel Center for Special Children (HLVS), is a publicly '
-          'funded, not-for-profit school highly regarded for providing outstanding educational and '
-          'therapeutic services for children with developmental disabilities.',
+      title: page?.title ?? 'About Us',
       children: [
+        if (page != null) PortableTextView(page.body),
         div(classes: 'link-grid', [
           _aboutLink('/mission', 'Mission Statement',
               'What we set out to do for every child and family we serve.'),
@@ -25,6 +29,8 @@ class About extends StatelessComponent {
           _aboutLink('/founders', 'Founders', 'The two educators who started it all.'),
           _aboutLink('/facilities', 'School Facilities',
               'A 77,000 sq. ft. building built for learning and therapy.'),
+          _aboutLink('/staff', 'Admin Staff', 'The team leading our programs day to day.'),
+          _aboutLink('/board', 'Board Members', 'The volunteers who govern the school.'),
         ]),
       ],
     );

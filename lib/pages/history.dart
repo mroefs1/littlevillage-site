@@ -1,43 +1,21 @@
-import 'package:jaspr/dom.dart';
-import 'package:jaspr/jaspr.dart';
-import 'package:jaspr_router/jaspr_router.dart';
+import 'package:jaspr/server.dart';
 
 import '../components/content_page.dart';
+import '../components/portable_text_view.dart';
+import '../sanity/content_repository.dart';
 
-class OurHistory extends StatelessComponent {
+class OurHistory extends AsyncStatelessComponent {
   const OurHistory({super.key});
 
   @override
-  Component build(BuildContext context) {
+  Future<Component> build(BuildContext context) async {
+    final page = await contentRepository.getPage('history');
+
     return ContentPage(
       breadcrumb: 'About Us › Our History',
-      title: 'Our History',
-      lede:
-          'The Hagedorn Little Village School has spent more than 50 years serving Long Island children and '
-          'families with developmental delays and disabilities, as a publicly funded, not-for-profit school.',
+      title: page?.title ?? 'Our History',
       children: [
-        div(classes: 'callout', [
-          div(classes: 'callout-figure', [.text('50+')]),
-          div([
-            div(classes: 'callout-title', [.text('Years serving Long Island families')]),
-            div(classes: 'callout-body', [
-              .text(
-                  'From our founding through today, our commitment to children with developmental delays and their families hasn\'t changed.'),
-            ]),
-          ]),
-        ]),
-        div(classes: 'info-card', [
-          div(classes: 'info-card-header', [.text('More history, coming soon')]),
-          div(classes: 'info-card-body', [
-            p([
-              .text(
-                  'Our full historical record is preserved in the school\'s archival documents. We\'re in the '
-                  'process of transcribing that material for the new site — check back soon, or see our '),
-              Link(to: '/founders', child: .text('founders')),
-              .text(' page in the meantime.'),
-            ]),
-          ]),
-        ]),
+        if (page != null) PortableTextView(page.body),
       ],
     );
   }

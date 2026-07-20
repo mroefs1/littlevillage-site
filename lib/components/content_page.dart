@@ -5,20 +5,17 @@ import 'package:jaspr_router/jaspr_router.dart';
 import '../constants/theme.dart';
 
 // Shared layout for simple informational pages (About, Mission, History,
-// Founders, Facilities, Contact): a breadcrumb + H1 + optional lede, followed
-// by page-specific content. Also defines a small set of reusable content
-// blocks (`.info-card`, `.callout`, `.person-card`, `.link-card`) so these
-// pages share one visual language instead of each inventing its own.
+// Founders, Facilities, Contact): a breadcrumb + H1, followed by
+// page-specific content — typically a `PortableTextView` of the page's
+// Sanity body. Also defines the `.link-card` grid used by the About hub.
 class ContentPage extends StatelessComponent {
   final String breadcrumb;
   final String title;
-  final String? lede;
   final List<Component> children;
 
   const ContentPage({
     required this.breadcrumb,
     required this.title,
-    this.lede,
     this.children = const [],
     super.key,
   });
@@ -31,7 +28,6 @@ class ContentPage extends StatelessComponent {
         .text(' › $breadcrumb'),
       ]),
       h1([.text(title)]),
-      if (lede != null) p(classes: 'page-lede', [.text(lede!)]),
       ...children,
     ]);
   }
@@ -54,129 +50,51 @@ class ContentPage extends StatelessComponent {
         fontSize: 36.px,
         lineHeight: 1.05.em,
       ),
-      css('.page-lede').styles(
-        maxWidth: 620.px,
+      css('h2').styles(
+        margin: .only(top: 30.px),
+        fontSize: 22.px,
+        lineHeight: 1.15.em,
+      ),
+      // News/event detail pages: a meta line, hero image, body paragraphs,
+      // an optional external link, and an optional photo gallery.
+      css('.detail-meta').styles(
         margin: .only(top: 10.px),
-        color: AppColors.body,
-        fontSize: 15.px,
-        lineHeight: 1.55.em,
+        color: AppColors.muted,
+        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        fontSize: 13.px,
       ),
-      // Bordered content block with a tinted header — for grouped info.
-      css('.info-card', [
+      css('.detail-hero').styles(
+        width: 100.percent,
+        margin: .only(top: 18.px),
+        radius: .all(.circular(10.px)),
+      ),
+      css('.detail-body', [
         css('&').styles(
-          margin: .only(top: 22.px),
-          border: .all(color: AppColors.borderMedium, width: 2.px),
-          radius: .all(.circular(10.px)),
-          overflow: .clip,
-        ),
-        css('.info-card-header').styles(
-          padding: .symmetric(vertical: 14.px, horizontal: 20.px),
-          color: AppColors.ink,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-          fontSize: 19.px,
-          fontWeight: .w700,
-          backgroundColor: AppColors.lightBlueTint,
-        ),
-        css('.info-card-body', [
-          css('&').styles(
-            padding: .all(20.px),
-            color: AppColors.body,
-            fontSize: 14.px,
-            lineHeight: 1.55.em,
-          ),
-          css('p').styles(
-            margin: .only(top: 10.px),
-          ),
-          css('p:first-child').styles(
-            margin: .zero,
-          ),
-          css('ul').styles(
-            padding: .only(left: 20.px),
-            margin: .zero,
-          ),
-          css('li').styles(
-            margin: .only(top: 6.px),
-          ),
-        ]),
-      ]),
-      // Highlighted stat/figure callout — e.g. "$0", "77,000 sq ft".
-      css('.callout', [
-        css('&').styles(
-          display: .flex,
-          padding: .symmetric(vertical: 20.px, horizontal: 24.px),
-          margin: .only(top: 24.px),
-          border: .all(color: Color('#cdd9ee'), width: 2.px),
-          radius: .all(.circular(10.px)),
-          alignItems: .center,
-          gap: .all(18.px),
-          backgroundColor: AppColors.lightBlueTint,
-        ),
-        css('.callout-figure').styles(
-          color: AppColors.primary,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-          fontSize: 40.px,
-          fontWeight: .w700,
-        ),
-        css('.callout-title').styles(
-          color: AppColors.ink,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-          fontSize: 19.px,
-          fontWeight: .w700,
-        ),
-        css('.callout-body').styles(
-          margin: .only(top: 3.px),
+          margin: .only(top: 18.px),
           color: AppColors.body,
-          fontSize: 13.px,
-          lineHeight: 1.45.em,
+          fontSize: 14.px,
+          lineHeight: 1.55.em,
         ),
+        css('p').styles(margin: .only(top: 10.px)),
+        css('p:first-child').styles(margin: .zero),
       ]),
-      // Grid of people (founders, staff) with a circular initials avatar.
-      css('.person-grid').styles(
+      css('.detail-link').styles(
+        margin: .only(top: 16.px),
+        color: AppColors.primary,
+        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        fontSize: 14.px,
+        fontWeight: .w700,
+      ),
+      css('.gallery-grid').styles(
         display: .flex,
-        margin: .only(top: 22.px),
+        margin: .only(top: 18.px),
         flexWrap: .wrap,
-        gap: .all(20.px),
+        gap: .all(10.px),
       ),
-      css('.person-card', [
-        css('&').styles(
-          minWidth: 260.px,
-          padding: .all(20.px),
-          border: .all(color: AppColors.borderLight, width: 2.px),
-          radius: .all(.circular(10.px)),
-          flex: Flex(grow: 1, basis: 260.px),
-        ),
-        css('.person-avatar').styles(
-          display: .flex,
-          width: 56.px,
-          height: 56.px,
-          radius: .all(.circular(28.px)),
-          justifyContent: .center,
-          alignItems: .center,
-          color: Colors.white,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-          fontSize: 18.px,
-          fontWeight: .w700,
-          backgroundColor: AppColors.primary,
-        ),
-        css('.person-name').styles(
-          margin: .only(top: 12.px),
-          color: AppColors.ink,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-          fontSize: 18.px,
-          fontWeight: .w700,
-        ),
-        css('.person-credentials').styles(
-          margin: .only(top: 2.px),
-          color: AppColors.muted,
-          fontSize: 12.px,
-        ),
-        css('.person-bio').styles(
-          margin: .only(top: 10.px),
-          color: AppColors.body,
-          fontSize: 13.px,
-          lineHeight: 1.5.em,
-        ),
-      ]),
+      css('.gallery-image').styles(
+        width: 140.px,
+        radius: .all(.circular(8.px)),
+      ),
       // Grid of link-out cards — e.g. the About hub's quick links.
       css('.link-grid').styles(
         display: .flex,

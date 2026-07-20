@@ -21,7 +21,12 @@ const String pageBySlugQuery = '''
   title,
   "slug": slug.current,
   "heroImageUrl": heroImage.asset->url,
-  body
+  body[]{
+    ...,
+    _type == "image" => {
+      "imageUrl": asset->url
+    }
+  }
 }
 ''';
 

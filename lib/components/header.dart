@@ -37,20 +37,28 @@ class Header extends StatelessComponent {
           for (var route in [
             (label: 'Programs', path: '/programs', aliases: const <String>[]),
             (label: 'Admissions', path: '/admissions', aliases: const <String>[]),
-            (label: 'About', path: '/about', aliases: const ['/mission', '/history', '/founders']),
+            (label: 'About', path: '/about', aliases: const ['/mission', '/history', '/founders', '/staff', '/board']),
             (label: 'Facilities', path: '/facilities', aliases: const <String>[]),
-            (label: 'News & Events', path: '/news', aliases: const <String>[]),
+            (label: 'News & Events', path: '/news', aliases: const ['/events']),
             (label: 'Contact', path: '/contact', aliases: const <String>[]),
           ])
             div(
-              classes:
-                  activePath == route.path || route.aliases.contains(activePath) ? 'active' : null,
+              classes: _isActive(activePath, route.path, route.aliases) ? 'active' : null,
               [Link(to: route.path, child: .text(route.label))],
             ),
           Link(to: '/contact', classes: 'request-info', child: .text('Request Info')),
         ]),
       ]),
     ]);
+  }
+
+  // Matches the exact nav path as well as anything nested under it (e.g.
+  // `/news/some-post` for `/news`, or `/board` as an alias under `/about`),
+  // so detail pages generated per-slug in app.dart still highlight the
+  // right top-level nav item.
+  static bool _isActive(String activePath, String path, List<String> aliases) {
+    bool matches(String candidate) => activePath == candidate || activePath.startsWith('$candidate/');
+    return matches(path) || aliases.any(matches);
   }
 
   @css

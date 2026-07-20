@@ -1,50 +1,25 @@
-import 'package:jaspr/dom.dart';
-import 'package:jaspr/jaspr.dart';
+import 'package:jaspr/server.dart';
 
 import '../components/content_page.dart';
+import '../components/portable_text_view.dart';
+import '../sanity/content_repository.dart';
 
-class Mission extends StatelessComponent {
+// Fetches the Sanity `page` document (slug "mission") at build time and
+// renders its body as portable text. Server-only (never imported by
+// main.client.dart / main.client.options.dart, see app.dart), so it's safe
+// to do the async Sanity fetch directly in build().
+class Mission extends AsyncStatelessComponent {
   const Mission({super.key});
 
   @override
-  Component build(BuildContext context) {
+  Future<Component> build(BuildContext context) async {
+    final page = await contentRepository.getPage('mission');
+
     return ContentPage(
       breadcrumb: 'About Us › Mission Statement',
-      title: 'Mission Statement',
-      lede:
-          'The mission of The Hagedorn Little Village School (HLVS) Jack Joel Center for Special Children '
-          'is to provide the finest educational and therapeutic programs to infants, pre-school and '
-          'elementary school children with a wide range of developmental delays and disabilities — helping '
-          'each child achieve their highest potential, educationally, emotionally and socially, by creating '
-          'a nurturing environment for the child and a supportive framework for their families.',
+      title: page?.title ?? 'Mission Statement',
       children: [
-        div(classes: 'info-card', [
-          div(classes: 'info-card-header', [.text('Guiding Philosophy')]),
-          div(classes: 'info-card-body', [
-            ul([
-              li([
-                .text(
-                    'Facilitating children in reaching their highest potential across social, educational, and emotional domains.'),
-              ]),
-              li([.text('Offering assistance and guidance to families.')]),
-              li([.text('Partnering with external service providers to accomplish these goals.')]),
-            ]),
-          ]),
-        ]),
-        div(classes: 'info-card', [
-          div(classes: 'info-card-header', [.text('Core Values')]),
-          div(classes: 'info-card-body', [
-            ul([
-              li([.text('Providing empathetic care to all constituencies.')]),
-              li([.text('Maintaining deep regard for the dignity of each child.')]),
-              li([.text('Conducting ethical business practices.')]),
-              li([
-                .text(
-                    'Supporting continuous staff development, to ensure that our children receive the most current and effective instruction and therapeutic interventions.'),
-              ]),
-            ]),
-          ]),
-        ]),
+        if (page != null) PortableTextView(page.body),
       ],
     );
   }

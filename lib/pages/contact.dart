@@ -1,28 +1,21 @@
-import 'package:jaspr/dom.dart';
-import 'package:jaspr/jaspr.dart';
+import 'package:jaspr/server.dart';
 
 import '../components/content_page.dart';
+import '../components/portable_text_view.dart';
+import '../sanity/content_repository.dart';
 
-class Contact extends StatelessComponent {
+class Contact extends AsyncStatelessComponent {
   const Contact({super.key});
 
   @override
-  Component build(BuildContext context) {
+  Future<Component> build(BuildContext context) async {
+    final page = await contentRepository.getPage('contact');
+
     return ContentPage(
       breadcrumb: 'Contact',
-      title: 'Contact Us',
-      lede: 'We respond to every family and community inquiry as quickly as we can. Reach us by phone, '
-          'email, or mail.',
+      title: page?.title ?? 'Contact Us',
       children: [
-        div(classes: 'info-card', [
-          div(classes: 'info-card-header', [.text('Get in Touch')]),
-          div(classes: 'info-card-body', [
-            p([.text('Phone: '), a(href: 'tel:+15165206000', [.text('516-520-6000')])]),
-            p([.text('Email: '), a(href: 'mailto:information@littlevillage.org', [.text('information@littlevillage.org')])]),
-            p([.text('Address: The Hagedorn Little Village School, 750 Hicksville Rd., Seaford, NY 11783')]),
-            p([.text('The school is located behind the Northwell Health doctors\' offices.')]),
-          ]),
-        ]),
+        if (page != null) PortableTextView(page.body),
       ],
     );
   }
