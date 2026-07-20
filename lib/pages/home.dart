@@ -34,7 +34,7 @@ class HomeState extends State<Home> {
 
   @override
   Component build(BuildContext context) {
-    return section([
+    return section(classes: 'home-placeholder', [
       img(src: 'images/logo.svg', width: 80),
       h1([.text('Welcome')]),
       p([.text('You successfully create a new Jaspr site.')]),
@@ -42,4 +42,15 @@ class HomeState extends State<Home> {
       const Counter(),
     ]);
   }
+
+  @css
+  static List<StyleRule> get styles => [
+    css('.home-placeholder').styles(
+      display: .flex,
+      flexDirection: .column,
+      justifyContent: .center,
+      alignItems: .center,
+      flex: Flex(grow: 1),
+    ),
+  ];
 }

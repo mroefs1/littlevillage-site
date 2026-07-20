@@ -1,27 +1,53 @@
 import 'package:jaspr/dom.dart';
 
-// As your CSS styles are defined using just Dart, you can simply
-// use global variables or methods for common things like colors.
-const primaryColor = Color('#01589B');
+// Design tokens from the homepage/admissions design handoff
+// (design_handoff_homepage_admissions/). Placeholder values —
+// not yet a confirmed final brand palette per that handoff's README.
+class AppColors {
+  static const primary = Color('#2f5aa8');
+  static const accent = Color('#d97a2b');
+  static const ink = Color('#2c2a26');
+  static const body = Color('#6b6760');
+  static const muted = Color('#8a8578');
 
-// Defines the global CSS styles for this project.
-//
-// By using the @css annotation, these will be rendered automatically to CSS and included in your page.
+  static const lightBlueTint = Color('#eef2f8');
+  static const utilityBorder = Color('#dfe5ef');
+  static const utilityText = Color('#5a6a86');
+
+  static const borderLight = Color('#ece9e1');
+  static const borderMedium = Color('#c9c4b8');
+
+  static const warmTint = Color('#f6e7d6');
+  static const warmBorder = Color('#e7c79f');
+  static const warmText = Color('#8a4f17');
+  static const warmMutedText = Color('#9a6a35');
+
+  static const footerNavy = Color('#2b3550');
+  static const footerLink = Color('#9fb0cc');
+  static const footerMuted = Color('#cdd6e6');
+}
+
+const headingFontFamily = FontFamily('Gaegu');
+const bodyFontFamily = FontFamily('system-ui');
+
 @css
-List<StyleRule> get styles => [
-  // Special import rule to include to another css file.
-  css.import('https://fonts.googleapis.com/css?family=Roboto'),
-  // Each style rule takes a valid css selector and a set of styles.
-  // Styles are defined using type-safe css bindings and can be freely chained and nested.
+List<StyleRule> get globalStyles => [
+  css.import('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap'),
   css('html, body').styles(
     width: 100.percent,
     minHeight: 100.vh,
     padding: .zero,
     margin: .zero,
-    fontFamily: const .list([FontFamily('Roboto'), FontFamilies.sansSerif]),
+    color: AppColors.ink,
+    fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
   ),
-  css('h1').styles(
+  css('h1, h2, h3').styles(
     margin: .unset,
-    fontSize: 4.rem,
+    fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+    fontWeight: .w700,
+  ),
+  css('a').styles(
+    color: .inherit,
+    textDecoration: TextDecoration(line: .none),
   ),
 ];

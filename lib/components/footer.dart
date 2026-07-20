@@ -1,0 +1,94 @@
+import 'package:jaspr/dom.dart';
+import 'package:jaspr/jaspr.dart';
+import 'package:jaspr_router/jaspr_router.dart';
+
+import '../constants/theme.dart';
+
+class Footer extends StatelessComponent {
+  const Footer({super.key});
+
+  @override
+  Component build(BuildContext context) {
+    return footer([
+      div(classes: 'footer-about', [
+        div(classes: 'footer-school-name', [.text('Hagedorn Little Village School')]),
+        div(classes: 'footer-address', [
+          .text('Seaford, NY · 516-520-6000'),
+          br(),
+          .text('A publicly funded, not-for-profit school.'),
+        ]),
+      ]),
+      div(classes: 'footer-columns', [
+        _footerColumn('Programs', const [
+          (label: 'Early Intervention', path: '/programs'),
+          (label: 'Preschool', path: '/programs'),
+          (label: 'Elementary', path: '/programs'),
+        ]),
+        _footerColumn('Get started', const [
+          (label: 'Admissions', path: '/admissions'),
+          (label: 'Request info', path: '/contact'),
+          (label: 'Schedule a tour', path: '/contact'),
+        ]),
+        _footerColumn('Community', const [
+          (label: 'News & events', path: '/news'),
+          (label: 'Donate', path: '#'),
+          (label: 'Parent portal', path: '#'),
+        ]),
+      ]),
+    ]);
+  }
+
+  static Component _footerColumn(String title, List<({String label, String path})> links) {
+    return div(classes: 'footer-column', [
+      span(classes: 'footer-column-title', [.text(title)]),
+      for (final link in links) Link(to: link.path, child: .text(link.label)),
+    ]);
+  }
+
+  @css
+  static List<StyleRule> get styles => [
+    css('footer', [
+      css('&').styles(
+        display: .flex,
+        padding: .symmetric(vertical: 24.px, horizontal: 40.px),
+        justifyContent: .spaceBetween,
+        gap: .all(20.px),
+        backgroundColor: AppColors.footerNavy,
+      ),
+      css('.footer-about', [
+        css('&').styles(
+          maxWidth: 240.px,
+          color: AppColors.footerMuted,
+          fontSize: 12.px,
+        ),
+        css('.footer-school-name').styles(
+          color: Colors.white,
+          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+          fontSize: 16.px,
+          fontWeight: .w700,
+        ),
+        css('.footer-address').styles(
+          margin: .only(top: 6.px),
+          lineHeight: 1.5.em,
+        ),
+      ]),
+      css('.footer-columns').styles(
+        display: .flex,
+        gap: .all(34.px),
+      ),
+      css('.footer-column', [
+        css('&').styles(
+          display: .flex,
+          flexDirection: .column,
+          gap: .all(5.px),
+          color: AppColors.footerLink,
+          fontSize: 13.px,
+        ),
+        css('.footer-column-title').styles(
+          color: Colors.white,
+          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        ),
+      ]),
+    ]),
+  ];
+}

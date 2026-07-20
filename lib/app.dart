@@ -2,52 +2,59 @@ import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
+import 'components/footer.dart';
 import 'components/header.dart';
 import 'pages/about.dart';
+import 'pages/admissions.dart';
+import 'pages/contact.dart';
+import 'pages/facilities.dart';
+import 'pages/founders.dart';
+import 'pages/history.dart';
 import 'pages/home.dart';
+import 'pages/mission.dart';
+import 'pages/news_events.dart';
+import 'pages/programs.dart';
 
-// The main component of your application.
+// The root layout shell of the site: header, routed page content, footer.
 //
 // By using multi-page routing, this component will only be built on the server during pre-rendering and
-// **not** executed on the client. Instead only the nested [Home] and [About] components will be mounted on the client.
+// **not** executed on the client. Instead only the individual page components are mounted on the client.
 class App extends StatelessComponent {
   const App({super.key});
 
   @override
   Component build(BuildContext context) {
-    // This method is rerun every time the component is rebuilt.
-    
-    // Renders a <div class="main"> html element with children.
-    return div(classes: 'main', [
+    return div(classes: 'app-shell', [
       const Header(),
-      Router(routes: [
-        Route(path: '/', title: 'Home', builder: (context, state) => const Home()),
-        Route(path: '/about', title: 'About', builder: (context, state) => const About()),
+      div(classes: 'app-content', [
+        Router(routes: [
+          Route(path: '/', title: 'Home', builder: (context, state) => const Home()),
+          Route(path: '/about', title: 'About', builder: (context, state) => const About()),
+          Route(path: '/mission', title: 'Mission Statement', builder: (context, state) => const Mission()),
+          Route(path: '/history', title: 'Our History', builder: (context, state) => const OurHistory()),
+          Route(path: '/founders', title: 'Founders', builder: (context, state) => const Founders()),
+          Route(path: '/facilities', title: 'School Facilities', builder: (context, state) => const Facilities()),
+          Route(path: '/programs', title: 'Programs', builder: (context, state) => const Programs()),
+          Route(path: '/admissions', title: 'Admissions', builder: (context, state) => const Admissions()),
+          Route(path: '/news', title: 'News & Events', builder: (context, state) => const NewsEvents()),
+          Route(path: '/contact', title: 'Contact', builder: (context, state) => const Contact()),
+        ]),
       ]),
+      const Footer(),
     ]);
   }
 
-  // Defines the CSS styles for this component.
-  //
-  // By using the @css annotation, these will be rendered automatically to CSS and included in your page.
-  // Must be a variable or getter of type [List<StyleRule>].
   @css
   static List<StyleRule> get styles => [
-    css('.main', [
-      // The '&' refers to the parent selector of a nested style rules.
-      css('&').styles(
-        display: .flex,
-        height: 100.vh,
-        flexDirection: .column,
-        flexWrap: .wrap,
-      ),
-      css('section').styles(
-        display: .flex,
-        flexDirection: .column,
-        justifyContent: .center,
-        alignItems: .center,
-        flex: Flex(grow: 1),
-      ),
-    ]),
+    css('.app-shell').styles(
+      display: .flex,
+      minHeight: 100.vh,
+      flexDirection: .column,
+    ),
+    css('.app-content').styles(
+      display: .flex,
+      flexDirection: .column,
+      flex: Flex(grow: 1),
+    ),
   ];
 }

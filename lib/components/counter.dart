@@ -40,7 +40,7 @@ class CounterState extends State<Counter> {
       css('&').styles(
         display: .flex,
         padding: .symmetric(vertical: 10.px),
-        border: .symmetric(vertical: .solid(color: primaryColor, width: 2.px)),
+        border: .symmetric(vertical: .solid(color: AppColors.primary, width: 2.px)),
         alignItems: .center,
       ),
       css('button', [
@@ -64,7 +64,7 @@ class CounterState extends State<Counter> {
         minWidth: 2.5.em,
         padding: .symmetric(horizontal: 2.rem),
         boxSizing: .borderBox, 
-        color: primaryColor, 
+        color: AppColors.primary, 
         textAlign: .center,
         fontSize: 4.rem,
       ),
