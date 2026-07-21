@@ -17,6 +17,7 @@ import 'pages/home.dart';
 import 'pages/mission.dart';
 import 'pages/news_detail.dart';
 import 'pages/news_events.dart';
+import 'pages/program_detail.dart';
 import 'pages/programs.dart';
 import 'pages/staff.dart';
 import 'sanity/content_repository.dart';
@@ -40,6 +41,7 @@ class App extends AsyncStatelessComponent {
     // needs its own pre-rendered route, not just the latest page of them.
     final newsPosts = await contentRepository.getNewsPosts(limit: 500);
     final events = await contentRepository.getEvents(limit: 500);
+    final programs = await contentRepository.getPrograms();
 
     return div(classes: 'app-shell', [
       const Header(),
@@ -57,7 +59,17 @@ class App extends AsyncStatelessComponent {
           Route(path: '/staff', title: 'Admin Staff', builder: (context, state) => const Staff()),
           Route(path: '/board', title: 'Board Members', builder: (context, state) => const Board()),
           Route(path: '/facilities', title: 'School Facilities', builder: (context, state) => const Facilities()),
-          Route(path: '/programs', title: 'Programs', builder: (context, state) => const Programs()),
+          Route(
+            path: '/programs',
+            title: 'Programs',
+            builder: (context, state) => Programs(programs: programs),
+          ),
+          for (final program in programs)
+            Route(
+              path: '/programs/${program.slug}',
+              title: program.title,
+              builder: (context, state) => ProgramDetail(program),
+            ),
           Route(path: '/admissions', title: 'Admissions', builder: (context, state) => const Admissions()),
           Route(
             path: '/news',

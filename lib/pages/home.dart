@@ -74,12 +74,19 @@ class Home extends StatelessComponent {
         age: 'Birth – 3 yrs',
         name: 'Early Intervention',
         desc: 'Home- & center-based support for your baby or toddler.',
+        slug: 'early-intervention',
       ),
-      (age: '3 – 5 yrs', name: 'Preschool Program', desc: 'Small classes pairing learning with therapy.'),
+      (
+        age: '3 – 5 yrs',
+        name: 'Preschool Program',
+        desc: 'Small classes pairing learning with therapy.',
+        slug: 'preschool',
+      ),
       (
         age: '5 – 12 yrs',
         name: 'Elementary School',
         desc: "A full school day built around each child's IEP.",
+        slug: 'elementary',
       ),
     ];
     return div(classes: 'age-locator', [
@@ -87,7 +94,7 @@ class Home extends StatelessComponent {
       div(classes: 'age-cards', [
         for (final card in cards)
           Link(
-            to: '/programs',
+            to: '/programs/${card.slug}',
             classes: 'age-card',
             child: .fragment([
               PhotoPlaceholder('photo', height: 84.px),
@@ -223,7 +230,7 @@ class Home extends StatelessComponent {
   @css
   static List<StyleRule> get styles => [
     css('.home', [
-      css('&').styles(display: .flex, flexDirection: .column),
+      css('&').styles(display: .flex, padding: .only(bottom: 30.px), flexDirection: .column),
 
       // Hero
       css('.hero').styles(

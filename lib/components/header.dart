@@ -152,7 +152,7 @@ class Header extends StatelessComponent {
           fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
           fontSize: 16.px,
         ),
-        css('div.active a').styles(
+        css('div.active').styles(
           position: .relative(),
         ),
         css('div.active::before').styles(

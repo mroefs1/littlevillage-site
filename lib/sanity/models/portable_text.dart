@@ -13,4 +13,16 @@ class PortableText {
   }
 
   bool get isEmpty => blocks.isEmpty;
+
+  /// Plain-text join of every block's spans — for excerpts (e.g. a card
+  /// blurb) where a short string is needed instead of full rendered markup.
+  String get plainText {
+    return blocks
+        .map((block) {
+          final children = (block['children'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>();
+          return children.map((child) => child['text'] as String? ?? '').join();
+        })
+        .join(' ')
+        .trim();
+  }
 }
