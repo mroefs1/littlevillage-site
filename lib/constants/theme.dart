@@ -17,6 +17,11 @@ class AppColors {
   static const borderLight = Color('#ece9e1');
   static const borderMedium = Color('#c9c4b8');
 
+  static const pillTint = Color('#e4ebf6');
+  static const shadedBg = Color('#f5f3ee');
+  static const placeholderBorder = Color('#bdb8ab');
+  static const placeholderStripe = Color('#e3dfd5');
+
   static const warmTint = Color('#f6e7d6');
   static const warmBorder = Color('#e7c79f');
   static const warmText = Color('#8a4f17');

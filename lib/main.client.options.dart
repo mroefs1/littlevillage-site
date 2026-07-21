@@ -6,8 +6,6 @@
 
 import 'package:jaspr/client.dart';
 
-import 'package:littlevillage_site/pages/home.dart' deferred as _home;
-
 /// Default [ClientOptions] for use with your Jaspr project.
 ///
 /// Use this to initialize Jaspr **before** calling [runApp].
@@ -24,8 +22,4 @@ import 'package:littlevillage_site/pages/home.dart' deferred as _home;
 ///   runApp(...);
 /// }
 /// ```
-ClientOptions get defaultClientOptions => ClientOptions(
-  clients: {
-    'home': ClientLoader((p) => _home.Home(), loader: _home.loadLibrary),
-  },
-);
+ClientOptions get defaultClientOptions => ClientOptions();

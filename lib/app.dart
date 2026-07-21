@@ -8,6 +8,7 @@ import 'pages/about.dart';
 import 'pages/admissions.dart';
 import 'pages/board.dart';
 import 'pages/contact.dart';
+import 'pages/current_families.dart';
 import 'pages/event_detail.dart';
 import 'pages/facilities.dart';
 import 'pages/founders.dart';
@@ -44,7 +45,11 @@ class App extends AsyncStatelessComponent {
       const Header(),
       div(classes: 'app-content', [
         Router(routes: [
-          Route(path: '/', title: 'Home', builder: (context, state) => const Home()),
+          Route(
+            path: '/',
+            title: 'Home',
+            builder: (context, state) => Home(newsPosts: newsPosts.take(2).toList(), events: events.take(2).toList()),
+          ),
           Route(path: '/about', title: 'About', builder: (context, state) => const About()),
           Route(path: '/mission', title: 'Mission Statement', builder: (context, state) => const Mission()),
           Route(path: '/history', title: 'Our History', builder: (context, state) => const OurHistory()),
@@ -70,6 +75,11 @@ class App extends AsyncStatelessComponent {
                 builder: (context, state) => EventDetail(event),
               ),
           Route(path: '/contact', title: 'Contact', builder: (context, state) => const Contact()),
+          Route(
+            path: '/current-families',
+            title: 'Current Families',
+            builder: (context, state) => const CurrentFamilies(),
+          ),
         ]),
       ]),
       const Footer(),

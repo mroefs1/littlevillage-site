@@ -89,6 +89,20 @@ Style one page/view per batch, the same way we worked through the app restyling.
 
 Work through these roughly in order; check in before jumping ahead to later steps.
 
+## Current design handoff batches (`design_handoff_homepage_admissions 2/`)
+
+Nav/footer/theme tokens (`components/header.dart`, `components/footer.dart`, `constants/theme.dart`) are already built from this handoff. Remaining work, one batch per page per the rule above:
+
+1. **Homepage** (`pages/home.dart`) — fully specified, no schema gaps. Hero, trust strip, age-locator cards, enrollment teaser, latest news/events (2 each, existing `contentRepository`), Current Families band, donate band.
+2. **Admissions** (`pages/admissions.dart`) — fully specified. Eligibility checklist, 4-step journey, $0 callout, FAQ accordion (needs a small `@client` component for expand/collapse), big CTA band.
+3. **Programs hub + 3 detail pages** — new routes, data-driven like news/events (loop `getPrograms()`, one route per slug). Age-bands map via the existing `category` enum (Early Intervention/Preschool/Elementary) — no schema change needed. Photos are dashed-placeholder blocks until real photography exists.
+4. **About redesign** (`pages/about.dart`) — replaces the current link-hub with inline stats/mission/team/accreditation content per the handoff. Open decision before starting: how to keep Mission/History/Founders/Staff/Board reachable, since the new design drops the link grid.
+5. **Contact redesign** (`pages/contact.dart`) — two-column form + info card. Info card can pull phone/email from `SiteSettings` (modeled, currently unused). Form stays static/non-functional until a backend is decided.
+6. **News & Events additions** (`pages/news_events.dart`) — filter pills (can be a real client-side toggle) + newsletter signup strip (no backend, matches handoff's own open item).
+7. **Current Families** (new page/route) — needs a `Document` model/query wired to the existing `doc` Sanity type (unused so far), plus a real gap: no lightweight "calendar closure/key date" content type yet (`event` requires two images, wrong shape for simple closures). Kept out of primary nav per the handoff; linked from footer/homepage band.
+
+Handoff README mentions Serverpod — that's stale/wrong, CLAUDE.md above is authoritative: no Serverpod yet, everything data-backed goes through Sanity.
+
 ## Reference: current WordPress nav (for parity-checking)
 
 - Programs and Enrollment (+ Educational Programs, Early Intervention, Preschool, Elementary, Therapeutic Services, Family Services, CPSE Evaluations, Enrollment Info, Summer Rec)

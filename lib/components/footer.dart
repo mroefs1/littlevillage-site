@@ -31,6 +31,7 @@ class Footer extends StatelessComponent {
         ]),
         _footerColumn('Community', const [
           (label: 'News & events', path: '/news'),
+          (label: 'Current families', path: '/current-families'),
           (label: 'Donate', path: '#'),
           (label: 'Parent portal', path: '#'),
         ]),
