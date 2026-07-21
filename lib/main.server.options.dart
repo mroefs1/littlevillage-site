@@ -20,6 +20,7 @@ import 'package:littlevillage_site/components/pill_list.dart' as _pill_list;
 import 'package:littlevillage_site/components/portable_text_view.dart'
     as _portable_text_view;
 import 'package:littlevillage_site/constants/theme.dart' as _theme;
+import 'package:littlevillage_site/pages/about.dart' as _about;
 import 'package:littlevillage_site/pages/admissions.dart' as _admissions;
 import 'package:littlevillage_site/pages/home.dart' as _home;
 import 'package:littlevillage_site/pages/program_detail.dart'
@@ -63,6 +64,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._photo_placeholder.PhotoPlaceholder.styles,
     ..._pill_list.PillList.styles,
     ..._portable_text_view.PortableTextView.styles,
+    ..._about.About.styles,
     ..._admissions.Admissions.styles,
     ..._home.Home.styles,
     ..._program_detail.ProgramDetail.styles,

@@ -3,13 +3,37 @@ import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
 import '../constants/theme.dart';
+import '../sanity/models/program.dart';
+
+typedef _NavChild = ({String label, String path});
+
+// Same three age-band categories, in the same display order, as the
+// Programs hub (pages/programs.dart) — the Programs dropdown mirrors that
+// page's card ordering rather than raw Sanity document order.
+const _ageBandCategories = ['Early Intervention', 'Preschool', 'Elementary'];
 
 class Header extends StatelessComponent {
-  const Header({super.key});
+  final List<Program> programs;
+
+  const Header({required this.programs, super.key});
 
   @override
   Component build(BuildContext context) {
     var activePath = context.url;
+
+    final programLinks = [
+      for (final category in _ageBandCategories)
+        for (final program in programs)
+          if (program.category == category) (label: program.title, path: '/programs/${program.slug}'),
+    ];
+
+    const aboutLinks = [
+      (label: 'Mission', path: '/mission'),
+      (label: 'History', path: '/history'),
+      (label: 'Founders', path: '/founders'),
+      (label: 'Admin Staff', path: '/staff'),
+      (label: 'Board Members', path: '/board'),
+    ];
 
     return .fragment([
       div(classes: 'utility-bar', [
@@ -34,21 +58,56 @@ class Header extends StatelessComponent {
           ]),
         ),
         nav([
-          for (var route in [
-            (label: 'Programs', path: '/programs', aliases: const <String>[]),
-            (label: 'Admissions', path: '/admissions', aliases: const <String>[]),
-            (label: 'About', path: '/about', aliases: const ['/mission', '/history', '/founders', '/staff', '/board']),
-            (label: 'Facilities', path: '/facilities', aliases: const <String>[]),
-            (label: 'News & Events', path: '/news', aliases: const ['/events']),
-            (label: 'Contact', path: '/contact', aliases: const <String>[]),
-          ])
-            div(
-              classes: _isActive(activePath, route.path, route.aliases) ? 'active' : null,
-              [Link(to: route.path, child: .text(route.label))],
-            ),
+          _navItem(
+            label: 'Programs',
+            path: '/programs',
+            activePath: activePath,
+            aliases: [for (final link in programLinks) link.path],
+            children: programLinks,
+          ),
+          _navItem(label: 'Admissions', path: '/admissions', activePath: activePath),
+          _navItem(
+            label: 'About',
+            path: '/about',
+            activePath: activePath,
+            aliases: const ['/mission', '/history', '/founders', '/staff', '/board'],
+            children: aboutLinks,
+          ),
+          _navItem(label: 'Facilities', path: '/facilities', activePath: activePath),
+          _navItem(label: 'News & Events', path: '/news', activePath: activePath, aliases: const ['/events']),
+          _navItem(label: 'Contact', path: '/contact', activePath: activePath),
           Link(to: '/contact', classes: 'request-info', child: .text('Request Info')),
         ]),
       ]),
+    ]);
+  }
+
+  // Plain nav link, or — when `children` is non-empty — a nav item with a
+  // pure-CSS (`:hover`/`:focus-within`, see styles below) dropdown menu, so
+  // Programs/About sub-pages are reachable without leaving the top nav.
+  static Component _navItem({
+    required String label,
+    required String path,
+    required String activePath,
+    List<String> aliases = const [],
+    List<_NavChild> children = const [],
+  }) {
+    final hasDropdown = children.isNotEmpty;
+    final isActive = _isActive(activePath, path, aliases);
+    final classes = [if (hasDropdown) 'nav-dropdown', if (isActive) 'active'].join(' ');
+
+    return div(classes: classes.isEmpty ? null : classes, [
+      Link(
+        to: path,
+        child: hasDropdown
+            ? .fragment([.text(label), span(classes: 'nav-caret', [.text('▾')])])
+            : .text(label),
+      ),
+      if (hasDropdown)
+        div(classes: 'nav-dropdown-menu', [
+          for (final child in children)
+            Link(to: child.path, classes: 'nav-dropdown-link', child: .text(child.label)),
+        ]),
     ]);
   }
 
@@ -169,6 +228,40 @@ class Header extends StatelessComponent {
           color: Colors.white,
           fontWeight: .w700,
           backgroundColor: AppColors.primary,
+        ),
+
+        // Dropdown menus for Programs/About — pure CSS, toggled by
+        // :hover and :focus-within (keyboard) on the nav item, no JS.
+        css('.nav-dropdown').styles(position: .relative()),
+        css('.nav-caret').styles(
+          margin: .only(left: 3.px),
+          fontSize: 11.px,
+        ),
+        css('.nav-dropdown-menu').styles(
+          display: .none,
+          position: .absolute(top: 100.percent, left: 0.px),
+          minWidth: 190.px,
+          padding: .all(8.px),
+          border: .all(color: AppColors.borderLight, width: 2.px),
+          radius: .all(.circular(10.px)),
+          shadow: BoxShadow(offsetX: 0.px, offsetY: 8.px, blur: 20.px, color: .rgba(44, 42, 38, 0.14)),
+          flexDirection: .column,
+          gap: .all(2.px),
+          backgroundColor: Colors.white,
+          raw: {'z-index': '30'},
+        ),
+        css('.nav-dropdown:hover > .nav-dropdown-menu, .nav-dropdown:focus-within > .nav-dropdown-menu').styles(
+          display: .flex,
+        ),
+        css('.nav-dropdown-link').styles(
+          padding: .symmetric(vertical: 8.px, horizontal: 12.px),
+          radius: .all(.circular(6.px)),
+          color: AppColors.ink,
+          fontSize: 14.px,
+        ),
+        css('.nav-dropdown-link:hover').styles(
+          color: AppColors.primary,
+          backgroundColor: AppColors.shadedBg,
         ),
       ]),
     ]),

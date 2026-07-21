@@ -44,7 +44,7 @@ class App extends AsyncStatelessComponent {
     final programs = await contentRepository.getPrograms();
 
     return div(classes: 'app-shell', [
-      const Header(),
+      Header(programs: programs),
       div(classes: 'app-content', [
         Router(routes: [
           Route(

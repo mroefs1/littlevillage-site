@@ -98,10 +98,10 @@ Nav/footer/theme tokens (`components/header.dart`, `components/footer.dart`, `co
 3. **Programs hub + 3 detail pages** — new routes, data-driven like news/events (loop `getPrograms()`, one route per slug). Age-bands map via the existing `category` enum (Early Intervention/Preschool/Elementary) — no schema change needed. Photos are dashed-placeholder blocks until real photography exists.
 4. **About redesign** (`pages/about.dart`) — replaces the current link-hub with inline stats/mission/team/accreditation content per the handoff. Open decision before starting: how to keep Mission/History/Founders/Staff/Board reachable, since the new design drops the link grid.
 5. **Contact redesign** (`pages/contact.dart`) — two-column form + info card. Info card can pull phone/email from `SiteSettings` (modeled, currently unused). Form stays static/non-functional until a backend is decided.
-6. **News & Events additions** (`pages/news_events.dart`) — filter pills (can be a real client-side toggle) + newsletter signup strip (no backend, matches handoff's own open item).
-7. **Current Families** (new page/route) — needs a `Document` model/query wired to the existing `doc` Sanity type (unused so far), plus a real gap: no lightweight "calendar closure/key date" content type yet (`event` requires two images, wrong shape for simple closures). Kept out of primary nav per the handoff; linked from footer/homepage band.
+6. **News & Events additions** (`pages/news_events.dart`) — filter pills (can be a real client-side toggle) + newsletter download links (from sanity) are to be present.
+7. **Current Families** (new page/route) — needs a `Document` model/query wired to the existing `doc` Sanity type (unused so far), plus a real gap: no lightweight "calendar closure/key date" content type yet (`event` requires two images, wrong shape for simple closures). Kept out of primary nav per the handoff; linked from footer/homepage band. Suggest embedding google calendar instead of pulling that information from Sanity. The app uses that approach.
 
-Handoff README mentions Serverpod — that's stale/wrong, CLAUDE.md above is authoritative: no Serverpod yet, everything data-backed goes through Sanity.
+Handoff README mentions Serverpod — that's stale/wrong, CLAUDE.md above is authoritative: no Serverpod yet, everything data-backed goes through Sanity with the exception of google calendar.
 
 ## Reference: current WordPress nav (for parity-checking)
 
