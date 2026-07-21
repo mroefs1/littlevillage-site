@@ -22,6 +22,7 @@ import 'package:littlevillage_site/components/portable_text_view.dart'
 import 'package:littlevillage_site/constants/theme.dart' as _theme;
 import 'package:littlevillage_site/pages/about.dart' as _about;
 import 'package:littlevillage_site/pages/admissions.dart' as _admissions;
+import 'package:littlevillage_site/pages/contact.dart' as _contact;
 import 'package:littlevillage_site/pages/home.dart' as _home;
 import 'package:littlevillage_site/pages/program_detail.dart'
     as _program_detail;
@@ -66,6 +67,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._portable_text_view.PortableTextView.styles,
     ..._about.About.styles,
     ..._admissions.Admissions.styles,
+    ..._contact.Contact.styles,
     ..._home.Home.styles,
     ..._program_detail.ProgramDetail.styles,
     ..._programs.Programs.styles,
