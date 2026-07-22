@@ -8,6 +8,8 @@ import 'package:jaspr/client.dart';
 
 import 'package:littlevillage_site/components/faq_accordion.dart'
     deferred as _faq_accordion;
+import 'package:littlevillage_site/components/news_events_filter.dart'
+    deferred as _news_events_filter;
 
 /// Default [ClientOptions] for use with your Jaspr project.
 ///
@@ -35,6 +37,17 @@ ClientOptions get defaultClientOptions => ClientOptions(
         initialOpenIndex: p['initialOpenIndex'] as int?,
       ),
       loader: _faq_accordion.loadLibrary,
+    ),
+    'news_events_filter': ClientLoader(
+      (p) => _news_events_filter.NewsEventsFilter(
+        newsItems: (p['newsItems'] as List<Object?>)
+            .map((i) => (i as Map<String, Object?>).cast<String, String?>())
+            .toList(),
+        eventItems: (p['eventItems'] as List<Object?>)
+            .map((i) => (i as Map<String, Object?>).cast<String, String?>())
+            .toList(),
+      ),
+      loader: _news_events_filter.loadLibrary,
     ),
   },
 );

@@ -41,6 +41,7 @@ class App extends AsyncStatelessComponent {
     // needs its own pre-rendered route, not just the latest page of them.
     final newsPosts = await contentRepository.getNewsPosts(limit: 500);
     final events = await contentRepository.getEvents(limit: 500);
+    final newsletters = await contentRepository.getNewsletters();
     final programs = await contentRepository.getPrograms();
 
     return div(classes: 'app-shell', [
@@ -74,7 +75,8 @@ class App extends AsyncStatelessComponent {
           Route(
             path: '/news',
             title: 'News & Events',
-            builder: (context, state) => NewsEvents(newsPosts: newsPosts, events: events),
+            builder: (context, state) =>
+                NewsEvents(newsPosts: newsPosts, events: events, newsletters: newsletters),
           ),
           for (final post in newsPosts)
             if (post.slug != null)

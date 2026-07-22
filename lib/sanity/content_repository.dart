@@ -1,6 +1,8 @@
 import 'client.dart';
+import 'models/document.dart';
 import 'models/event_item.dart';
 import 'models/news_post.dart';
+import 'models/newsletter.dart';
 import 'models/page_content.dart';
 import 'models/person.dart';
 import 'models/program.dart';
@@ -17,6 +19,8 @@ abstract class ContentRepository {
   Future<List<NewsPost>> getNewsPosts({int limit = 10});
   Future<NewsPost?> getNewsPost(String slug);
   Future<List<EventItem>> getEvents({int limit = 10});
+  Future<List<Newsletter>> getNewsletters({int limit = 20});
+  Future<List<ParentDocument>> getDocuments();
   Future<List<Program>> getPrograms();
   Future<Program?> getProgram(String slug);
   Future<List<StaffMember>> getStaffMembers();
@@ -61,6 +65,22 @@ class SanityContentRepository implements ContentRepository {
     final result = await _client.fetch(eventListQuery, {'limit': limit});
     return (result as List<dynamic>)
         .map((item) => EventItem.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<List<Newsletter>> getNewsletters({int limit = 20}) async {
+    final result = await _client.fetch(newsletterListQuery, {'limit': limit});
+    return (result as List<dynamic>)
+        .map((item) => Newsletter.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<List<ParentDocument>> getDocuments() async {
+    final result = await _client.fetch(documentListQuery);
+    return (result as List<dynamic>)
+        .map((item) => ParentDocument.fromJson(item as Map<String, dynamic>))
         .toList();
   }
 

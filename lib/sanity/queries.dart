@@ -70,6 +70,23 @@ const String eventListQuery = '''
 }
 ''';
 
+const String newsletterListQuery = '''
+*[_type == "newsletter"] | order(published_date desc) [0...\$limit]{
+  _id,
+  title,
+  published_date,
+  "fileUrl": file.asset->url
+}
+''';
+
+const String documentListQuery = '''
+*[_type == "doc"] | order(title asc){
+  _id,
+  title,
+  "fileUrl": file.asset->url
+}
+''';
+
 const String programListQuery = '''
 *[_type == "program"]{
   _id,

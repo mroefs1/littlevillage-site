@@ -14,6 +14,8 @@ import 'package:littlevillage_site/components/faq_accordion.dart'
     as _faq_accordion;
 import 'package:littlevillage_site/components/footer.dart' as _footer;
 import 'package:littlevillage_site/components/header.dart' as _header;
+import 'package:littlevillage_site/components/news_events_filter.dart'
+    as _news_events_filter;
 import 'package:littlevillage_site/components/photo_placeholder.dart'
     as _photo_placeholder;
 import 'package:littlevillage_site/components/pill_list.dart' as _pill_list;
@@ -23,6 +25,8 @@ import 'package:littlevillage_site/constants/theme.dart' as _theme;
 import 'package:littlevillage_site/pages/about.dart' as _about;
 import 'package:littlevillage_site/pages/admissions.dart' as _admissions;
 import 'package:littlevillage_site/pages/contact.dart' as _contact;
+import 'package:littlevillage_site/pages/current_families.dart'
+    as _current_families;
 import 'package:littlevillage_site/pages/home.dart' as _home;
 import 'package:littlevillage_site/pages/program_detail.dart'
     as _program_detail;
@@ -52,6 +56,11 @@ ServerOptions get defaultServerOptions => ServerOptions(
       'faq_accordion',
       params: __faq_accordionFaqAccordion,
     ),
+    _news_events_filter.NewsEventsFilter:
+        ClientTarget<_news_events_filter.NewsEventsFilter>(
+          'news_events_filter',
+          params: __news_events_filterNewsEventsFilter,
+        ),
   },
   styles: () => [
     ..._theme.globalStyles,
@@ -62,12 +71,14 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._faq_accordion.FaqAccordion.styles,
     ..._footer.Footer.styles,
     ..._header.Header.styles,
+    ..._news_events_filter.NewsEventsFilter.styles,
     ..._photo_placeholder.PhotoPlaceholder.styles,
     ..._pill_list.PillList.styles,
     ..._portable_text_view.PortableTextView.styles,
     ..._about.About.styles,
     ..._admissions.Admissions.styles,
     ..._contact.Contact.styles,
+    ..._current_families.CurrentFamilies.styles,
     ..._home.Home.styles,
     ..._program_detail.ProgramDetail.styles,
     ..._programs.Programs.styles,
@@ -77,3 +88,6 @@ ServerOptions get defaultServerOptions => ServerOptions(
 Map<String, Object?> __faq_accordionFaqAccordion(
   _faq_accordion.FaqAccordion c,
 ) => {'items': c.items, 'initialOpenIndex': c.initialOpenIndex};
+Map<String, Object?> __news_events_filterNewsEventsFilter(
+  _news_events_filter.NewsEventsFilter c,
+) => {'newsItems': c.newsItems, 'eventItems': c.eventItems};

@@ -75,6 +75,7 @@ class Header extends StatelessComponent {
           ),
           _navItem(label: 'Facilities', path: '/facilities', activePath: activePath),
           _navItem(label: 'News & Events', path: '/news', activePath: activePath, aliases: const ['/events']),
+          _navItem(label: 'Current Families', path: '/current-families', activePath: activePath),
           _navItem(label: 'Contact', path: '/contact', activePath: activePath),
           Link(to: '/contact', classes: 'request-info', child: .text('Request Info')),
         ]),
