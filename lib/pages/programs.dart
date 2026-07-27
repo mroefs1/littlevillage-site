@@ -155,5 +155,9 @@ class Programs extends StatelessComponent {
       fontSize: 20.px,
       fontWeight: .w700,
     ),
+
+    css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+      css('.prog-cards').styles(flexDirection: .column),
+    ]),
   ];
 }

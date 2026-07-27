@@ -228,5 +228,12 @@ class ProgramDetail extends StatelessComponent {
       fontWeight: .w700,
       whiteSpace: .noWrap,
     ),
+
+    css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+      css('.progd-hero').styles(flexDirection: .column, alignItems: .stretch),
+      css('.progd-timeline-step').styles(flexDirection: .column, gap: .all(4.px)),
+      css('.progd-timeline-step-label').styles(width: .auto),
+      css('.progd-how-to-start').styles(flexDirection: .column, textAlign: .center),
+    ]),
   ];
 }
