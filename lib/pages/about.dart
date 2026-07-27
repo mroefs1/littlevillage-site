@@ -6,6 +6,8 @@ import '../components/content_page.dart';
 import '../components/cta_band.dart';
 import '../components/photo_placeholder.dart';
 import '../components/portable_text_view.dart';
+import '../components/seo_meta.dart';
+import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/content_repository.dart';
 import '../sanity/models/person.dart';
@@ -25,24 +27,33 @@ class About extends AsyncStatelessComponent {
     final page = await contentRepository.getPage('about');
     final staff = await contentRepository.getStaffMembers();
 
-    return ContentPage(
-      breadcrumb: 'About',
-      title: '50+ years of meeting every child where they are.',
-      children: [
-        p(classes: 'about-subtitle', [
-          .text(
+    return .fragment([
+      const SeoMeta(
+        title: 'About Us | $siteName',
+        description:
             'Hagedorn Little Village School, part of the Jack Joel Center for Special Children, has served '
             'Long Island families with developmental delays and disabilities since 1953.',
-          ),
-        ]),
-        _subNav(),
-        _stats(),
-        _mission(page?.body),
-        if (staff.isNotEmpty) _team(staff.take(3).toList()),
-        _accreditation(),
-        const CtaBand(),
-      ],
-    );
+        path: '/about',
+      ),
+      ContentPage(
+        breadcrumb: 'About',
+        title: '50+ years of meeting every child where they are.',
+        children: [
+          p(classes: 'about-subtitle', [
+            .text(
+              'Hagedorn Little Village School, part of the Jack Joel Center for Special Children, has served '
+              'Long Island families with developmental delays and disabilities since 1953.',
+            ),
+          ]),
+          _subNav(),
+          _stats(),
+          _mission(page?.body),
+          if (staff.isNotEmpty) _team(staff.take(3).toList()),
+          _accreditation(),
+          const CtaBand(),
+        ],
+      ),
+    ]);
   }
 
   static Component _subNav() {
@@ -161,7 +172,9 @@ class About extends AsyncStatelessComponent {
     ),
     css('.about-stat').styles(
       padding: .all(16.px),
-      border: .only(right: .solid(color: AppColors.borderLight, width: 1.5.px)),
+      border: .only(
+        right: .solid(color: AppColors.borderLight, width: 1.5.px),
+      ),
       flex: Flex(grow: 1),
       textAlign: .center,
     ),
@@ -183,13 +196,19 @@ class About extends AsyncStatelessComponent {
     ),
     css('.about-mission-text').styles(flex: Flex(grow: 1)),
     css('.about-mission-text h2').styles(margin: .zero),
-    css('.about-mission-text .body-content').styles(maxWidth: 480.px, margin: .only(top: 10.px)),
+    css('.about-mission-text .body-content').styles(
+      maxWidth: 480.px,
+      margin: .only(top: 10.px),
+    ),
     css('.about-mission-photo').styles(flex: Flex(grow: 1)),
     css('.about-mission-photo .photo-placeholder').styles(height: 200.px),
 
     // Team teaser
     css('.about-team').styles(margin: .only(top: 26.px)),
-    css('.about-team h2').styles(margin: .only(bottom: 14.px), fontSize: 22.px),
+    css('.about-team h2').styles(
+      margin: .only(bottom: 14.px),
+      fontSize: 22.px,
+    ),
     css('.about-team-cards').styles(display: .flex, gap: .all(16.px)),
     css('.about-team-card').styles(
       padding: .all(14.px),

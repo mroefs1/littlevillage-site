@@ -3,6 +3,8 @@ import 'package:jaspr/server.dart';
 
 import '../components/content_page.dart';
 import '../components/photo_placeholder.dart';
+import '../components/seo_meta.dart';
+import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/content_repository.dart';
 import '../sanity/models/site_settings.dart';
@@ -19,22 +21,31 @@ class Contact extends AsyncStatelessComponent {
   Future<Component> build(BuildContext context) async {
     final siteSettings = await contentRepository.getSiteSettings();
 
-    return ContentPage(
-      breadcrumb: 'Contact',
-      title: "Let's talk about your child.",
-      children: [
-        p(classes: 'contact-subtitle', [
-          .text(
+    return .fragment([
+      const SeoMeta(
+        title: 'Contact | $siteName',
+        description:
             "Whether you have a question, want to request information, or you're ready to schedule a tour — "
             "reach out and we'll respond within one business day.",
-          ),
-        ]),
-        div(classes: 'contact-grid', [
-          _form(),
-          _infoColumn(siteSettings),
-        ]),
-      ],
-    );
+        path: '/contact',
+      ),
+      ContentPage(
+        breadcrumb: 'Contact',
+        title: "Let's talk about your child.",
+        children: [
+          p(classes: 'contact-subtitle', [
+            .text(
+              "Whether you have a question, want to request information, or you're ready to schedule a tour — "
+              "reach out and we'll respond within one business day.",
+            ),
+          ]),
+          div(classes: 'contact-grid', [
+            _form(),
+            _infoColumn(siteSettings),
+          ]),
+        ],
+      ),
+    ]);
   }
 
   static Component _form() {
@@ -185,6 +196,10 @@ class Contact extends AsyncStatelessComponent {
       fontSize: 16.px,
       fontWeight: .w700,
     ),
-    css('.contact-info-value').styles(margin: .only(top: 4.px), color: AppColors.body, fontSize: 14.px),
+    css('.contact-info-value').styles(
+      margin: .only(top: 4.px),
+      color: AppColors.body,
+      fontSize: 14.px,
+    ),
   ];
 }

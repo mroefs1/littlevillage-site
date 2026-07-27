@@ -2,6 +2,8 @@ import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
 
 import '../components/content_page.dart';
+import '../components/seo_meta.dart';
+import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/content_repository.dart';
 import '../sanity/models/document.dart';
@@ -36,65 +38,73 @@ class CurrentFamilies extends AsyncStatelessComponent {
   Future<Component> build(BuildContext context) async {
     final documents = await contentRepository.getDocuments();
 
-    return ContentPage(
-      breadcrumb: 'Current Families',
-      title: 'Welcome back.',
-      children: [
-        p(classes: 'cf-subtitle', [
-          .text(
+    return .fragment([
+      const SeoMeta(
+        title: 'Current Families | $siteName',
+        description:
             'Everything current Little Village families need — calendar, forms, and quick links — in one place.',
-          ),
-        ]),
-        div(classes: 'cf-features', [
-          a(href: '#calendar', classes: 'cf-feature-card', [
-            div(classes: 'cf-feature-icon', [.text('📅')]),
-            div(classes: 'cf-feature-title', [.text('School Calendar')]),
-            div(classes: 'cf-feature-desc', [
-              .text('Closings, breaks, half-days, and key dates for the school year.'),
-            ]),
-            div(classes: 'cf-feature-cta', [.text('View full calendar →')]),
+        path: '/current-families',
+      ),
+      ContentPage(
+        breadcrumb: 'Current Families',
+        title: 'Welcome back.',
+        children: [
+          p(classes: 'cf-subtitle', [
+            .text(
+              'Everything current Little Village families need — calendar, forms, and quick links — in one place.',
+            ),
           ]),
-          a(href: '#documents', classes: 'cf-feature-card', [
-            div(classes: 'cf-feature-icon', [.text('📄')]),
-            div(classes: 'cf-feature-title', [.text('Important Documents')]),
-            div(classes: 'cf-feature-desc', [
-              .text('Handbooks, one-page calendars, and district paperwork.'),
+          div(classes: 'cf-features', [
+            a(href: '#calendar', classes: 'cf-feature-card', [
+              div(classes: 'cf-feature-icon', [.text('📅')]),
+              div(classes: 'cf-feature-title', [.text('School Calendar')]),
+              div(classes: 'cf-feature-desc', [
+                .text('Closings, breaks, half-days, and key dates for the school year.'),
+              ]),
+              div(classes: 'cf-feature-cta', [.text('View full calendar →')]),
             ]),
-            div(classes: 'cf-feature-cta', [.text('Browse documents →')]),
-          ]),
-          a(href: '#', classes: 'cf-feature-card cf-feature-card-portal', [
-            div(classes: 'cf-feature-icon cf-feature-icon-portal', [.text('🔐')]),
-            div(classes: 'cf-feature-title', [.text('Parent Portal')]),
-            div(classes: 'cf-feature-desc', [
-              .text("Sign in to view your child's records, progress, and messages."),
+            a(href: '#documents', classes: 'cf-feature-card', [
+              div(classes: 'cf-feature-icon', [.text('📄')]),
+              div(classes: 'cf-feature-title', [.text('Important Documents')]),
+              div(classes: 'cf-feature-desc', [
+                .text('Handbooks, one-page calendars, and district paperwork.'),
+              ]),
+              div(classes: 'cf-feature-cta', [.text('Browse documents →')]),
             ]),
-            div(classes: 'cf-feature-cta', [.text('Sign in →')]),
+            a(href: '#', classes: 'cf-feature-card cf-feature-card-portal', [
+              div(classes: 'cf-feature-icon cf-feature-icon-portal', [.text('🔐')]),
+              div(classes: 'cf-feature-title', [.text('Parent Portal')]),
+              div(classes: 'cf-feature-desc', [
+                .text("Sign in to view your child's records, progress, and messages."),
+              ]),
+              div(classes: 'cf-feature-cta', [.text('Sign in →')]),
+            ]),
           ]),
-        ]),
-        section(classes: 'cf-section', id: 'calendar', [
-          h2([.text('Upcoming closures & key dates')]),
-          iframe(
-            src: _calendarEmbedUri.toString(),
-            height: 600,
-            loading: MediaLoading.lazy,
-            classes: 'cf-calendar-embed',
-            const [],
-          ),
-        ]),
-        section(classes: 'cf-section', id: 'documents', [
-          h2([.text('Documents')]),
-          if (documents.isEmpty)
-            p([.text('Documents are coming soon.')])
-          else
-            div(classes: 'cf-documents', [for (final document in documents) _documentCard(document)]),
-        ]),
-        div(classes: 'cf-quicklinks', [
-          a(href: '#', [.text('↳ Parent Association')]),
-          a(href: '#', [.text('↳ Summer Recreation')]),
-          a(href: '#', [.text('↳ Careers & staff portal')]),
-        ]),
-      ],
-    );
+          section(classes: 'cf-section', id: 'calendar', [
+            h2([.text('Upcoming closures & key dates')]),
+            iframe(
+              src: _calendarEmbedUri.toString(),
+              height: 600,
+              loading: MediaLoading.lazy,
+              classes: 'cf-calendar-embed',
+              const [],
+            ),
+          ]),
+          section(classes: 'cf-section', id: 'documents', [
+            h2([.text('Documents')]),
+            if (documents.isEmpty)
+              p([.text('Documents are coming soon.')])
+            else
+              div(classes: 'cf-documents', [for (final document in documents) _documentCard(document)]),
+          ]),
+          div(classes: 'cf-quicklinks', [
+            a(href: '#', [.text('↳ Parent Association')]),
+            a(href: '#', [.text('↳ Summer Recreation')]),
+            a(href: '#', [.text('↳ Careers & staff portal')]),
+          ]),
+        ],
+      ),
+    ]);
   }
 
   static Component _documentCard(ParentDocument document) {
@@ -118,7 +128,11 @@ class CurrentFamilies extends AsyncStatelessComponent {
       lineHeight: 1.55.em,
     ),
 
-    css('.cf-features').styles(display: .flex, margin: .only(top: 16.px), gap: .all(16.px)),
+    css('.cf-features').styles(
+      display: .flex,
+      margin: .only(top: 16.px),
+      gap: .all(16.px),
+    ),
     css('.cf-feature-card', [
       css('&').styles(
         display: .block,

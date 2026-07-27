@@ -3,6 +3,8 @@ import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
 import '../components/photo_placeholder.dart';
+import '../components/seo_meta.dart';
+import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/models/event_item.dart';
 import '../sanity/models/news_post.dart';
@@ -19,14 +21,21 @@ class Home extends StatelessComponent {
 
   @override
   Component build(BuildContext context) {
-    return div(classes: 'home', [
-      _hero(),
-      _trustStrip(),
-      _ageLocator(),
-      _enrollmentTeaser(),
-      _newsEvents(),
-      _currentFamilies(),
-      _donateBand(),
+    return .fragment([
+      const SeoMeta(
+        title: '$siteName | Special Education, Early Intervention & Preschool on Long Island',
+        description: defaultMetaDescription,
+        path: '/',
+      ),
+      div(classes: 'home', [
+        _hero(),
+        _trustStrip(),
+        _ageLocator(),
+        _enrollmentTeaser(),
+        _newsEvents(),
+        _currentFamilies(),
+        _donateBand(),
+      ]),
     ]);
   }
 
@@ -134,11 +143,17 @@ class Home extends StatelessComponent {
     return div(classes: 'home-news-events', [
       div(classes: 'home-news', [
         h2([.text('Latest News')]),
-        if (newsPosts.isEmpty) p([.text('No news posts yet.')]) else div([for (final post in newsPosts) _newsRow(post)]),
+        if (newsPosts.isEmpty)
+          p([.text('No news posts yet.')])
+        else
+          div([for (final post in newsPosts) _newsRow(post)]),
       ]),
       div(classes: 'home-events', [
         h2([.text('Upcoming Events')]),
-        if (events.isEmpty) p([.text('No upcoming events yet.')]) else div([for (final event in events) _eventRow(event)]),
+        if (events.isEmpty)
+          p([.text('No upcoming events yet.')])
+        else
+          div([for (final event in events) _eventRow(event)]),
       ]),
     ]);
   }
@@ -230,7 +245,11 @@ class Home extends StatelessComponent {
   @css
   static List<StyleRule> get styles => [
     css('.home', [
-      css('&').styles(display: .flex, padding: .only(bottom: 30.px), flexDirection: .column),
+      css('&').styles(
+        display: .flex,
+        padding: .only(bottom: 30.px),
+        flexDirection: .column,
+      ),
 
       // Hero
       css('.hero').styles(
@@ -258,7 +277,11 @@ class Home extends StatelessComponent {
         fontSize: 15.px,
         lineHeight: 1.55.em,
       ),
-      css('.hero-ctas').styles(display: .flex, margin: .only(top: 22.px), gap: .all(12.px)),
+      css('.hero-ctas').styles(
+        display: .flex,
+        margin: .only(top: 22.px),
+        gap: .all(12.px),
+      ),
       css('.hero-photo').styles(flex: Flex(grow: 1)),
       css('.hero-photo .photo-placeholder').styles(height: 280.px),
 
@@ -294,7 +317,9 @@ class Home extends StatelessComponent {
       ),
       css('.trust-item').styles(
         padding: .all(16.px),
-        border: .only(right: .solid(color: AppColors.borderLight, width: 1.5.px)),
+        border: .only(
+          right: .solid(color: AppColors.borderLight, width: 1.5.px),
+        ),
         flex: Flex(grow: 1),
         textAlign: .center,
       ),
@@ -308,9 +333,15 @@ class Home extends StatelessComponent {
       css('.trust-label').styles(color: AppColors.body, fontSize: 12.px),
 
       // Age locator
-      css('.age-locator').styles(padding: .only(top: 30.px, left: 40.px, right: 40.px, bottom: 8.px)),
+      css('.age-locator').styles(
+        padding: .only(top: 30.px, left: 40.px, right: 40.px, bottom: 8.px),
+      ),
       css('.age-locator h2').styles(textAlign: .center, fontSize: 26.px),
-      css('.age-cards').styles(display: .flex, margin: .only(top: 20.px), gap: .all(16.px)),
+      css('.age-cards').styles(
+        display: .flex,
+        margin: .only(top: 20.px),
+        gap: .all(16.px),
+      ),
       css('.age-card', [
         css('&').styles(
           display: .block,
@@ -364,7 +395,11 @@ class Home extends StatelessComponent {
         fontSize: 15.px,
         fontWeight: .w700,
       ),
-      css('.enrollment-steps').styles(display: .flex, margin: .only(top: 14.px), gap: .all(10.px)),
+      css('.enrollment-steps').styles(
+        display: .flex,
+        margin: .only(top: 14.px),
+        gap: .all(10.px),
+      ),
       css('.enrollment-step').styles(flex: Flex(grow: 1), textAlign: .center),
       css('.enrollment-step-badge').styles(
         display: .flex,
@@ -383,10 +418,17 @@ class Home extends StatelessComponent {
       css('.enrollment-step-label').styles(color: AppColors.body, fontSize: 12.px),
 
       // News & events
-      css('.home-news-events').styles(display: .flex, padding: .only(top: 30.px, left: 40.px, right: 40.px, bottom: 8.px), gap: .all(18.px)),
+      css('.home-news-events').styles(
+        display: .flex,
+        padding: .only(top: 30.px, left: 40.px, right: 40.px, bottom: 8.px),
+        gap: .all(18.px),
+      ),
       css('.home-news').styles(flex: Flex(grow: 1)),
       css('.home-events').styles(flex: Flex(grow: 1)),
-      css('.home-news-events h2').styles(margin: .only(bottom: 10.px), fontSize: 22.px),
+      css('.home-news-events h2').styles(
+        margin: .only(bottom: 10.px),
+        fontSize: 22.px,
+      ),
       css('.home-news-row', [
         css('&').styles(
           display: .flex,
@@ -458,7 +500,9 @@ class Home extends StatelessComponent {
       css('.current-families-header').styles(
         display: .flex,
         padding: .symmetric(vertical: 13.px, horizontal: 20.px),
-        border: .only(bottom: .solid(color: AppColors.utilityBorder, width: 2.px)),
+        border: .only(
+          bottom: .solid(color: AppColors.utilityBorder, width: 2.px),
+        ),
         justifyContent: .spaceBetween,
         alignItems: .center,
         backgroundColor: AppColors.lightBlueTint,
@@ -480,7 +524,9 @@ class Home extends StatelessComponent {
         css('&').styles(
           display: .flex,
           padding: .symmetric(vertical: 18.px, horizontal: 20.px),
-          border: .only(right: .solid(color: AppColors.borderLight, width: 1.5.px)),
+          border: .only(
+            right: .solid(color: AppColors.borderLight, width: 1.5.px),
+          ),
           alignItems: .center,
           gap: .all(14.px),
           flex: Flex(grow: 1.2),
@@ -551,7 +597,11 @@ class Home extends StatelessComponent {
         fontSize: 22.px,
         fontWeight: .w700,
       ),
-      css('.donate-band-subtitle').styles(margin: .only(top: 3.px), color: AppColors.warmMutedText, fontSize: 13.px),
+      css('.donate-band-subtitle').styles(
+        margin: .only(top: 3.px),
+        color: AppColors.warmMutedText,
+        fontSize: 13.px,
+      ),
       css('.donate-band-button').styles(
         padding: .symmetric(vertical: 13.px, horizontal: 26.px),
         radius: .all(.circular(9.px)),
