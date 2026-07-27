@@ -85,13 +85,19 @@ class App extends AsyncStatelessComponent {
             ),
             for (final post in newsPosts)
               if (post.slug != null)
-                Route(path: '/news/${post.slug}', title: post.title, builder: (context, state) => NewsDetail(post)),
+                Route(
+                  path: '/news/${post.slug}',
+                  title: post.title,
+                  builder: (context, state) => NewsDetail(post),
+                  settings: RouteSettings(lastMod: post.publishedDate),
+                ),
             for (final event in events)
               if (event.slug != null)
                 Route(
                   path: '/events/${event.slug}',
                   title: event.title,
                   builder: (context, state) => EventDetail(event),
+                  settings: RouteSettings(lastMod: event.publishedDate),
                 ),
             Route(path: '/contact', title: 'Contact', builder: (context, state) => const Contact()),
             Route(
