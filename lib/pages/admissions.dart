@@ -347,5 +347,18 @@ class Admissions extends StatelessComponent {
       fontSize: 18.px,
       fontWeight: .w700,
     ),
+
+    css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+      css('.adm-eligibility-checks').styles(flexDirection: .column),
+      css('.adm-eligibility-check').styles(
+        border: .only(right: .none(), bottom: .solid(color: AppColors.borderLight, width: 1.5.px)),
+      ),
+      css('.adm-eligibility-check:last-child').styles(border: .none),
+      css('.adm-journey-step').styles(flexWrap: .wrap),
+      css('.adm-journey-step-photo').styles(display: .none),
+      css('.adm-tuition').styles(flexDirection: .column, textAlign: .center),
+      css('.adm-cta').styles(padding: .symmetric(vertical: 24.px, horizontal: 18.px)),
+      css('.adm-cta-title').styles(fontSize: 22.px),
+    ]),
   ];
 }

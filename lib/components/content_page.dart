@@ -55,6 +55,10 @@ class ContentPage extends StatelessComponent {
         fontSize: 22.px,
         lineHeight: 1.15.em,
       ),
+      css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+        css('&').styles(padding: .only(top: 18.px, left: 20.px, right: 20.px, bottom: 40.px)),
+        css('h1').styles(fontSize: 28.px),
+      ]),
       // News/event detail pages: a meta line, hero image, body paragraphs,
       // an optional external link, and an optional photo gallery.
       css('.detail-meta').styles(

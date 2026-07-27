@@ -613,6 +613,55 @@ class Home extends StatelessComponent {
         whiteSpace: .noWrap,
         backgroundColor: AppColors.accent,
       ),
+
+      css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+        css('.hero').styles(
+          padding: .only(top: 24.px, left: 20.px, right: 20.px, bottom: 24.px),
+          flexDirection: .column,
+          alignItems: .stretch,
+        ),
+        css('.hero-copy h1').styles(fontSize: 28.px),
+        css('.hero-photo .photo-placeholder').styles(height: 180.px),
+        css('.hero-ctas').styles(flexWrap: .wrap),
+        css('.trust-strip').styles(
+          margin: .only(top: 8.px, left: 20.px, right: 20.px),
+          flexWrap: .wrap,
+        ),
+        css('.trust-item').styles(
+          minWidth: 50.percent,
+          border: .only(right: .none(), bottom: .solid(color: AppColors.borderLight, width: 1.5.px)),
+        ),
+        css('.age-locator').styles(padding: .only(top: 24.px, left: 20.px, right: 20.px, bottom: 8.px)),
+        css('.age-cards').styles(flexDirection: .column),
+        css('.enrollment-teaser').styles(
+          padding: .symmetric(vertical: 18.px, horizontal: 18.px),
+          margin: .only(top: 20.px, left: 20.px, right: 20.px),
+        ),
+        css('.enrollment-teaser-header').styles(flexDirection: .column, alignItems: .start, gap: .all(6.px)),
+        css('.enrollment-steps').styles(flexWrap: .wrap),
+        css('.enrollment-step').styles(minWidth: 50.percent),
+        css('.home-news-events').styles(
+          padding: .only(top: 24.px, left: 20.px, right: 20.px, bottom: 8.px),
+          flexDirection: .column,
+        ),
+        css('.current-families').styles(margin: .only(top: 22.px, left: 20.px, right: 20.px)),
+        css('.current-families-header').styles(
+          padding: .symmetric(vertical: 12.px, horizontal: 16.px),
+          flexDirection: .column,
+          alignItems: .start,
+          gap: .all(6.px),
+        ),
+        css('.current-families-body').styles(flexDirection: .column),
+        css('.current-families-feature').styles(
+          border: .only(right: .none(), bottom: .solid(color: AppColors.borderLight, width: 1.5.px)),
+        ),
+        css('.donate-band').styles(
+          padding: .symmetric(vertical: 20.px, horizontal: 20.px),
+          margin: .only(top: 20.px, left: 20.px, right: 20.px),
+          flexDirection: .column,
+          textAlign: .center,
+        ),
+      ]),
     ]),
   ];
 }

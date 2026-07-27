@@ -56,6 +56,13 @@ class Footer extends StatelessComponent {
         gap: .all(20.px),
         backgroundColor: AppColors.footerNavy,
       ),
+      css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+        css('&').styles(
+          padding: .symmetric(vertical: 24.px, horizontal: 20.px),
+          flexDirection: .column,
+          gap: .all(22.px),
+        ),
+      ]),
       css('.footer-about', [
         css('&').styles(
           maxWidth: 240.px,
@@ -77,6 +84,10 @@ class Footer extends StatelessComponent {
         display: .flex,
         gap: .all(34.px),
       ),
+      css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+        css('.footer-about').styles(maxWidth: 100.percent),
+        css('.footer-columns').styles(flexWrap: .wrap, gap: .all(24.px)),
+      ]),
       css('.footer-column', [
         css('&').styles(
           display: .flex,

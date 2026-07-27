@@ -41,6 +41,16 @@ class AppColors {
 const headingFontFamily = FontFamily('Gaegu');
 const bodyFontFamily = FontFamily('system-ui');
 
+// Shared breakpoints for `css.media()` queries across components/pages.
+// `tablet` is also where the header nav collapses behind the hamburger
+// toggle — the desktop nav (8 items + brand + request-info button) doesn't
+// fit inside 1024px once side padding is accounted for.
+class Breakpoints {
+  static const tablet = Unit.pixels(1024);
+  static const mobile = Unit.pixels(768);
+  static const small = Unit.pixels(480);
+}
+
 @css
 List<StyleRule> get globalStyles => [
   css.import('https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&display=swap'),

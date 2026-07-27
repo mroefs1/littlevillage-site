@@ -14,6 +14,7 @@ import 'package:littlevillage_site/components/faq_accordion.dart'
     as _faq_accordion;
 import 'package:littlevillage_site/components/footer.dart' as _footer;
 import 'package:littlevillage_site/components/header.dart' as _header;
+import 'package:littlevillage_site/components/mobile_nav.dart' as _mobile_nav;
 import 'package:littlevillage_site/components/news_events_filter.dart'
     as _news_events_filter;
 import 'package:littlevillage_site/components/photo_placeholder.dart'
@@ -57,6 +58,10 @@ ServerOptions get defaultServerOptions => ServerOptions(
       'faq_accordion',
       params: __faq_accordionFaqAccordion,
     ),
+    _mobile_nav.MobileNav: ClientTarget<_mobile_nav.MobileNav>(
+      'mobile_nav',
+      params: __mobile_navMobileNav,
+    ),
     _news_events_filter.NewsEventsFilter:
         ClientTarget<_news_events_filter.NewsEventsFilter>(
           'news_events_filter',
@@ -72,6 +77,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._faq_accordion.FaqAccordion.styles,
     ..._footer.Footer.styles,
     ..._header.Header.styles,
+    ..._mobile_nav.MobileNav.styles,
     ..._news_events_filter.NewsEventsFilter.styles,
     ..._photo_placeholder.PhotoPlaceholder.styles,
     ..._pill_list.PillList.styles,
@@ -90,6 +96,10 @@ ServerOptions get defaultServerOptions => ServerOptions(
 Map<String, Object?> __faq_accordionFaqAccordion(
   _faq_accordion.FaqAccordion c,
 ) => {'items': c.items, 'initialOpenIndex': c.initialOpenIndex};
+Map<String, Object?> __mobile_navMobileNav(_mobile_nav.MobileNav c) => {
+  'activePath': c.activePath,
+  'items': c.items,
+};
 Map<String, Object?> __news_events_filterNewsEventsFilter(
   _news_events_filter.NewsEventsFilter c,
 ) => {'newsItems': c.newsItems, 'eventItems': c.eventItems};

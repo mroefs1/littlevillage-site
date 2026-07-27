@@ -236,5 +236,14 @@ class CurrentFamilies extends AsyncStatelessComponent {
       fontSize: 15.px,
       backgroundColor: AppColors.shadedBg,
     ),
+
+    css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+      css('.cf-features').styles(flexDirection: .column),
+      css('.cf-documents').styles(
+        gridTemplate: GridTemplate(columns: GridTracks([GridTrack(TrackSize.fr(1))])),
+      ),
+      css('.cf-quicklinks').styles(flexDirection: .column, gap: .all(10.px)),
+      css('.cf-calendar-embed').styles(height: 400.px),
+    ]),
   ];
 }

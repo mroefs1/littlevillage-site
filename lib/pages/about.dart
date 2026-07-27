@@ -262,5 +262,16 @@ class About extends AsyncStatelessComponent {
       fontWeight: .w700,
     ),
     css('.about-accreditation-body').styles(color: AppColors.body, fontSize: 13.px, lineHeight: 1.5.em),
+
+    css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+      css('.about-stats').styles(flexWrap: .wrap),
+      css('.about-stat').styles(
+        minWidth: 50.percent,
+        border: .only(right: .none(), bottom: .solid(color: AppColors.borderLight, width: 1.5.px)),
+      ),
+      css('.about-mission').styles(flexDirection: .column),
+      css('.about-mission-photo .photo-placeholder').styles(height: 160.px),
+      css('.about-team-cards').styles(flexDirection: .column),
+    ]),
   ];
 }

@@ -8,6 +8,8 @@ import 'package:jaspr/client.dart';
 
 import 'package:littlevillage_site/components/faq_accordion.dart'
     deferred as _faq_accordion;
+import 'package:littlevillage_site/components/mobile_nav.dart'
+    deferred as _mobile_nav;
 import 'package:littlevillage_site/components/news_events_filter.dart'
     deferred as _news_events_filter;
 
@@ -37,6 +39,15 @@ ClientOptions get defaultClientOptions => ClientOptions(
         initialOpenIndex: p['initialOpenIndex'] as int?,
       ),
       loader: _faq_accordion.loadLibrary,
+    ),
+    'mobile_nav': ClientLoader(
+      (p) => _mobile_nav.MobileNav(
+        activePath: p['activePath'] as String,
+        items: (p['items'] as List<Object?>)
+            .map((i) => (i as Map<String, Object?>))
+            .toList(),
+      ),
+      loader: _mobile_nav.loadLibrary,
     ),
     'news_events_filter': ClientLoader(
       (p) => _news_events_filter.NewsEventsFilter(

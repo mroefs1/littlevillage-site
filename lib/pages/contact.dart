@@ -201,5 +201,19 @@ class Contact extends AsyncStatelessComponent {
       color: AppColors.body,
       fontSize: 14.px,
     ),
+
+    css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+      css('.contact-grid').styles(flexDirection: .column),
+      css('.contact-form-card').styles(padding: .all(18.px)),
+      css('.contact-form-grid').styles(
+        gridTemplate: GridTemplate(columns: GridTracks([GridTrack(TrackSize.fr(1))])),
+      ),
+      css('.contact-field-full').styles(gridPlacement: GridPlacement(columnStart: LinePlacement.span(1))),
+      css('.contact-form-actions').styles(
+        flexDirection: .column,
+        gridPlacement: GridPlacement(columnStart: LinePlacement.span(1)),
+      ),
+      css('.contact-form-actions button').styles(width: 100.percent),
+    ]),
   ];
 }

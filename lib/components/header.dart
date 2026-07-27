@@ -4,8 +4,7 @@ import 'package:jaspr_router/jaspr_router.dart';
 
 import '../constants/theme.dart';
 import '../sanity/models/program.dart';
-
-typedef _NavChild = ({String label, String path});
+import 'mobile_nav.dart';
 
 // Same three age-band categories, in the same display order, as the
 // Programs hub (pages/programs.dart) — the Programs dropdown mirrors that
@@ -24,15 +23,38 @@ class Header extends StatelessComponent {
     final programLinks = [
       for (final category in _ageBandCategories)
         for (final program in programs)
-          if (program.category == category) (label: program.title, path: '/programs/${program.slug}'),
+          if (program.category == category) {'label': program.title, 'path': '/programs/${program.slug}'},
     ];
 
     const aboutLinks = [
-      (label: 'Mission', path: '/mission'),
-      (label: 'History', path: '/history'),
-      (label: 'Founders', path: '/founders'),
-      (label: 'Admin Staff', path: '/staff'),
-      (label: 'Board Members', path: '/board'),
+      {'label': 'Mission', 'path': '/mission'},
+      {'label': 'History', 'path': '/history'},
+      {'label': 'Founders', 'path': '/founders'},
+      {'label': 'Admin Staff', 'path': '/staff'},
+      {'label': 'Board Members', 'path': '/board'},
+    ];
+
+    // Nav data is handed to `MobileNav` (the @client hydration boundary for
+    // the hamburger toggle) as plain Maps rather than the previous record
+    // typedef, since @client component params must be JSON-serializable.
+    final navItems = [
+      {
+        'label': 'Programs',
+        'path': '/programs',
+        'aliases': [for (final link in programLinks) link['path']],
+        'children': programLinks,
+      },
+      {'label': 'Admissions', 'path': '/admissions'},
+      {
+        'label': 'About',
+        'path': '/about',
+        'aliases': const ['/mission', '/history', '/founders', '/staff', '/board'],
+        'children': aboutLinks,
+      },
+      {'label': 'Facilities', 'path': '/facilities'},
+      {'label': 'News & Events', 'path': '/news', 'aliases': const ['/events']},
+      {'label': 'Current Families', 'path': '/current-families'},
+      {'label': 'Contact', 'path': '/contact'},
     ];
 
     // Both the utility bar and the main brand/nav row live inside one
@@ -61,68 +83,9 @@ class Header extends StatelessComponent {
             ]),
           ]),
         ),
-        nav(attributes: const {'aria-label': 'Primary'}, [
-          _navItem(
-            label: 'Programs',
-            path: '/programs',
-            activePath: activePath,
-            aliases: [for (final link in programLinks) link.path],
-            children: programLinks,
-          ),
-          _navItem(label: 'Admissions', path: '/admissions', activePath: activePath),
-          _navItem(
-            label: 'About',
-            path: '/about',
-            activePath: activePath,
-            aliases: const ['/mission', '/history', '/founders', '/staff', '/board'],
-            children: aboutLinks,
-          ),
-          _navItem(label: 'Facilities', path: '/facilities', activePath: activePath),
-          _navItem(label: 'News & Events', path: '/news', activePath: activePath, aliases: const ['/events']),
-          _navItem(label: 'Current Families', path: '/current-families', activePath: activePath),
-          _navItem(label: 'Contact', path: '/contact', activePath: activePath),
-          Link(to: '/contact', classes: 'request-info', child: .text('Request Info')),
-        ]),
+        MobileNav(activePath: activePath, items: navItems),
       ]),
     ]);
-  }
-
-  // Plain nav link, or — when `children` is non-empty — a nav item with a
-  // pure-CSS (`:hover`/`:focus-within`, see styles below) dropdown menu, so
-  // Programs/About sub-pages are reachable without leaving the top nav.
-  static Component _navItem({
-    required String label,
-    required String path,
-    required String activePath,
-    List<String> aliases = const [],
-    List<_NavChild> children = const [],
-  }) {
-    final hasDropdown = children.isNotEmpty;
-    final isActive = _isActive(activePath, path, aliases);
-    final classes = [if (hasDropdown) 'nav-dropdown', if (isActive) 'active'].join(' ');
-
-    return div(classes: classes.isEmpty ? null : classes, [
-      Link(
-        to: path,
-        child: hasDropdown
-            ? .fragment([.text(label), span(classes: 'nav-caret', [.text('▾')])])
-            : .text(label),
-      ),
-      if (hasDropdown)
-        div(classes: 'nav-dropdown-menu', [
-          for (final child in children)
-            Link(to: child.path, classes: 'nav-dropdown-link', child: .text(child.label)),
-        ]),
-    ]);
-  }
-
-  // Matches the exact nav path as well as anything nested under it (e.g.
-  // `/news/some-post` for `/news`, or `/board` as an alias under `/about`),
-  // so detail pages generated per-slug in app.dart still highlight the
-  // right top-level nav item.
-  static bool _isActive(String activePath, String path, List<String> aliases) {
-    bool matches(String candidate) => activePath == candidate || activePath.startsWith('$candidate/');
-    return matches(path) || aliases.any(matches);
   }
 
   @css
@@ -142,6 +105,13 @@ class Header extends StatelessComponent {
         fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
         fontSize: 14.px,
       ),
+      // The full contact line is too long to wrap gracefully at mobile/
+      // tablet widths — hidden there, keeping just the donate pill visible;
+      // phone/email are still reachable via the Contact page and footer.
+      css.media(MediaQuery.screen(maxWidth: Breakpoints.tablet), [
+        css('&').styles(justifyContent: .end),
+        css('.utility-contact').styles(display: .none),
+      ]),
       css('.utility-actions', [
         css('&').styles(
           display: .flex,
@@ -170,11 +140,15 @@ class Header extends StatelessComponent {
     css('header', [
       css('.header-main').styles(
         display: .flex,
+        position: .relative(),
         padding: .symmetric(vertical: 14.px, horizontal: 40.px),
         border: .only(bottom: .solid(color: AppColors.borderLight, width: 2.px)),
         justifyContent: .spaceBetween,
         alignItems: .center,
       ),
+      css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+        css('.header-main').styles(padding: .symmetric(vertical: 12.px, horizontal: 20.px)),
+      ]),
       css('.brand', [
         css('&').styles(
           display: .flex,
