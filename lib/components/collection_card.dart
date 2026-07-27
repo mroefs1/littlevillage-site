@@ -13,6 +13,7 @@ import '../constants/theme.dart';
 // card layouts.
 class CollectionCard extends StatelessComponent {
   final String? imageUrl;
+  final String imageAlt;
   final String? eyebrow;
   final String title;
   final String? excerpt;
@@ -23,6 +24,7 @@ class CollectionCard extends StatelessComponent {
   const CollectionCard({
     required this.title,
     this.imageUrl,
+    this.imageAlt = 'Photo',
     this.eyebrow,
     this.excerpt,
     this.linkTo,
@@ -34,7 +36,7 @@ class CollectionCard extends StatelessComponent {
   @override
   Component build(BuildContext context) {
     final content = [
-      if (imageUrl != null) img(src: imageUrl!, alt: '', classes: 'collection-card-image'),
+      if (imageUrl != null) img(src: imageUrl!, alt: imageAlt, classes: 'collection-card-image'),
       div(classes: 'collection-card-body', [
         if (eyebrow != null) div(classes: 'collection-card-eyebrow', [.text(eyebrow!)]),
         div(classes: 'collection-card-title', [.text(title)]),

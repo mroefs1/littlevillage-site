@@ -114,7 +114,7 @@ class About extends AsyncStatelessComponent {
         for (final member in members)
           div(classes: 'about-team-card', [
             if (member.photoUrl != null)
-              img(src: member.photoUrl!, alt: '', classes: 'about-team-photo')
+              img(src: member.photoUrl!, alt: 'Staff photo', classes: 'about-team-photo')
             else
               div(classes: 'about-team-photo-placeholder', []),
             div(classes: 'about-team-name', [.text(member.name)]),

@@ -32,6 +32,7 @@ class Board extends AsyncStatelessComponent {
                 CollectionCard(
                   title: member.name,
                   imageUrl: member.photoUrl,
+                  imageAlt: 'Board member photo',
                   eyebrow: member.title,
                   excerpt: member.bio,
                 ),

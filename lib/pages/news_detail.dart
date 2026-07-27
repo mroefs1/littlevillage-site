@@ -31,7 +31,7 @@ class NewsDetail extends StatelessComponent {
         title: post.title,
         children: [
           div(classes: 'detail-meta', [.text(formatDate(post.publishedDate))]),
-          if (post.heroImageUrl != null) img(src: post.heroImageUrl!, alt: '', classes: 'detail-hero'),
+          if (post.heroImageUrl != null) img(src: post.heroImageUrl!, alt: 'Hero photo', classes: 'detail-hero'),
           div(classes: 'detail-body', [
             for (final paragraph in post.body.split('\n'))
               if (paragraph.trim().isNotEmpty) p([.text(paragraph)]),

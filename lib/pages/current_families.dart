@@ -87,6 +87,7 @@ class CurrentFamilies extends AsyncStatelessComponent {
               height: 600,
               loading: MediaLoading.lazy,
               classes: 'cf-calendar-embed',
+              attributes: const {'title': 'School calendar — closures, breaks, and key dates'},
               const [],
             ),
           ]),

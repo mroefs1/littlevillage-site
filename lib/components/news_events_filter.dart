@@ -53,11 +53,15 @@ class _NewsEventsFilterState extends State<NewsEventsFilter> {
     final showNews = _filter != _Filter.events;
 
     return .fragment([
-      div(classes: 'filter-pills', [
-        _pill('All', _Filter.all),
-        _pill('News', _Filter.news),
-        _pill('Events', _Filter.events),
-      ]),
+      div(
+        classes: 'filter-pills',
+        attributes: const {'role': 'group', 'aria-label': 'Filter by type'},
+        [
+          _pill('All', _Filter.all),
+          _pill('News', _Filter.news),
+          _pill('Events', _Filter.events),
+        ],
+      ),
       if (showEvents && component.eventItems.isNotEmpty) ...[
         h2([.text('Upcoming Events')]),
         div(classes: 'card-grid', [for (final item in component.eventItems) _card(item)]),
@@ -77,6 +81,7 @@ class _NewsEventsFilterState extends State<NewsEventsFilter> {
     return button(
       classes: 'filter-pill${isActive ? ' active' : ''}',
       onClick: () => setState(() => _filter = value),
+      attributes: {'aria-pressed': '$isActive'},
       [.text(label)],
     );
   }
@@ -85,6 +90,7 @@ class _NewsEventsFilterState extends State<NewsEventsFilter> {
     return CollectionCard(
       title: item['title']!,
       imageUrl: item['imageUrl'],
+      imageAlt: item['imageAlt'] ?? 'Photo',
       eyebrow: item['eyebrow'],
       excerpt: item['excerpt'],
       linkTo: item['linkTo'],

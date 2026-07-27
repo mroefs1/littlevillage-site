@@ -33,7 +33,7 @@ class EventDetail extends StatelessComponent {
         title: event.title,
         children: [
           div(classes: 'detail-meta', [.text('${formatDate(event.eventDate)} · ${event.location}')]),
-          if (heroUrl != null) img(src: heroUrl, alt: '', classes: 'detail-hero'),
+          if (heroUrl != null) img(src: heroUrl, alt: 'Hero photo', classes: 'detail-hero'),
           div(classes: 'detail-body', [
             for (final paragraph in event.description.split('\n'))
               if (paragraph.trim().isNotEmpty) p([.text(paragraph)]),
@@ -42,7 +42,7 @@ class EventDetail extends StatelessComponent {
             a(href: event.ticketLink!, target: Target.blank, classes: 'detail-link', [.text('Tickets / RSVP →')]),
           if (event.photoGalleryUrls.isNotEmpty)
             div(classes: 'gallery-grid', [
-              for (final url in event.photoGalleryUrls) img(src: url, alt: '', classes: 'gallery-image'),
+              for (final url in event.photoGalleryUrls) img(src: url, alt: 'Event photo', classes: 'gallery-image'),
             ]),
         ],
       ),

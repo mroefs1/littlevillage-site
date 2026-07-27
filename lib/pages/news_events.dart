@@ -55,6 +55,7 @@ class NewsEvents extends StatelessComponent {
     return {
       'title': post.title,
       'imageUrl': post.heroImageUrl,
+      'imageAlt': 'News photo',
       'eyebrow': formatDate(post.publishedDate),
       'excerpt': _excerpt(post.body),
       'linkTo': post.slug != null ? '/news/${post.slug}' : null,
@@ -66,6 +67,7 @@ class NewsEvents extends StatelessComponent {
     return {
       'title': event.title,
       'imageUrl': event.cardImageUrl ?? event.flyerUrl,
+      'imageAlt': 'Event photo',
       'eyebrow': '${formatDate(event.eventDate)} · ${event.location}',
       'excerpt': _excerpt(event.description),
       'linkTo': event.slug != null ? '/events/${event.slug}' : null,

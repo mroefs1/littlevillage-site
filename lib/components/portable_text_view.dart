@@ -41,13 +41,18 @@ class PortableTextView extends StatelessComponent {
   static Component _renderBlock(Map<String, dynamic> block) {
     if (block['_type'] == 'image') {
       final url = block['imageUrl'] as String?;
-      return url == null ? .fragment([]) : img(src: url, alt: '');
+      return url == null ? .fragment([]) : img(src: url, alt: 'Photo');
     }
 
     final spans = _renderSpans(block);
+    // Every page that renders portable text already has its own `<h1>` from
+    // the page template, so an `h1`-styled block is demoted to `h2` here —
+    // otherwise an editor picking "Heading 1" in Sanity would produce a
+    // second `<h1>` on the page. h2/h3/h4 pass through unchanged since they
+    // already nest correctly under the page's real h1.
     switch (block['style'] as String? ?? 'normal') {
       case 'h1':
-        return h1(spans);
+        return h2(spans);
       case 'h2':
         return h2(spans);
       case 'h3':

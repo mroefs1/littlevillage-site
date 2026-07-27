@@ -32,6 +32,7 @@ class Staff extends AsyncStatelessComponent {
                 CollectionCard(
                   title: member.name,
                   imageUrl: member.photoUrl,
+                  imageAlt: 'Staff photo',
                   eyebrow: member.title,
                   excerpt: member.bio,
                 ),

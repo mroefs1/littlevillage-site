@@ -31,6 +31,7 @@ void main() {
   runApp(
     Document(
       title: siteName,
+      lang: 'en',
       meta: {'description': defaultMetaDescription},
       head: [const link(href: '/favicon.ico', rel: 'icon')],
       body: App(),

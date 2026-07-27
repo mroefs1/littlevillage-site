@@ -31,7 +31,7 @@ class AppColors {
   static const warmTint = Color('#f6e7d6');
   static const warmBorder = Color('#e7c79f');
   static const warmText = Color('#8a4f17');
-  static const warmMutedText = Color('#9a6a35');
+  static const warmMutedText = Color('#805429');
 
   static const footerNavy = Color('#2b3550');
   static const footerLink = Color('#9fb0cc');

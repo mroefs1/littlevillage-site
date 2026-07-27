@@ -63,16 +63,18 @@ class _FaqAccordionState extends State<FaqAccordion> {
 
   Component _faqItem(int i, Map<String, String> item) {
     final isOpen = _openIndex == i;
+    final answerId = 'faq-answer-$i';
     return div(classes: 'faq-item${isOpen ? ' open' : ''}', [
       button(
         classes: 'faq-question',
         onClick: () => setState(() => _openIndex = isOpen ? null : i),
+        attributes: {'aria-expanded': '$isOpen', 'aria-controls': answerId},
         [
           span([.text(item['question']!)]),
-          span(classes: 'faq-icon', [.text(isOpen ? '–' : '+')]),
+          span(classes: 'faq-icon', attributes: const {'aria-hidden': 'true'}, [.text(isOpen ? '–' : '+')]),
         ],
       ),
-      if (isOpen) div(classes: 'faq-answer', [.text(item['answer']!)]),
+      if (isOpen) div(id: answerId, classes: 'faq-answer', [.text(item['answer']!)]),
     ]);
   }
 }

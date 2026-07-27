@@ -160,7 +160,7 @@ class Home extends StatelessComponent {
 
   static Component _newsRow(NewsPost post) {
     final content = [
-      div(classes: 'home-news-thumb', [if (post.heroImageUrl != null) img(src: post.heroImageUrl!, alt: '')]),
+      div(classes: 'home-news-thumb', [if (post.heroImageUrl != null) img(src: post.heroImageUrl!, alt: 'News photo')]),
       div([
         div(classes: 'home-news-title', [.text(post.title)]),
         div(classes: 'home-news-date', [.text(formatDate(post.publishedDate))]),

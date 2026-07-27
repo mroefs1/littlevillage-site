@@ -35,7 +35,11 @@ class Header extends StatelessComponent {
       (label: 'Board Members', path: '/board'),
     ];
 
-    return .fragment([
+    // Both the utility bar and the main brand/nav row live inside one
+    // `<header>` landmark — they're both top-of-page site chrome, and
+    // splitting them left the utility bar's contact/social/donate links
+    // outside any landmark (flagged by axe's "region" rule).
+    return header([
       div(classes: 'utility-bar', [
         div(classes: 'utility-contact', [
           .text('📞 516-520-6000 · ✉ information@littlevillage.org · Seaford, NY'),
@@ -45,7 +49,7 @@ class Header extends StatelessComponent {
           a(href: '#', classes: 'donate-pill', [.text('♥ Donate')]),
         ]),
       ]),
-      header([
+      div(classes: 'header-main', [
         Link(
           to: '/',
           classes: 'brand',
@@ -164,7 +168,7 @@ class Header extends StatelessComponent {
       ]),
     ]),
     css('header', [
-      css('&').styles(
+      css('.header-main').styles(
         display: .flex,
         padding: .symmetric(vertical: 14.px, horizontal: 40.px),
         border: .only(bottom: .solid(color: AppColors.borderLight, width: 2.px)),
