@@ -114,3 +114,73 @@ Handoff README mentions Serverpod — that's stale/wrong, CLAUDE.md above is aut
 - Homepage also features: Latest News feed, Events feed, Parent Info/Documents/Careers quick links, Employee Portal, Outlook Web Access
 
 Full plan and rationale: see the "Little Village Site Rebuild — Jaspr + Sanity" Notion page.
+
+## Step 7: Polish — Batches
+
+Work through these in order. Complete, verify, and check in each batch
+before starting the next. Do not start a batch until the prior one is
+committed.
+
+### Batch 7.1 — 404 Page
+
+- Build a custom 404/not-found route styled consistently with site chrome
+  (header/footer/theme tokens already in `constants/theme.dart`)
+- Include a link back to the homepage and (optionally) to the primary nav sections
+- Verify: hitting an unknown route locally renders this page, not a framework default
+
+### Batch 7.2 — SEO Meta Helper + Static/About Pages
+
+- Build a small reusable meta-tag component/helper (title, description,
+  canonical URL, Open Graph tags, favicon/touch-icon references)
+- Apply it to: Home, About (+ Mission/History/Founders/Staff/Board sub-nav
+  pages), Contact, Current Families
+- Pull title/description from Sanity page content where available; sensible
+  fallback defaults otherwise
+- Verify: view-source on each page shows correct <title> and OG tags
+
+### Batch 7.3 — SEO Meta — Collections & Programs
+
+- Apply the meta helper from 7.2 to: Programs hub + 3 program detail pages,
+  News/Events listing + detail pages, Staff/Board listing
+- Dynamic pages (news post, event, program detail) should generate
+  per-item title/description from the Sanity document, not a static default
+- Verify: spot-check a few detail-page URLs for correct per-item meta
+
+### Batch 7.4 — Sitemap + robots.txt
+
+- Build-time sitemap.xml generator covering all static routes and all
+  dynamic routes (news posts, events, program pages) sourced from Sanity
+- Add robots.txt referencing the sitemap
+- Verify: sitemap.xml lists every real route with no 404s, robots.txt is valid
+
+### Batch 7.5 — Accessibility: Layout & Navigation
+
+- Skip-to-content link, landmark roles (header/nav/main/footer)
+- Keyboard focus states and tab order across header nav, footer, mobile menu toggle
+- Color contrast check against `constants/theme.dart` tokens; fix any
+  failing text/background combos
+- Verify: full keyboard-only pass through nav + footer; automated a11y
+  check (e.g. axe) on layout shell
+
+### Batch 7.6 — Accessibility: Page Content & Interactive Components
+
+- Alt text for all images (hero images, staff/board photos, program images)
+- Correct heading hierarchy (single h1 per page, no skipped levels)
+- Form labels on the Contact form
+- ARIA states for the two `@client` interactive components: FAQ accordion
+  (Admissions) and news/events filter pills
+- Verify: automated a11y check on each page template, manual screen-reader
+  spot-check of the accordion and filter pills
+
+### Batch 7.7 — Mobile Responsiveness: Core Pages
+
+- Homepage, Admissions, About, Contact, Current Families at mobile/tablet
+  breakpoints (using `css.media()` per the existing styling approach)
+- Verify: manual check at 375px/768px/1024px, no overflow or overlap
+
+### Batch 7.8 — Mobile Responsiveness: Collections & Programs
+
+- Programs hub + 3 detail pages, News/Events listing + detail, Staff/Board
+  listing at the same breakpoints as 7.7
+- Verify: same breakpoint check; confirm filter pills and cards reflow
+  correctly on small screens

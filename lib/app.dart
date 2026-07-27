@@ -16,6 +16,7 @@ import 'pages/history.dart';
 import 'pages/home.dart';
 import 'pages/mission.dart';
 import 'pages/news_detail.dart';
+import 'pages/not_found.dart';
 import 'pages/news_events.dart';
 import 'pages/program_detail.dart';
 import 'pages/programs.dart';
@@ -47,54 +48,64 @@ class App extends AsyncStatelessComponent {
     return div(classes: 'app-shell', [
       Header(programs: programs),
       div(classes: 'app-content', [
-        Router(routes: [
-          Route(
-            path: '/',
-            title: 'Home',
-            builder: (context, state) => Home(newsPosts: newsPosts.take(2).toList(), events: events.take(2).toList()),
-          ),
-          Route(path: '/about', title: 'About', builder: (context, state) => const About()),
-          Route(path: '/mission', title: 'Mission Statement', builder: (context, state) => const Mission()),
-          Route(path: '/history', title: 'Our History', builder: (context, state) => const OurHistory()),
-          Route(path: '/founders', title: 'Founders', builder: (context, state) => const Founders()),
-          Route(path: '/staff', title: 'Admin Staff', builder: (context, state) => const Staff()),
-          Route(path: '/board', title: 'Board Members', builder: (context, state) => const Board()),
-          Route(path: '/facilities', title: 'School Facilities', builder: (context, state) => const Facilities()),
-          Route(
-            path: '/programs',
-            title: 'Programs',
-            builder: (context, state) => Programs(programs: programs),
-          ),
-          for (final program in programs)
+        Router(
+          errorBuilder: (context, state) {
+            context.setStatusCode(404);
+            return const NotFound();
+          },
+          routes: [
             Route(
-              path: '/programs/${program.slug}',
-              title: program.title,
-              builder: (context, state) => ProgramDetail(program),
+              path: '/',
+              title: 'Home',
+              builder: (context, state) => Home(newsPosts: newsPosts.take(2).toList(), events: events.take(2).toList()),
             ),
-          Route(path: '/admissions', title: 'Admissions', builder: (context, state) => const Admissions()),
-          Route(
-            path: '/news',
-            title: 'News & Events',
-            builder: (context, state) =>
-                NewsEvents(newsPosts: newsPosts, events: events, newsletters: newsletters),
-          ),
-          for (final post in newsPosts)
-            if (post.slug != null)
-              Route(path: '/news/${post.slug}', title: post.title, builder: (context, state) => NewsDetail(post)),
-          for (final event in events)
-            if (event.slug != null)
+            Route(path: '/about', title: 'About', builder: (context, state) => const About()),
+            Route(path: '/mission', title: 'Mission Statement', builder: (context, state) => const Mission()),
+            Route(path: '/history', title: 'Our History', builder: (context, state) => const OurHistory()),
+            Route(path: '/founders', title: 'Founders', builder: (context, state) => const Founders()),
+            Route(path: '/staff', title: 'Admin Staff', builder: (context, state) => const Staff()),
+            Route(path: '/board', title: 'Board Members', builder: (context, state) => const Board()),
+            Route(path: '/facilities', title: 'School Facilities', builder: (context, state) => const Facilities()),
+            Route(
+              path: '/programs',
+              title: 'Programs',
+              builder: (context, state) => Programs(programs: programs),
+            ),
+            for (final program in programs)
               Route(
-                path: '/events/${event.slug}',
-                title: event.title,
-                builder: (context, state) => EventDetail(event),
+                path: '/programs/${program.slug}',
+                title: program.title,
+                builder: (context, state) => ProgramDetail(program),
               ),
-          Route(path: '/contact', title: 'Contact', builder: (context, state) => const Contact()),
-          Route(
-            path: '/current-families',
-            title: 'Current Families',
-            builder: (context, state) => const CurrentFamilies(),
-          ),
-        ]),
+            Route(path: '/admissions', title: 'Admissions', builder: (context, state) => const Admissions()),
+            Route(
+              path: '/news',
+              title: 'News & Events',
+              builder: (context, state) => NewsEvents(newsPosts: newsPosts, events: events, newsletters: newsletters),
+            ),
+            for (final post in newsPosts)
+              if (post.slug != null)
+                Route(path: '/news/${post.slug}', title: post.title, builder: (context, state) => NewsDetail(post)),
+            for (final event in events)
+              if (event.slug != null)
+                Route(
+                  path: '/events/${event.slug}',
+                  title: event.title,
+                  builder: (context, state) => EventDetail(event),
+                ),
+            Route(path: '/contact', title: 'Contact', builder: (context, state) => const Contact()),
+            Route(
+              path: '/current-families',
+              title: 'Current Families',
+              builder: (context, state) => const CurrentFamilies(),
+            ),
+            // Literal `/404.html` (not `/404`) so the static build writes this
+            // route straight to `build/jaspr/404.html` — the filename Netlify,
+            // Vercel, and GitHub Pages look for by convention to serve on an
+            // unmatched path.
+            Route(path: '/404.html', title: 'Page Not Found', builder: (context, state) => const NotFound()),
+          ],
+        ),
       ]),
       const Footer(),
     ]);
