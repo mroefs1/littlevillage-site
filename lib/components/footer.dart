@@ -90,6 +90,14 @@ class Footer extends StatelessComponent {
           fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
         ),
       ]),
+      // White outline, not the sitewide primary blue — on this dark navy
+      // background primary only clears ~1.8:1 contrast, well under the 3:1
+      // WCAG floor for a visible focus indicator.
+      css('a:focus-visible').styles(
+        radius: .all(.circular(4.px)),
+        outline: Outline(color: Colors.white, width: OutlineWidth(2.px), style: .solid),
+        raw: {'outline-offset': '2px'},
+      ),
     ]),
   ];
 }

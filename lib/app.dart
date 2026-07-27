@@ -4,6 +4,7 @@ import 'package:jaspr_router/jaspr_router.dart';
 
 import 'components/footer.dart';
 import 'components/header.dart';
+import 'constants/theme.dart';
 import 'pages/about.dart';
 import 'pages/admissions.dart';
 import 'pages/board.dart';
@@ -46,8 +47,9 @@ class App extends AsyncStatelessComponent {
     final programs = await contentRepository.getPrograms();
 
     return div(classes: 'app-shell', [
+      a(href: '#main-content', classes: 'skip-link', [.text('Skip to main content')]),
       Header(programs: programs),
-      div(classes: 'app-content', [
+      main_(id: 'main-content', attributes: const {'tabindex': '-1'}, classes: 'app-content', [
         Router(
           errorBuilder: (context, state) {
             context.setStatusCode(404);
@@ -129,5 +131,23 @@ class App extends AsyncStatelessComponent {
       flexDirection: .column,
       flex: Flex(grow: 1),
     ),
+    // Hidden off-screen until keyboard-focused, so sighted mouse users see
+    // nothing extra but keyboard/screen-reader users can jump past the
+    // header/nav straight to page content.
+    css('.skip-link', [
+      css('&').styles(
+        position: .absolute(top: (-48).px, left: 8.px),
+        padding: .symmetric(vertical: 10.px, horizontal: 16.px),
+        radius: .all(.circular(6.px)),
+        color: Colors.white,
+        fontSize: 14.px,
+        fontWeight: .w700,
+        backgroundColor: AppColors.primary,
+        raw: {'z-index': '100', 'transition': 'top 0.15s ease-in-out'},
+      ),
+      css('&:focus').styles(
+        position: .absolute(top: 8.px, left: 8.px),
+      ),
+    ]),
   ];
 }

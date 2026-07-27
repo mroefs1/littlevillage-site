@@ -57,7 +57,7 @@ class Header extends StatelessComponent {
             ]),
           ]),
         ),
-        nav([
+        nav(attributes: const {'aria-label': 'Primary'}, [
           _navItem(
             label: 'Programs',
             path: '/programs',
@@ -157,6 +157,10 @@ class Header extends StatelessComponent {
           fontWeight: .w700,
           backgroundColor: AppColors.accent,
         ),
+        css('.donate-pill:focus-visible').styles(
+          outline: Outline(color: AppColors.primary, width: OutlineWidth(2.px), style: .solid),
+          raw: {'outline-offset': '2px'},
+        ),
       ]),
     ]),
     css('header', [
@@ -201,6 +205,10 @@ class Header extends StatelessComponent {
           fontWeight: .w400,
         ),
       ]),
+      css('.brand:focus-visible').styles(
+        outline: Outline(color: AppColors.primary, width: OutlineWidth(2.px), style: .solid),
+        raw: {'outline-offset': '3px'},
+      ),
       css('nav', [
         css('&').styles(
           display: .flex,
@@ -211,6 +219,11 @@ class Header extends StatelessComponent {
           color: AppColors.ink,
           fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
           fontSize: 16.px,
+        ),
+        css('a:focus-visible').styles(
+          radius: .all(.circular(4.px)),
+          outline: Outline(color: AppColors.primary, width: OutlineWidth(2.px), style: .solid),
+          raw: {'outline-offset': '3px'},
         ),
         css('div.active').styles(
           position: .relative(),

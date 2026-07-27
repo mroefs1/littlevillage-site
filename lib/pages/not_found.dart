@@ -24,7 +24,7 @@ class NotFound extends StatelessComponent {
         ),
       ]),
       Link(to: '/', classes: 'not-found-home-btn', child: .text('Back to Homepage')),
-      nav(classes: 'not-found-links', [
+      nav(classes: 'not-found-links', attributes: const {'aria-label': 'Helpful links'}, [
         Link(to: '/programs', child: .text('Programs & Enrollment')),
         Link(to: '/admissions', child: .text('Admissions')),
         Link(to: '/about', child: .text('About Us')),
