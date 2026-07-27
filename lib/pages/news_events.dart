@@ -3,6 +3,8 @@ import 'package:jaspr/jaspr.dart';
 
 import '../components/content_page.dart';
 import '../components/news_events_filter.dart';
+import '../components/seo_meta.dart';
+import '../constants/seo.dart';
 import '../sanity/models/event_item.dart';
 import '../sanity/models/news_post.dart';
 import '../sanity/models/newsletter.dart';
@@ -25,21 +27,28 @@ class NewsEvents extends StatelessComponent {
 
   @override
   Component build(BuildContext context) {
-    return ContentPage(
-      breadcrumb: 'News & Events',
-      title: 'News & Events',
-      children: [
-        p([.text('Fundraisers, milestones, and everything happening around the school.')]),
-        NewsEventsFilter(
-          newsItems: [for (final post in newsPosts) _newsItem(post)],
-          eventItems: [for (final event in events) _eventItem(event)],
-        ),
-        if (newsletters.isNotEmpty) ...[
-          h2([.text('Newsletters')]),
-          div(classes: 'link-grid', [for (final newsletter in newsletters) _newsletterCard(newsletter)]),
+    return .fragment([
+      const SeoMeta(
+        title: 'News & Events | $siteName',
+        description: 'Fundraisers, milestones, and everything happening around Hagedorn Little Village School.',
+        path: '/news',
+      ),
+      ContentPage(
+        breadcrumb: 'News & Events',
+        title: 'News & Events',
+        children: [
+          p([.text('Fundraisers, milestones, and everything happening around the school.')]),
+          NewsEventsFilter(
+            newsItems: [for (final post in newsPosts) _newsItem(post)],
+            eventItems: [for (final event in events) _eventItem(event)],
+          ),
+          if (newsletters.isNotEmpty) ...[
+            h2([.text('Newsletters')]),
+            div(classes: 'link-grid', [for (final newsletter in newsletters) _newsletterCard(newsletter)]),
+          ],
         ],
-      ],
-    );
+      ),
+    ]);
   }
 
   static Map<String, String?> _newsItem(NewsPost post) {

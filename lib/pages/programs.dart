@@ -6,6 +6,8 @@ import '../components/content_page.dart';
 import '../components/cta_band.dart';
 import '../components/photo_placeholder.dart';
 import '../components/pill_list.dart';
+import '../components/seo_meta.dart';
+import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/models/program.dart';
 
@@ -30,24 +32,33 @@ class Programs extends StatelessComponent {
           if (program.category == category) program,
     ];
 
-    return ContentPage(
-      breadcrumb: 'Programs',
-      title: 'One continuum, from birth through elementary school.',
-      children: [
-        p(classes: 'prog-subtitle', [
-          .text(
-            "Every program pairs learning with on-site therapy, built around your child's Individualized "
-            "Education Program (IEP) or Individualized Family Service Plan (IFSP).",
-          ),
-        ]),
-        if (ageBandPrograms.isEmpty)
-          p([.text('Program details are coming soon.')])
-        else
-          div(classes: 'prog-cards', [for (final program in ageBandPrograms) _card(program)]),
-        _therapiesStrip(),
-        const CtaBand(),
-      ],
-    );
+    return .fragment([
+      const SeoMeta(
+        title: 'Programs & Enrollment | $siteName',
+        description:
+            'One continuum of tuition-free special education, from Early Intervention through elementary school, '
+            'with on-site therapy built into every program.',
+        path: '/programs',
+      ),
+      ContentPage(
+        breadcrumb: 'Programs',
+        title: 'One continuum, from birth through elementary school.',
+        children: [
+          p(classes: 'prog-subtitle', [
+            .text(
+              "Every program pairs learning with on-site therapy, built around your child's Individualized "
+              "Education Program (IEP) or Individualized Family Service Plan (IFSP).",
+            ),
+          ]),
+          if (ageBandPrograms.isEmpty)
+            p([.text('Program details are coming soon.')])
+          else
+            div(classes: 'prog-cards', [for (final program in ageBandPrograms) _card(program)]),
+          _therapiesStrip(),
+          const CtaBand(),
+        ],
+      ),
+    ]);
   }
 
   static Component _card(Program program) {

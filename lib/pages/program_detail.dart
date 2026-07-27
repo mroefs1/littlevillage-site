@@ -7,6 +7,8 @@ import '../components/cta_band.dart';
 import '../components/photo_placeholder.dart';
 import '../components/pill_list.dart';
 import '../components/portable_text_view.dart';
+import '../components/seo_meta.dart';
+import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/models/program.dart';
 
@@ -91,24 +93,33 @@ class ProgramDetail extends StatelessComponent {
   Component build(BuildContext context) {
     final copy = _copyByCategory[program.category];
 
-    return ContentPage(
-      breadcrumb: 'Programs › ${program.title}',
-      title: program.title,
-      children: [
-        div(classes: 'progd-hero', [
-          div(classes: 'progd-hero-photo', [
-            PhotoPlaceholder(copy?.heroPhotoCaption ?? 'photo', height: 220.px),
+    return .fragment([
+      SeoMeta(
+        title: '${program.title} | $siteName',
+        description: !program.description.isEmpty
+            ? truncateForMeta(program.description.plainText)
+            : 'Learn about the ${program.title} program at Hagedorn Little Village School.',
+        path: '/programs/${program.slug}',
+      ),
+      ContentPage(
+        breadcrumb: 'Programs › ${program.title}',
+        title: program.title,
+        children: [
+          div(classes: 'progd-hero', [
+            div(classes: 'progd-hero-photo', [
+              PhotoPlaceholder(copy?.heroPhotoCaption ?? 'photo', height: 220.px),
+            ]),
+            div(classes: 'progd-hero-body', [
+              if (program.ageRange != null) div(classes: 'progd-age-pill', [.text(program.ageRange!)]),
+              PortableTextView(program.description),
+            ]),
           ]),
-          div(classes: 'progd-hero-body', [
-            if (program.ageRange != null) div(classes: 'progd-age-pill', [.text(program.ageRange!)]),
-            PortableTextView(program.description),
-          ]),
-        ]),
-        if (copy != null) ..._timelineAndServices(copy),
-        _howToStart(),
-        const CtaBand(),
-      ],
-    );
+          if (copy != null) ..._timelineAndServices(copy),
+          _howToStart(),
+          const CtaBand(),
+        ],
+      ),
+    ]);
   }
 
   static List<Component> _timelineAndServices(_ProgramCopy copy) {
