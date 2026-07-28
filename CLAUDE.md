@@ -184,3 +184,14 @@ committed.
   listing at the same breakpoints as 7.7
 - Verify: same breakpoint check; confirm filter pills and cards reflow
   correctly on small screens
+
+### Givelively Donation Widget
+
+- Create a page named "Support Us". It should be located in the About drop down from the nav bar.
+- Use the embed link below.
+
+<!-- Begin Give Lively Fundraising Widget -->
+
+<script>gl=document.createElement('script');gl.src='https://secure.givelively.org/widgets/branded_donation/the-hagedorn-little-village-school.js';document.getElementsByTagName('head')[0].appendChild(gl);</script><div data-widget-src='https://secure.givelively.org/donate/the-hagedorn-little-village-school?ref=sd_widget' id="give-lively-widget" class="gl-branded-donation-widget"></div>
+
+<!-- End Give Lively Fundraising Widget -->

@@ -32,6 +32,7 @@ class Header extends StatelessComponent {
       {'label': 'Founders', 'path': '/founders'},
       {'label': 'Admin Staff', 'path': '/staff'},
       {'label': 'Board Members', 'path': '/board'},
+      {'label': 'Support Us', 'path': '/support-us'},
     ];
 
     // Nav data is handed to `MobileNav` (the @client hydration boundary for
@@ -48,7 +49,7 @@ class Header extends StatelessComponent {
       {
         'label': 'About',
         'path': '/about',
-        'aliases': const ['/mission', '/history', '/founders', '/staff', '/board'],
+        'aliases': const ['/mission', '/history', '/founders', '/staff', '/board', '/support-us'],
         'children': aboutLinks,
       },
       {'label': 'Facilities', 'path': '/facilities'},

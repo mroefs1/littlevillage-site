@@ -22,6 +22,7 @@ import 'pages/news_events.dart';
 import 'pages/program_detail.dart';
 import 'pages/programs.dart';
 import 'pages/staff.dart';
+import 'pages/support_us.dart';
 import 'sanity/content_repository.dart';
 
 // The root layout shell of the site: header, routed page content, footer.
@@ -67,6 +68,7 @@ class App extends AsyncStatelessComponent {
             Route(path: '/founders', title: 'Founders', builder: (context, state) => const Founders()),
             Route(path: '/staff', title: 'Admin Staff', builder: (context, state) => const Staff()),
             Route(path: '/board', title: 'Board Members', builder: (context, state) => const Board()),
+            Route(path: '/support-us', title: 'Support Us', builder: (context, state) => const SupportUs()),
             Route(path: '/facilities', title: 'School Facilities', builder: (context, state) => const Facilities()),
             Route(
               path: '/programs',

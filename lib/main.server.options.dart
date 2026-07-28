@@ -33,6 +33,7 @@ import 'package:littlevillage_site/pages/not_found.dart' as _not_found;
 import 'package:littlevillage_site/pages/program_detail.dart'
     as _program_detail;
 import 'package:littlevillage_site/pages/programs.dart' as _programs;
+import 'package:littlevillage_site/pages/support_us.dart' as _support_us;
 import 'package:littlevillage_site/app.dart' as _app;
 
 /// Default [ServerOptions] for use with your Jaspr project.
@@ -90,6 +91,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._not_found.NotFound.styles,
     ..._program_detail.ProgramDetail.styles,
     ..._programs.Programs.styles,
+    ..._support_us.SupportUs.styles,
   ],
 );
 
