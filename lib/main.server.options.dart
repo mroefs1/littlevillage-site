@@ -14,6 +14,8 @@ import 'package:littlevillage_site/components/faq_accordion.dart'
     as _faq_accordion;
 import 'package:littlevillage_site/components/footer.dart' as _footer;
 import 'package:littlevillage_site/components/header.dart' as _header;
+import 'package:littlevillage_site/components/hero_gallery.dart'
+    as _hero_gallery;
 import 'package:littlevillage_site/components/mobile_nav.dart' as _mobile_nav;
 import 'package:littlevillage_site/components/news_events_filter.dart'
     as _news_events_filter;
@@ -78,6 +80,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._faq_accordion.FaqAccordion.styles,
     ..._footer.Footer.styles,
     ..._header.Header.styles,
+    ..._hero_gallery.HeroGallery.styles,
     ..._mobile_nav.MobileNav.styles,
     ..._news_events_filter.NewsEventsFilter.styles,
     ..._photo_placeholder.PhotoPlaceholder.styles,

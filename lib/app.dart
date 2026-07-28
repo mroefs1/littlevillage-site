@@ -46,6 +46,7 @@ class App extends AsyncStatelessComponent {
     final events = await contentRepository.getEvents(limit: 500);
     final newsletters = await contentRepository.getNewsletters();
     final programs = await contentRepository.getPrograms();
+    final siteSettings = await contentRepository.getSiteSettings();
 
     return div(classes: 'app-shell', [
       a(href: '#main-content', classes: 'skip-link', [.text('Skip to main content')]),
@@ -60,7 +61,11 @@ class App extends AsyncStatelessComponent {
             Route(
               path: '/',
               title: 'Home',
-              builder: (context, state) => Home(newsPosts: newsPosts.take(2).toList(), events: events.take(2).toList()),
+              builder: (context, state) => Home(
+                newsPosts: newsPosts.take(2).toList(),
+                events: events.take(2).toList(),
+                heroGallery: siteSettings.heroGallery,
+              ),
             ),
             Route(path: '/about', title: 'About', builder: (context, state) => const About()),
             Route(path: '/mission', title: 'Mission Statement', builder: (context, state) => const Mission()),

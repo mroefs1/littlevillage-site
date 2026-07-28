@@ -2,22 +2,25 @@ import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
+import '../components/hero_gallery.dart';
 import '../components/photo_placeholder.dart';
 import '../components/seo_meta.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/models/event_item.dart';
 import '../sanity/models/news_post.dart';
+import '../sanity/models/site_settings.dart';
 import '../util/date_format.dart';
 
-// Receives its news/events pre-fetched from [App] (already fetching the full
-// lists for static routing purposes) rather than querying Sanity again — see
-// app.dart.
+// Receives its news/events/heroGallery pre-fetched from [App] (already
+// fetching the full lists for static routing purposes) rather than querying
+// Sanity again — see app.dart.
 class Home extends StatelessComponent {
   final List<NewsPost> newsPosts;
   final List<EventItem> events;
+  final List<HeroGalleryImage> heroGallery;
 
-  const Home({required this.newsPosts, required this.events, super.key});
+  const Home({required this.newsPosts, required this.events, required this.heroGallery, super.key});
 
   @override
   Component build(BuildContext context) {
@@ -39,7 +42,7 @@ class Home extends StatelessComponent {
     ]);
   }
 
-  static Component _hero() {
+  Component _hero() {
     return div(classes: 'hero', [
       div(classes: 'hero-copy', [
         div(classes: 'hero-eyebrow', [.text('For children birth–12 with developmental delays')]),
@@ -55,7 +58,7 @@ class Home extends StatelessComponent {
           Link(to: '/contact', classes: 'btn-secondary', child: .text('Schedule a Tour')),
         ]),
       ]),
-      div(classes: 'hero-gallery-slot', []),
+      div(classes: 'hero-gallery-slot', [HeroGallery(images: heroGallery)]),
     ]);
   }
 
@@ -279,8 +282,12 @@ class Home extends StatelessComponent {
         margin: .only(top: 22.px),
         gap: .all(12.px),
       ),
-      // .hero-gallery-slot fills the second grid column by default (1fr);
-      // gallery content/styling is added in a later batch.
+      // `position: relative` + the gallery filling it via absolute inset
+      // keeps this slot out of both the row-height and column-width
+      // intrinsic-sizing calculations — otherwise the photos' large
+      // intrinsic pixel dimensions blow out the grid track sizes instead of
+      // the slot simply stretching to match `.hero-copy`.
+      css('.hero-gallery-slot').styles(position: .relative(), minWidth: .zero),
 
       // Buttons (shared by hero, donate band, CTA bands added in later batches)
       css('.btn-primary').styles(
