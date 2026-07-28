@@ -625,6 +625,12 @@ class Home extends StatelessComponent {
           padding: .only(top: 24.px, left: 20.px, right: 20.px, bottom: 24.px),
           gridTemplate: GridTemplate(columns: GridTracks([GridTrack(TrackSize.fr(1))])),
         ),
+        // Text-only hero on mobile — the gallery is a desktop/tablet feature.
+        // `display: none` removes it from grid layout entirely (rather than
+        // just visually hiding it), so no empty second row/dead space is left
+        // behind; it reappears automatically above this breakpoint since
+        // nothing here overrides its default display outside the query.
+        css('.hero-gallery-slot').styles(display: .none),
         css('.hero-copy h1').styles(fontSize: 28.px),
         css('.hero-ctas').styles(flexWrap: .wrap),
         css('.trust-strip').styles(
