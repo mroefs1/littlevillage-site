@@ -185,13 +185,77 @@ committed.
 - Verify: same breakpoint check; confirm filter pills and cards reflow
   correctly on small screens
 
-### Givelively Donation Widget
+## Home Hero Redesign — Batch 8
 
-- Create a page named "Support Us". It should be located in the About drop down from the nav bar.
-- Use the embed link below.
+Work through these in order. Complete, verify, and check in each batch
+before starting the next. Do not start a batch until the prior one is
+committed.
 
-<!-- Begin Give Lively Fundraising Widget -->
+### Batch 8.1 — Two-column hero shell (desktop)
 
-<script>gl=document.createElement('script');gl.src='https://secure.givelively.org/widgets/branded_donation/the-hagedorn-little-village-school.js';document.getElementsByTagName('head')[0].appendChild(gl);</script><div data-widget-src='https://secure.givelively.org/donate/the-hagedorn-little-village-school?ref=sd_widget' id="give-lively-widget" class="gl-branded-donation-widget"></div>
+- In the hero component, change the container to a two-column layout
+  (CSS grid or flex, 50/50 split) at desktop breakpoints
+- Move the existing text block ("a place where your child is understood...",
+  subhead, CTA) into the left column — content and styling unchanged
+- Remove the current hero image placeholder markup; swap in an empty
+  right-column slot sized to fill the remaining 50%
+- Scope to desktop only — mobile is handled in Batch 5
+- Verify: at desktop widths the text sits flush in the left half, the right
+  half is an empty block of matching height, no change to the text's own
+  styling/spacing
 
-<!-- End Give Lively Fundraising Widget -->
+### Batch 8.2 — Sanity: hero gallery field + query + model
+
+- Add a `heroGallery` field to `siteSettings` — array of images, each with
+  a required alt text field (this is a site-wide singleton, same home as
+  nav/footer/social links)
+- Extend the existing `SiteSettings` GROQ query and typed model to include
+  `heroGallery`
+- Wire it through the existing `ContentRepository` interface — no new
+  abstraction needed, this follows the same path every other content type
+  already uses
+- Verify: querying `SiteSettings` returns the (possibly empty) gallery
+  array with image URL + alt text per item
+
+### Batch 8.3 — Gallery component: image strip from Sanity data
+
+- New component: `components/hero_gallery.dart` — takes the `heroGallery`
+  list from `ContentRepository`, renders it as a horizontal row inside a
+  container (`overflow-x: hidden` for now; motion comes in Batch 4)
+- Wire it into the right-column slot from Batch 1
+- Handle an empty or not-yet-populated gallery gracefully — no broken
+  layout — since the Sanity field will start empty until photos are added
+- Verify: with test images added in Sanity Studio, the gallery renders
+  them in a row at the correct aspect ratio/height, filling the right
+  column; with the field empty, the layout doesn't break
+
+### Batch 8.4 — Motion: auto-scroll, hover-pause, manual arrows
+
+- Auto-scroll the strip continuously; loop seamlessly at the end (e.g.
+  duplicate the image list once so the wrap isn't visible)
+- Pause auto-scroll on mouse hover over the gallery, resume on mouse-leave
+- Add prev/next arrow buttons overlaid on the gallery; clicking
+  advances/retreats one photo-width and briefly pauses auto-scroll so it
+  doesn't fight the click
+- Implement the scroll/timer logic as a Jaspr client/island component
+  rather than hand-written JS, consistent with the Dart-first/minimal-JS
+  constraint — confirm the current client-component annotation/syntax
+  against installed Jaspr version's docs before writing it
+- Respect `prefers-reduced-motion`: if set, don't auto-scroll — static
+  strip, arrows still work
+- Arrow buttons need `aria-label`s ("Previous photo" / "Next photo")
+  since they carry no visible text
+- Verify: gallery auto-scrolls and loops smoothly, stops on hover and
+  resumes on mouse-leave, arrows manually advance/retreat, reduced-motion
+  disables autoplay, keyboard focus reaches both arrows
+
+### Batch 8.5 — Mobile: text-only hero
+
+- At mobile breakpoints (use the existing tokens in `constants/theme.dart`,
+  don't invent new ones), hide the gallery entirely and let the text
+  column take full width
+- Confirm no layout shift or dead space is left where the gallery would
+  have been
+- Verify: at mobile widths only the text hero shows, full-width, no
+  orphaned gallery container; gallery reappears correctly above the
+  tablet/desktop breakpoint

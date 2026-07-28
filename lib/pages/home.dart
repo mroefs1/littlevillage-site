@@ -55,9 +55,7 @@ class Home extends StatelessComponent {
           Link(to: '/contact', classes: 'btn-secondary', child: .text('Schedule a Tour')),
         ]),
       ]),
-      div(classes: 'hero-photo', [
-        const PhotoPlaceholder('hero photo placeholder — warm, child & teacher, real classroom moment'),
-      ]),
+      div(classes: 'hero-gallery-slot', []),
     ]);
   }
 
@@ -253,12 +251,11 @@ class Home extends StatelessComponent {
 
       // Hero
       css('.hero').styles(
-        display: .flex,
+        display: .grid,
         padding: .only(top: 34.px, left: 40.px, right: 40.px, bottom: 30.px),
-        alignItems: .center,
+        gridTemplate: GridTemplate(columns: GridTracks([GridTrack(TrackSize.fr(1)), GridTrack(TrackSize.fr(1))])),
         gap: .all(26.px),
       ),
-      css('.hero-copy').styles(flex: Flex(grow: 1.05)),
       css('.hero-eyebrow').styles(
         display: .inlineBlock,
         padding: .symmetric(vertical: 4.px, horizontal: 12.px),
@@ -282,8 +279,8 @@ class Home extends StatelessComponent {
         margin: .only(top: 22.px),
         gap: .all(12.px),
       ),
-      css('.hero-photo').styles(flex: Flex(grow: 1)),
-      css('.hero-photo .photo-placeholder').styles(height: 280.px),
+      // .hero-gallery-slot fills the second grid column by default (1fr);
+      // gallery content/styling is added in a later batch.
 
       // Buttons (shared by hero, donate band, CTA bands added in later batches)
       css('.btn-primary').styles(
@@ -617,11 +614,9 @@ class Home extends StatelessComponent {
       css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
         css('.hero').styles(
           padding: .only(top: 24.px, left: 20.px, right: 20.px, bottom: 24.px),
-          flexDirection: .column,
-          alignItems: .stretch,
+          gridTemplate: GridTemplate(columns: GridTracks([GridTrack(TrackSize.fr(1))])),
         ),
         css('.hero-copy h1').styles(fontSize: 28.px),
-        css('.hero-photo .photo-placeholder').styles(height: 180.px),
         css('.hero-ctas').styles(flexWrap: .wrap),
         css('.trust-strip').styles(
           margin: .only(top: 8.px, left: 20.px, right: 20.px),
