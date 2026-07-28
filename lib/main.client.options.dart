@@ -8,6 +8,8 @@ import 'package:jaspr/client.dart';
 
 import 'package:littlevillage_site/components/faq_accordion.dart'
     deferred as _faq_accordion;
+import 'package:littlevillage_site/components/hero_gallery.dart'
+    deferred as _hero_gallery;
 import 'package:littlevillage_site/components/mobile_nav.dart'
     deferred as _mobile_nav;
 import 'package:littlevillage_site/components/news_events_filter.dart'
@@ -39,6 +41,14 @@ ClientOptions get defaultClientOptions => ClientOptions(
         initialOpenIndex: p['initialOpenIndex'] as int?,
       ),
       loader: _faq_accordion.loadLibrary,
+    ),
+    'hero_gallery': ClientLoader(
+      (p) => _hero_gallery.HeroGallery(
+        images: (p['images'] as List<Object?>)
+            .map((i) => (i as Map<String, Object?>).cast<String, String>())
+            .toList(),
+      ),
+      loader: _hero_gallery.loadLibrary,
     ),
     'mobile_nav': ClientLoader(
       (p) => _mobile_nav.MobileNav(

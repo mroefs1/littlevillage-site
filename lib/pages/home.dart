@@ -58,7 +58,9 @@ class Home extends StatelessComponent {
           Link(to: '/contact', classes: 'btn-secondary', child: .text('Schedule a Tour')),
         ]),
       ]),
-      div(classes: 'hero-gallery-slot', [HeroGallery(images: heroGallery)]),
+      div(classes: 'hero-gallery-slot', [
+        HeroGallery(images: [for (final image in heroGallery) {'url': image.url, 'alt': image.alt}]),
+      ]),
     ]);
   }
 

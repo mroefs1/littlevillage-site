@@ -61,6 +61,10 @@ ServerOptions get defaultServerOptions => ServerOptions(
       'faq_accordion',
       params: __faq_accordionFaqAccordion,
     ),
+    _hero_gallery.HeroGallery: ClientTarget<_hero_gallery.HeroGallery>(
+      'hero_gallery',
+      params: __hero_galleryHeroGallery,
+    ),
     _mobile_nav.MobileNav: ClientTarget<_mobile_nav.MobileNav>(
       'mobile_nav',
       params: __mobile_navMobileNav,
@@ -101,6 +105,9 @@ ServerOptions get defaultServerOptions => ServerOptions(
 Map<String, Object?> __faq_accordionFaqAccordion(
   _faq_accordion.FaqAccordion c,
 ) => {'items': c.items, 'initialOpenIndex': c.initialOpenIndex};
+Map<String, Object?> __hero_galleryHeroGallery(_hero_gallery.HeroGallery c) => {
+  'images': c.images,
+};
 Map<String, Object?> __mobile_navMobileNav(_mobile_nav.MobileNav c) => {
   'activePath': c.activePath,
   'items': c.items,
