@@ -38,12 +38,24 @@ class SocialLink {
   }
 }
 
+class HeroGalleryImage {
+  final String url;
+  final String alt;
+
+  const HeroGalleryImage({required this.url, required this.alt});
+
+  factory HeroGalleryImage.fromJson(Map<String, dynamic> json) {
+    return HeroGalleryImage(url: json['url'] as String, alt: json['alt'] as String);
+  }
+}
+
 class SiteSettings {
   final List<NavLink> navigation;
   final List<FooterLink> footerLinks;
   final List<SocialLink> socialLinks;
   final String? phone;
   final String? email;
+  final List<HeroGalleryImage> heroGallery;
 
   const SiteSettings({
     this.navigation = const [],
@@ -51,6 +63,7 @@ class SiteSettings {
     this.socialLinks = const [],
     this.phone,
     this.email,
+    this.heroGallery = const [],
   });
 
   factory SiteSettings.fromJson(Map<String, dynamic> json) {
@@ -66,6 +79,9 @@ class SiteSettings {
           .toList(),
       phone: json['phone'] as String?,
       email: json['email'] as String?,
+      heroGallery: (json['heroGallery'] as List<dynamic>? ?? const [])
+          .map((item) => HeroGalleryImage.fromJson(item as Map<String, dynamic>))
+          .toList(),
     );
   }
 }

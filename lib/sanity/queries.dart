@@ -12,7 +12,11 @@ const String siteSettingsQuery = '''
   footerLinks[]{label, url},
   socialLinks[]{platform, url},
   phone,
-  email
+  email,
+  heroGallery[]{
+    "url": asset->url,
+    alt
+  }
 }
 ''';
 
