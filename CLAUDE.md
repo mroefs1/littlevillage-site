@@ -259,3 +259,86 @@ committed.
 - Verify: at mobile widths only the text hero shows, full-width, no
   orphaned gallery container; gallery reappears correctly above the
   tablet/desktop breakpoint
+
+## Feature Batch 9: News & Events Tiles + Event Detail Pages
+
+### Problem Statement
+
+- Home page news/events tiles are too narrow vertically — need to be taller.
+- Home page tiles currently either redirect to the legacy WordPress site or link nowhere. They need to route to the actual in-app news/event item.
+- `/news` page tile grid looks correct, but there's no dedicated detail page for an individual news or event item to link to yet.
+- The mobile app already solves this problem: it fetches a single news/event document from Sanity and renders a native detail screen. This batch mirrors that data-fetching and rendering approach in Jaspr rather than inventing a new one.
+
+### Confirmed Decisions
+
+- **News** and **Events** are separate Sanity document types with different fields (not a shared type with a variant flag).
+- **PA Events** are a third, related Sanity document type — out of scope for this batch, to be handled separately later. Don't fold PA Events into the News/Events routing or queries here.
+- No need to preserve legacy WordPress URLs — this is a clean break, no redirect mapping required.
+- Portable Text rendering already exists in the codebase — reuse it, don't rebuild it.
+
+### Guiding Principles for This Batch
+
+- Work in checkpoints, same as the page-by-page styling process: finish and verify one batch below before starting the next.
+- Sanity is the source of truth. Confirm exact field names for News and Events before writing queries — don't guess.
+- All new Sanity reads go through `ContentRepository`. No direct Sanity client calls from widgets or pages.
+- Treat the mobile app's existing query + detail screen as the reference implementation for field names, slug handling, and Portable Text usage.
+
+---
+
+### Batch 9.1 — Sanity Field Audit (no code changes)
+
+**Goal:** Nail down the exact field names for the two document types before writing anything.
+
+- Pull the **News** document type schema from Sanity Studio: slug field name, title, body (Portable Text), author/category, hero image, etc.
+- Pull the **Events** document type schema separately: slug field name, title, body, date/start-end time, location, hero image, etc.
+- Confirm slug fields don't collide in a way that matters (News and Events will each have their own route namespace, so uniqueness only needs to hold within each type).
+- If available, pull the mobile app's existing GROQ queries for a single News item and a single Event item — reuse them instead of writing new ones from scratch.
+- Explicitly note that PA Events is a separate type and is not part of this audit.
+
+**Definition of done:** A short written note (in this file, or a scratch doc linked from it) listing both types' field names and slug pattern. Nothing merged yet.
+
+---
+
+### Batch 9.2 — Home Page Tile Sizing (CSS only)
+
+**Goal:** Increase the vertical size of the news/events tiles on the home page.
+
+- Locate the home page tile component (likely under `lib/components` or `lib/pages/home`).
+- Adjust height / aspect-ratio / padding in its CSS-in-Dart styles only. No routing or data changes in this batch.
+- Check at all breakpoints already established for the site, consistent with the per-page styling checkpoints used elsewhere.
+
+**Definition of done:** Tiles are visibly taller, same content and data, checked in before moving to Batch 9.3.
+
+---
+
+### Batch 9.3 — News & Event Detail Pages: Routing & Rendering
+
+**Goal:** Add routes and pages that render a single News item and a single Event item pulled from Sanity, mirroring the mobile app's detail screens.
+
+- Add two routes, since News and Events are separate types: `/news/:slug` and `/events/:slug`.
+- Add two `ContentRepository` methods — `getNewsItemBySlug(String slug)` and `getEventBySlug(String slug)` — rather than one shared method with branching logic.
+- Build the News detail page: title, author/category if present, body, hero image.
+- Build the Event detail page: title, date/start-end time, location, body, hero image.
+- Reuse the existing Portable Text renderer already in the codebase for both pages' body content — no need to build a new one.
+- Style with CSS-in-Dart; use the Claude Design template as visual reference only, not literal code.
+
+**Definition of done:** Visiting `/news/<real-slug>` and `/events/<real-slug>` directly in the browser renders the correct content end-to-end from Sanity, using the existing Portable Text renderer.
+
+---
+
+### Batch 9.4 — Wire Up Tile Links (Home Page + /news)
+
+**Goal:** Every News and Event tile, on both the home page and `/news`, links to its own working detail page.
+
+- Home page tiles: replace whatever currently produces the WordPress link / dead link with a route to `/news/:slug` for News items or `/events/:slug` for Events, using the slug already present in the Sanity data the tile is built from.
+- `/news` page tiles: same fix.
+- If any PA Events tiles currently appear on either page, leave their linking behavior as-is for now — they're out of scope until PA Events is handled separately.
+- Spot-check both a News tile and an Event tile on each page to confirm each resolves to the correct route.
+
+**Definition of done:** Every News and Event tile on both pages navigates to a correctly populated detail page. No more references to the legacy WordPress URLs for this content.
+
+---
+
+### Scope Note
+
+- PA Events is a related but separate Sanity document type. It is intentionally excluded from all four batches above and will be scoped as its own follow-up batch once News and Events are done.
