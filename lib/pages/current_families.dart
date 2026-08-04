@@ -1,5 +1,6 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
+import 'package:jaspr_router/jaspr_router.dart';
 
 import '../components/content_page.dart';
 import '../components/seo_meta.dart';
@@ -28,9 +29,10 @@ final Uri _calendarEmbedUri = Uri.https('calendar.google.com', '/calendar/embed'
 // Per the design handoff (current-families.html): a "welcome back" hero,
 // three feature cards (calendar / documents / parent portal), the calendar
 // embed, a documents list backed by the `doc` Sanity type (unused until
-// now), and a static quick-links band. Parent Association / Summer
-// Recreation / Careers have no Sanity content type yet and no portal
-// backend exists (see CLAUDE.md's "Data layer"), so those stay stub links.
+// now), and a static quick-links band. Summer Recreation / Careers have no
+// Sanity content type yet and no portal backend exists (see CLAUDE.md's
+// "Data layer"), so those stay stub links — Parent Association links to its
+// real page (Batch 10).
 class CurrentFamilies extends AsyncStatelessComponent {
   const CurrentFamilies({super.key});
 
@@ -99,7 +101,7 @@ class CurrentFamilies extends AsyncStatelessComponent {
               div(classes: 'cf-documents', [for (final document in documents) _documentCard(document)]),
           ]),
           div(classes: 'cf-quicklinks', [
-            a(href: '#', [.text('↳ Parent Association')]),
+            Link(to: '/parent-association', child: .text('↳ Parent Association')),
             a(href: '#', [.text('↳ Summer Recreation')]),
             a(href: '#', [.text('↳ Careers & staff portal')]),
           ]),

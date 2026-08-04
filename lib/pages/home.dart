@@ -246,7 +246,7 @@ class Home extends StatelessComponent {
           ]),
         ),
         div(classes: 'current-families-links', [
-          Link(to: '/current-families', child: .text('↳ Parent Association')),
+          Link(to: '/parent-association', child: .text('↳ Parent Association')),
           Link(to: '/current-families', child: .text('↳ Summer Recreation')),
           Link(to: '/current-families', child: .text('↳ Careers & staff portal')),
         ]),
