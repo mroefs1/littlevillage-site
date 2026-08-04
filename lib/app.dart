@@ -19,6 +19,7 @@ import 'pages/mission.dart';
 import 'pages/news_detail.dart';
 import 'pages/not_found.dart';
 import 'pages/news_events.dart';
+import 'pages/parent_association.dart';
 import 'pages/program_detail.dart';
 import 'pages/programs.dart';
 import 'pages/staff.dart';
@@ -114,6 +115,11 @@ class App extends AsyncStatelessComponent {
               path: '/current-families',
               title: 'Current Families',
               builder: (context, state) => const CurrentFamilies(),
+            ),
+            Route(
+              path: '/parent-association',
+              title: 'Parent Association',
+              builder: (context, state) => const ParentAssociation(),
             ),
             // Literal `/404.html` (not `/404`) so the static build writes this
             // route straight to `build/jaspr/404.html` — the filename Netlify,
