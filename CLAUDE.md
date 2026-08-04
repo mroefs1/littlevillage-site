@@ -348,19 +348,42 @@ committed.
 Source of truth for content/behavior: https://littlevillage.org/parent-association/
 Work one batch at a time, commit and check in before starting the next.
 
-### 10.1 — Sanity: PA content + event flag
+**Correction (pre-investigation batch text was wrong on two points):** the batch below
+originally called for a `parentAssociation: bool` flag on the `event` schema. Investigation
+(2026-08-04) found `~/dev/hlvs-studio/hlvs/schemaTypes/pa_event.js` already exists as its own
+registered document type — `title`, `published_date`, `event_date`, `location`, `description`,
+`google_meet` (optional), notably with **no required images**, unlike `event`. The existing
+Flutter app already reads from it (`parent_association_screen.dart`,
+`pa_events_provider.dart`, `pa_event_post_card.dart`, query `*[_type == "pa_event"]`). This also
+matches Batch 9's own framing of PA Events as "a third, related Sanity document type." Decision:
+**use the existing `pa_event` type, no boolean flag on `event`.** Also confirmed: the header nav
+is a hardcoded array in `header.dart`, not driven by `SiteSettings.navigation` — 10.5 follows
+that existing pattern, no schema change needed for nav.
+
+### 10.1 — Sanity: PA content + PA events
 
 - New singleton schema `parentAssociation`: `intro` (portable text), `duesAnnual` (string),
   `duesLifetime` (string), `signupUrl` (url), `boardMembers` (array of {role, name}),
   `contacts` (array of {name, email}).
-- Add `parentAssociation: bool` (default false) to the existing `event` schema. Keep this
-  separate from whatever field drives the News/Events filter pills — don't disturb that filter.
-- GROQ: query for the new singleton, and a filtered events query (`parentAssociation == true`,
-  upcoming only, sorted ascending by date).
-- Typed models: new `ParentAssociationInfo`; extend `EventItem` with `parentAssociation`.
-- Wire both through `ContentRepository`, same as every other content type.
-- Verify: repository returns real data end-to-end (seed one test doc if the dataset is empty);
-  confirm existing event/news queries and pages are unaffected.
+- Do **not** add a flag to `event`. PA events already have their own type (`pa_event`, see
+  correction note above) — leave `event` and its News/Events filter pills untouched.
+- Seed the new `parentAssociation` singleton with the real content currently hardcoded in the
+  Flutter app's `parent_association_screen.dart` (it isn't in Sanity yet, this is the point of
+  the migration): intro copy, annual/lifetime dues ($20 / $100), the Give Lively signup URL,
+  the 4 board members (role + name), and the 2 contacts (name + email). Pull current values from
+  that file rather than re-typing from scratch or inventing placeholders.
+- GROQ: query for the new `parentAssociation` singleton, and a `pa_event` list query (upcoming
+  only, sorted ascending by `event_date`) — mirror the mobile app's existing query shape.
+  Note: `event_date` is a plain `date` field, not `datetime` — filter with
+  `dateTime(event_date) >= now()` (explicit cast), not a bare comparison against `now()`, or
+  the upcoming-only filter can silently misbehave.
+- Typed models: new `ParentAssociationInfo`; new `PaEventItem` (id, title, description,
+  location, publishedDate, eventDate, meetingLink — mirrors the app's `PaEventPost`). Don't
+  extend `EventItem`.
+- Wire `getParentAssociationInfo()` and `getPaEvents()` through `ContentRepository`, same as
+  every other content type.
+- Verify: repository returns real data end-to-end (seed docs already present per above);
+  confirm existing `event`/News-Events-filter queries and pages are unaffected.
 
 ### 10.2 — Parent Association page shell
 
@@ -374,8 +397,13 @@ Work one batch at a time, commit and check in before starting the next.
 
 ### 10.3 — PA events section
 
-- Add "Upcoming PA Events and Meetings" to the page, reusing the existing event/news card
-  component (don't fork it) against the `parentAssociation == true` query from 10.1.
+- Add "Upcoming PA Events and Meetings" to the page, reusing the existing `CollectionCard`
+  component (don't fork it) against the `getPaEvents()` query from 10.1. `pa_event` has no
+  image field — `CollectionCard` already renders fine with `imageUrl: null`, no changes needed
+  there.
+- No detail pages for PA events in this batch — `pa_event` has no slug and Batch 9 already
+  scoped PA Events routing as separate future work. Cards render info inline (title, date,
+  location) without linking anywhere, same as the mobile app's card.
 - Empty state: friendly message + fallback link to the school calendar (same pattern already
   used on Current Families), since Sanity may have zero upcoming PA events at any given time.
 - Alt text / aria labeling per the 7.6 accessibility conventions.
@@ -384,19 +412,46 @@ Work one batch at a time, commit and check in before starting the next.
 
 ### 10.4 — Current Families cross-link
 
-- Short teaser card on the Current Families page: title, one-line description, link to
-  `/parent-association`. Visually consistent with the page's other quick-link sections.
-- Verify: link resolves; mobile reflow checked at 375/768/1024px per the 7.7 pattern.
+**Correction (re-analysis, 2026-08-04):** two placeholder "Parent Association" links already
+exist and point nowhere useful — [home.dart:249](lib/pages/home.dart#L249) (Current Families
+band quicklink, currently routes to `/current-families` instead of a real destination) and
+[current_families.dart:102](lib/pages/current_families.dart#L102) (`href: '#'` stub, plus a
+stale comment at lines 29-33 claiming PA "has no Sanity content type yet"). Decision: fix these
+two in place rather than adding a separate new teaser card — avoids ending up with three
+different Parent Association links pointing to three different places.
+
+- Repoint both existing quicklinks (`home.dart:249` and `current_families.dart:102`) to
+  `/parent-association`.
+- Delete/update the stale "no Sanity content type yet" comment in `current_families.dart`
+  now that Parent Association has real content.
+- No new card component — this batch is a link-destination fix, not a new UI element.
+- Verify: both links resolve to `/parent-association`; mobile reflow checked at
+  375/768/1024px per the 7.7 pattern.
 
 ### 10.5 — Nav: Current Families dropdown
 
+**Correction (re-analysis, 2026-08-04):** originally specified a click/keyboard-toggle
+`@client` dropdown, framed as if built in a separate desktop-nav surface and then "mirrored" in
+`mobile_nav.dart`. In fact there is no separate desktop nav component — `header.dart` builds one
+`navItems` list consumed entirely by the single `@client` `MobileNav` component, which renders
+both the desktop CSS-hover dropdown and the mobile flyout from the same `_navItem` method
+(mobile_nav.dart:101-123). A click-toggle for just this one item would've meant new per-item
+open/close state in `_MobileNavState` (which currently only tracks the single hamburger
+`_isOpen`) plus a CSS class scoped to avoid colliding with the shared `.nav-dropdown:hover`
+rule. Decision: **reuse the existing hover/focus-within CSS pattern instead** — same interaction
+model as Programs/About, no new `@client` state needed.
+
 - Convert the flat "Current Families" header link into a dropdown with two entries:
-  Overview (`/current-families`) and Parent Association (`/parent-association`).
-- Build as a `@client` island — click/keyboard toggle (not hover-only), `aria-expanded`,
-  `aria-haspopup`, closes on outside click and Escape, focus-visible states matching the
-  existing header conventions from 7.5.
-- Mirror in `mobile_nav.dart` as an expandable nested item under Current Families.
-- First check whether the nav is already Sanity/siteSettings-driven or a hardcoded array in
-  `header.dart`, and follow whichever pattern already exists rather than introducing a second one.
-- Verify: desktop dropdown opens/closes via mouse and keyboard; mobile version works at
-  375/768px; existing header accessibility (skip link, landmarks) unaffected; both links resolve.
+  Overview (`/current-families`) and Parent Association (`/parent-association`) — add a
+  `children` array to its entry in `header.dart`'s `navItems`, exactly like the existing
+  Programs/About entries. The existing `hasDropdown`/`nav-dropdown`/`nav-dropdown-menu`
+  handling in `mobile_nav.dart` already supports this generically — no new component or state.
+- Add `'aliases': const ['/parent-association']` to the Current Families entry so the nav item
+  shows active state while on `/parent-association`, matching how Programs/About's `aliases`
+  keep them highlighted on child routes.
+- Confirmed: the nav is a hardcoded array in `header.dart` (`SiteSettings.navigation` is queried
+  but currently unused by the header). Follow that existing hardcoded-array pattern — don't
+  introduce a Sanity-driven nav.
+- Verify: dropdown opens/closes via mouse hover and keyboard focus (`:focus-within`) at desktop
+  widths, same as Programs/About; mobile flyout shows it as a nested expandable item at
+  375/768px; visiting `/parent-association` highlights "Current Families"; both links resolve.

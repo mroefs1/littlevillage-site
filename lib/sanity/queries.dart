@@ -138,3 +138,29 @@ const String boardMembersQuery = '''
   "photoUrl": photo.asset->url
 }
 ''';
+
+const String parentAssociationQuery = '''
+*[_type == "parentAssociation"][0]{
+  intro,
+  duesAnnual,
+  duesLifetime,
+  signupUrl,
+  boardMembers[]{role, name},
+  contacts[]{name, email}
+}
+''';
+
+// `event_date` is a plain `date` field, not `datetime` — `dateTime()` casts
+// it before comparing against `now()` so the upcoming-only filter behaves
+// correctly (a bare `event_date >= now()` comparison mismatches types).
+const String paEventListQuery = '''
+*[_type == "pa_event" && dateTime(event_date) >= now()] | order(event_date asc){
+  _id,
+  title,
+  published_date,
+  event_date,
+  location,
+  description,
+  google_meet
+}
+''';

@@ -3,7 +3,9 @@ import 'models/document.dart';
 import 'models/event_item.dart';
 import 'models/news_post.dart';
 import 'models/newsletter.dart';
+import 'models/pa_event_item.dart';
 import 'models/page_content.dart';
+import 'models/parent_association.dart';
 import 'models/person.dart';
 import 'models/program.dart';
 import 'models/site_settings.dart';
@@ -25,6 +27,8 @@ abstract class ContentRepository {
   Future<Program?> getProgram(String slug);
   Future<List<StaffMember>> getStaffMembers();
   Future<List<BoardMember>> getBoardMembers();
+  Future<ParentAssociationInfo?> getParentAssociationInfo();
+  Future<List<PaEventItem>> getPaEvents();
 }
 
 class SanityContentRepository implements ContentRepository {
@@ -112,6 +116,21 @@ class SanityContentRepository implements ContentRepository {
     final result = await _client.fetch(boardMembersQuery);
     return (result as List<dynamic>)
         .map((item) => BoardMember.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<ParentAssociationInfo?> getParentAssociationInfo() async {
+    final result = await _client.fetch(parentAssociationQuery);
+    if (result == null) return null;
+    return ParentAssociationInfo.fromJson(result as Map<String, dynamic>);
+  }
+
+  @override
+  Future<List<PaEventItem>> getPaEvents() async {
+    final result = await _client.fetch(paEventListQuery);
+    return (result as List<dynamic>)
+        .map((item) => PaEventItem.fromJson(item as Map<String, dynamic>))
         .toList();
   }
 }
