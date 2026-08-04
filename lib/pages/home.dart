@@ -9,18 +9,26 @@ import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/models/event_item.dart';
 import '../sanity/models/news_post.dart';
+import '../sanity/models/program.dart';
 import '../sanity/models/site_settings.dart';
 import '../util/date_format.dart';
 
-// Receives its news/events/heroGallery pre-fetched from [App] (already
-// fetching the full lists for static routing purposes) rather than querying
-// Sanity again — see app.dart.
+// Receives its news/events/heroGallery/programs pre-fetched from [App]
+// (already fetching the full lists for static routing purposes) rather than
+// querying Sanity again — see app.dart.
 class Home extends StatelessComponent {
   final List<NewsPost> newsPosts;
   final List<EventItem> events;
   final List<HeroGalleryImage> heroGallery;
+  final List<Program> programs;
 
-  const Home({required this.newsPosts, required this.events, required this.heroGallery, super.key});
+  const Home({
+    required this.newsPosts,
+    required this.events,
+    required this.heroGallery,
+    required this.programs,
+    super.key,
+  });
 
   @override
   Component build(BuildContext context) {
@@ -33,7 +41,7 @@ class Home extends StatelessComponent {
       div(classes: 'home', [
         _hero(),
         _trustStrip(),
-        _ageLocator(),
+        _ageLocator(programs),
         _enrollmentTeaser(),
         _newsEvents(),
         _currentFamilies(),
@@ -80,7 +88,7 @@ class Home extends StatelessComponent {
     ]);
   }
 
-  static Component _ageLocator() {
+  static Component _ageLocator(List<Program> programs) {
     const cards = [
       (
         age: 'Birth – 3 yrs',
@@ -109,7 +117,10 @@ class Home extends StatelessComponent {
             to: '/programs/${card.slug}',
             classes: 'age-card',
             child: .fragment([
-              PhotoPlaceholder('photo', height: 84.px),
+              if (_imageUrlForSlug(programs, card.slug) case final url?)
+                img(src: url, alt: card.name, classes: 'age-card-photo')
+              else
+                PhotoPlaceholder('photo', height: 168.px),
               div(classes: 'age-card-age', [.text(card.age)]),
               div(classes: 'age-card-name', [.text(card.name)]),
               div(classes: 'age-card-desc', [.text(card.desc)]),
@@ -118,6 +129,13 @@ class Home extends StatelessComponent {
           ),
       ]),
     ]);
+  }
+
+  static String? _imageUrlForSlug(List<Program> programs, String slug) {
+    for (final program in programs) {
+      if (program.slug == slug) return program.imageUrl;
+    }
+    return null;
   }
 
   static Component _enrollmentTeaser() {
@@ -352,13 +370,21 @@ class Home extends StatelessComponent {
       css('.age-card', [
         css('&').styles(
           display: .block,
+          minWidth: 0.px,
           padding: .all(16.px),
           border: .all(color: AppColors.borderMedium, width: 2.px),
           radius: .all(.circular(10.px)),
           flex: Flex(grow: 1),
           backgroundColor: Colors.white,
         ),
-        css('.photo-placeholder').styles(height: 84.px),
+        css('.photo-placeholder').styles(height: 168.px),
+        css('.age-card-photo').styles(
+          display: .block,
+          width: 100.percent,
+          height: 168.px,
+          radius: .all(.circular(8.px)),
+          raw: {'object-fit': 'cover'},
+        ),
         css('.age-card-age').styles(
           margin: .only(top: 10.px),
           color: AppColors.primary,

@@ -65,6 +65,7 @@ class App extends AsyncStatelessComponent {
                 newsPosts: newsPosts.take(2).toList(),
                 events: events.take(2).toList(),
                 heroGallery: siteSettings.heroGallery,
+                programs: programs,
               ),
             ),
             Route(path: '/about', title: 'About', builder: (context, state) => const About()),

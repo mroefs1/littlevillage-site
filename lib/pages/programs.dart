@@ -70,7 +70,7 @@ class Programs extends StatelessComponent {
         if (program.imageUrl != null)
           img(src: program.imageUrl!, alt: program.title, classes: 'prog-card-photo')
         else
-          PhotoPlaceholder('photo', height: 110.px),
+          PhotoPlaceholder('photo', height: 220.px),
         div(classes: 'prog-card-age', [.text(program.ageRange ?? '')]),
         div(classes: 'prog-card-name', [.text(program.title)]),
         if (excerpt != null) div(classes: 'prog-card-desc', [.text(excerpt)]),
@@ -121,7 +121,7 @@ class Programs extends StatelessComponent {
       css('.prog-card-photo').styles(
         display: .block,
         width: 100.percent,
-        height: 110.px,
+        height: 220.px,
         radius: .all(.circular(8.px)),
         raw: {'object-fit': 'cover'},
       ),

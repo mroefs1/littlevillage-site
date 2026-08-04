@@ -342,3 +342,61 @@ committed.
 ### Scope Note
 
 - PA Events is a related but separate Sanity document type. It is intentionally excluded from all four batches above and will be scoped as its own follow-up batch once News and Events are done.
+
+## Batch 10 — Parent Association page + Current Families nav dropdown
+
+Source of truth for content/behavior: https://littlevillage.org/parent-association/
+Work one batch at a time, commit and check in before starting the next.
+
+### 10.1 — Sanity: PA content + event flag
+
+- New singleton schema `parentAssociation`: `intro` (portable text), `duesAnnual` (string),
+  `duesLifetime` (string), `signupUrl` (url), `boardMembers` (array of {role, name}),
+  `contacts` (array of {name, email}).
+- Add `parentAssociation: bool` (default false) to the existing `event` schema. Keep this
+  separate from whatever field drives the News/Events filter pills — don't disturb that filter.
+- GROQ: query for the new singleton, and a filtered events query (`parentAssociation == true`,
+  upcoming only, sorted ascending by date).
+- Typed models: new `ParentAssociationInfo`; extend `EventItem` with `parentAssociation`.
+- Wire both through `ContentRepository`, same as every other content type.
+- Verify: repository returns real data end-to-end (seed one test doc if the dataset is empty);
+  confirm existing event/news queries and pages are unaffected.
+
+### 10.2 — Parent Association page shell
+
+- New route `/parent-association`, `lib/pages/parent_association.dart`.
+- Intro via `portable_text_view`, dues line, prominent signup CTA (external link, new tab) to
+  `signupUrl`, board members list, contacts list. Match Current Families/About visual style.
+- Apply `seo_meta.dart` (title, description, canonical).
+- No PA events section yet — that's 10.3.
+- Verify: static build succeeds, content is live from Sanity (not hardcoded), SEO tags present,
+  skip-link/landmark conventions from 7.5 followed.
+
+### 10.3 — PA events section
+
+- Add "Upcoming PA Events and Meetings" to the page, reusing the existing event/news card
+  component (don't fork it) against the `parentAssociation == true` query from 10.1.
+- Empty state: friendly message + fallback link to the school calendar (same pattern already
+  used on Current Families), since Sanity may have zero upcoming PA events at any given time.
+- Alt text / aria labeling per the 7.6 accessibility conventions.
+- Verify: events render sorted correctly; temporarily empty the filter to confirm the empty
+  state; calendar fallback link resolves.
+
+### 10.4 — Current Families cross-link
+
+- Short teaser card on the Current Families page: title, one-line description, link to
+  `/parent-association`. Visually consistent with the page's other quick-link sections.
+- Verify: link resolves; mobile reflow checked at 375/768/1024px per the 7.7 pattern.
+
+### 10.5 — Nav: Current Families dropdown
+
+- Convert the flat "Current Families" header link into a dropdown with two entries:
+  Overview (`/current-families`) and Parent Association (`/parent-association`).
+- Build as a `@client` island — click/keyboard toggle (not hover-only), `aria-expanded`,
+  `aria-haspopup`, closes on outside click and Escape, focus-visible states matching the
+  existing header conventions from 7.5.
+- Mirror in `mobile_nav.dart` as an expandable nested item under Current Families.
+- First check whether the nav is already Sanity/siteSettings-driven or a hardcoded array in
+  `header.dart`, and follow whichever pattern already exists rather than introducing a second one.
+- Verify: desktop dropdown opens/closes via mouse and keyboard; mobile version works at
+  375/768px; existing header accessibility (skip link, landmarks) unaffected; both links resolve.
