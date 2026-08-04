@@ -37,15 +37,21 @@ class ParentAssociation extends AsyncStatelessComponent {
         breadcrumb: 'Parent Association',
         title: 'Parent Association',
         children: [
-          if (info != null) ...[
-            if (!info.intro.isEmpty) PortableTextView(info.intro),
-            _duesLine(info),
-            _signupCta(info),
-            if (info.boardMembers.isNotEmpty) _boardMembers(info),
-            if (info.contacts.isNotEmpty) _contacts(info),
-          ] else
-            p([.text('Parent Association details are coming soon.')]),
-          _paEvents(paEvents),
+          // `.detail-container` (defined in content_page.dart, already used by
+          // News/Event detail pages) centers the body in a narrower column
+          // instead of stretching full-width like the plain `.page` shell —
+          // reads better for this page's mix of prose, cards, and lists.
+          div(classes: 'detail-container', [
+            if (info != null) ...[
+              if (!info.intro.isEmpty) PortableTextView(info.intro),
+              _duesLine(info),
+              _signupCta(info),
+              if (info.boardMembers.isNotEmpty) _boardMembers(info),
+              if (info.contacts.isNotEmpty) _contacts(info),
+            ] else
+              p([.text('Parent Association details are coming soon.')]),
+            _paEvents(paEvents),
+          ]),
         ],
       ),
     ]);

@@ -54,7 +54,15 @@ class Header extends StatelessComponent {
       },
       {'label': 'Facilities', 'path': '/facilities'},
       {'label': 'News & Events', 'path': '/news', 'aliases': const ['/events']},
-      {'label': 'Current Families', 'path': '/current-families'},
+      {
+        'label': 'Current Families',
+        'path': '/current-families',
+        'aliases': const ['/parent-association'],
+        'children': const [
+          {'label': 'Overview', 'path': '/current-families'},
+          {'label': 'Parent Association', 'path': '/parent-association'},
+        ],
+      },
       {'label': 'Contact', 'path': '/contact'},
     ];
 
