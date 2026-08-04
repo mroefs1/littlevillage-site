@@ -150,11 +150,13 @@ const String parentAssociationQuery = '''
 }
 ''';
 
-// `event_date` is a plain `date` field, not `datetime` — `dateTime()` casts
-// it before comparing against `now()` so the upcoming-only filter behaves
-// correctly (a bare `event_date >= now()` comparison mismatches types).
+// `event_date` is a plain `date` field, not `datetime`. Verified against the
+// live dataset: `dateTime(event_date)` returns null for a bare date string
+// (so a `dateTime(event_date) >= now()` filter always matches nothing),
+// while GROQ's plain string comparison between `date` and `now()` (a
+// datetime) works correctly — do not add a `dateTime()` cast here.
 const String paEventListQuery = '''
-*[_type == "pa_event" && dateTime(event_date) >= now()] | order(event_date asc){
+*[_type == "pa_event" && event_date >= now()] | order(event_date asc){
   _id,
   title,
   published_date,

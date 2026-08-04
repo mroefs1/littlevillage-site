@@ -1,24 +1,29 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
+import 'package:jaspr_router/jaspr_router.dart';
 
+import '../components/collection_card.dart';
 import '../components/content_page.dart';
 import '../components/portable_text_view.dart';
 import '../components/seo_meta.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/content_repository.dart';
+import '../sanity/models/pa_event_item.dart';
 import '../sanity/models/parent_association.dart';
+import '../util/date_format.dart';
 
-// Shell only — no PA events section yet (that's Batch 10.3). Content
-// (intro, dues, signup link, board members, contacts) is fully Sanity-backed
-// via the `parentAssociation` singleton, matching Current Families/About's
-// visual style (ContentPage shell, same section/card conventions).
+// Content (intro, dues, signup link, board members, contacts, PA events) is
+// fully Sanity-backed via the `parentAssociation` singleton and the
+// `pa_event` type, matching Current Families/About's visual style
+// (ContentPage shell, same section/card conventions).
 class ParentAssociation extends AsyncStatelessComponent {
   const ParentAssociation({super.key});
 
   @override
   Future<Component> build(BuildContext context) async {
     final info = await contentRepository.getParentAssociationInfo();
+    final paEvents = await contentRepository.getPaEvents();
 
     return .fragment([
       const SeoMeta(
@@ -40,9 +45,39 @@ class ParentAssociation extends AsyncStatelessComponent {
             if (info.contacts.isNotEmpty) _contacts(info),
           ] else
             p([.text('Parent Association details are coming soon.')]),
+          _paEvents(paEvents),
         ],
       ),
     ]);
+  }
+
+  static Component _paEvents(List<PaEventItem> events) {
+    return section(classes: 'pa-section', [
+      h2([.text('Upcoming PA Events and Meetings')]),
+      if (events.isEmpty)
+        p([
+          .text('No upcoming events at this time. Check the '),
+          Link(to: '/current-families#calendar', child: .text('school calendar')),
+          .text(' for other key dates.'),
+        ])
+      else
+        div(classes: 'card-grid', [for (final event in events) _paEventCard(event)]),
+    ]);
+  }
+
+  static Component _paEventCard(PaEventItem event) {
+    return CollectionCard(
+      title: event.title,
+      eyebrow: '${formatDate(event.eventDate)} · ${event.location}',
+      excerpt: _excerpt(event.description),
+    );
+  }
+
+  static String? _excerpt(String text) {
+    final trimmed = text.trim();
+    if (trimmed.isEmpty) return null;
+    if (trimmed.length <= 140) return trimmed;
+    return '${trimmed.substring(0, 140).trimRight()}…';
   }
 
   static Component _duesLine(ParentAssociationInfo info) {

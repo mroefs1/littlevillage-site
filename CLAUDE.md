@@ -374,9 +374,11 @@ that existing pattern, no schema change needed for nav.
   that file rather than re-typing from scratch or inventing placeholders.
 - GROQ: query for the new `parentAssociation` singleton, and a `pa_event` list query (upcoming
   only, sorted ascending by `event_date`) — mirror the mobile app's existing query shape.
-  Note: `event_date` is a plain `date` field, not `datetime` — filter with
-  `dateTime(event_date) >= now()` (explicit cast), not a bare comparison against `now()`, or
-  the upcoming-only filter can silently misbehave.
+  Note (corrected during 10.3 implementation — the original note here had it backwards):
+  `event_date` is a plain `date` field, not `datetime`. Verified against the live dataset that
+  `dateTime(event_date) >= now()` is wrong — `dateTime()` on a bare date string returns `null`,
+  so that filter silently matches nothing, ever. The plain comparison `event_date >= now()`
+  is what actually works (GROQ compares the strings correctly). Don't add a `dateTime()` cast.
 - Typed models: new `ParentAssociationInfo`; new `PaEventItem` (id, title, description,
   location, publishedDate, eventDate, meetingLink — mirrors the app's `PaEventPost`). Don't
   extend `EventItem`.
