@@ -67,7 +67,10 @@ class Programs extends StatelessComponent {
       to: '/programs/${program.slug}',
       classes: 'prog-card',
       child: .fragment([
-        PhotoPlaceholder('photo', height: 110.px),
+        if (program.imageUrl != null)
+          img(src: program.imageUrl!, alt: program.title, classes: 'prog-card-photo')
+        else
+          PhotoPlaceholder('photo', height: 110.px),
         div(classes: 'prog-card-age', [.text(program.ageRange ?? '')]),
         div(classes: 'prog-card-name', [.text(program.title)]),
         if (excerpt != null) div(classes: 'prog-card-desc', [.text(excerpt)]),
@@ -114,6 +117,13 @@ class Programs extends StatelessComponent {
         radius: .all(.circular(10.px)),
         flex: Flex(grow: 1),
         backgroundColor: Colors.white,
+      ),
+      css('.prog-card-photo').styles(
+        display: .block,
+        width: 100.percent,
+        height: 110.px,
+        radius: .all(.circular(8.px)),
+        raw: {'object-fit': 'cover'},
       ),
       css('.prog-card-age').styles(
         margin: .only(top: 12.px),

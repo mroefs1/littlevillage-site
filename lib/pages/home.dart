@@ -163,7 +163,7 @@ class Home extends StatelessComponent {
 
   static Component _newsRow(NewsPost post) {
     final content = [
-      div(classes: 'home-news-thumb', [if (post.heroImageUrl != null) img(src: post.heroImageUrl!, alt: 'News photo')]),
+      div(classes: 'home-thumb', [if (post.heroImageUrl != null) img(src: post.heroImageUrl!, alt: 'News photo')]),
       div([
         div(classes: 'home-news-title', [.text(post.title)]),
         div(classes: 'home-news-date', [.text(formatDate(post.publishedDate))]),
@@ -184,6 +184,7 @@ class Home extends StatelessComponent {
         div(classes: 'home-event-day', [.text('${event.eventDate.day}')]),
         div(classes: 'home-event-month', [.text(monthAbbr(event.eventDate))]),
       ]),
+      div(classes: 'home-thumb', [if (event.cardImageUrl != null) img(src: event.cardImageUrl!, alt: 'Event photo')]),
       div(classes: 'home-event-title', [.text(event.title)]),
     ];
     if (event.slug != null) {
@@ -448,7 +449,7 @@ class Home extends StatelessComponent {
         ),
         css('&:first-child').styles(margin: .zero),
       ]),
-      css('.home-news-thumb').styles(
+      css('.home-thumb').styles(
         display: .flex,
         width: 112.px,
         height: 84.px,
@@ -457,7 +458,7 @@ class Home extends StatelessComponent {
         flex: Flex(grow: 0, shrink: 0),
         backgroundColor: AppColors.borderLight,
       ),
-      css('.home-news-thumb img').styles(
+      css('.home-thumb img').styles(
         width: 100.percent,
         height: 100.percent,
         raw: {'object-fit': 'cover'},

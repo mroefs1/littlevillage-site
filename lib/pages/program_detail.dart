@@ -107,7 +107,10 @@ class ProgramDetail extends StatelessComponent {
         children: [
           div(classes: 'progd-hero', [
             div(classes: 'progd-hero-photo', [
-              PhotoPlaceholder(copy?.heroPhotoCaption ?? 'photo', height: 220.px),
+              if (program.imageUrl != null)
+                img(src: program.imageUrl!, alt: program.title, classes: 'progd-hero-img')
+              else
+                PhotoPlaceholder(copy?.heroPhotoCaption ?? 'photo', height: 220.px),
             ]),
             div(classes: 'progd-hero-body', [
               if (program.ageRange != null) div(classes: 'progd-age-pill', [.text(program.ageRange!)]),
@@ -155,6 +158,13 @@ class ProgramDetail extends StatelessComponent {
   static List<StyleRule> get styles => [
     css('.progd-hero').styles(display: .flex, margin: .only(top: 10.px), alignItems: .start, gap: .all(26.px)),
     css('.progd-hero-photo').styles(flex: Flex(grow: 1)),
+    css('.progd-hero-img').styles(
+      display: .block,
+      width: 100.percent,
+      height: 220.px,
+      radius: .all(.circular(10.px)),
+      raw: {'object-fit': 'cover'},
+    ),
     css('.progd-hero-body').styles(flex: Flex(grow: 1)),
     css('.progd-age-pill').styles(
       display: .inlineBlock,

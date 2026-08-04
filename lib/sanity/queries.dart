@@ -25,6 +25,10 @@ const String pageBySlugQuery = '''
   title,
   "slug": slug.current,
   "heroImageUrl": heroImage.asset->url,
+  images[]{
+    "url": asset->url,
+    alt
+  },
   body[]{
     ...,
     _type == "image" => {
@@ -99,6 +103,7 @@ const String programListQuery = '''
   category,
   ageRange,
   description,
+  "imageUrl": image.asset->url,
   "relatedProgramSlugs": relatedPrograms[]->slug.current
 }
 ''';
@@ -111,6 +116,7 @@ const String programBySlugQuery = '''
   category,
   ageRange,
   description,
+  "imageUrl": image.asset->url,
   "relatedProgramSlugs": relatedPrograms[]->slug.current
 }
 ''';

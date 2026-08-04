@@ -59,17 +59,25 @@ class ContentPage extends StatelessComponent {
         css('&').styles(padding: .only(top: 18.px, left: 20.px, right: 20.px, bottom: 40.px)),
         css('h1').styles(fontSize: 28.px),
       ]),
-      // News/event detail pages: a meta line, hero image, body paragraphs,
-      // an optional external link, and an optional photo gallery.
-      css('.detail-meta').styles(
+      // News/event detail pages: a centered column with a meta bar, hero
+      // image (auto height so it scales without cropping regardless of the
+      // source image's dimensions), body paragraphs, and an optional CTA
+      // link (ticket/RSVP for events, "read more" for news).
+      css('.detail-container').styles(maxWidth: 760.px, raw: {'margin-left': 'auto', 'margin-right': 'auto'}),
+      css('.detail-meta-bar').styles(
+        display: .flex,
         margin: .only(top: 10.px),
-        color: AppColors.muted,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-        fontSize: 13.px,
+        flexWrap: .wrap,
+        gap: .all(20.px),
       ),
-      css('.detail-hero').styles(
+      css('.detail-meta-item').styles(display: .flex, alignItems: .center, gap: .all(6.px)),
+      css('.detail-meta-icon').styles(color: AppColors.primary),
+      css('.detail-meta-text').styles(color: AppColors.ink, fontSize: 15.px),
+      css('.detail-hero').styles(margin: .only(top: 18.px)),
+      css('.detail-hero-image').styles(
+        display: .block,
         width: 100.percent,
-        margin: .only(top: 18.px),
+        height: .auto,
         radius: .all(.circular(10.px)),
       ),
       css('.detail-body', [
@@ -82,22 +90,23 @@ class ContentPage extends StatelessComponent {
         css('p').styles(margin: .only(top: 10.px)),
         css('p:first-child').styles(margin: .zero),
       ]),
-      css('.detail-link').styles(
+      css('.detail-cta').styles(
+        padding: .all(20.px),
         margin: .only(top: 16.px),
-        color: AppColors.primary,
+        border: .all(color: AppColors.utilityBorder, width: 2.px),
+        radius: .all(.circular(10.px)),
+        textAlign: .center,
+        backgroundColor: AppColors.lightBlueTint,
+      ),
+      css('.detail-cta-btn').styles(
+        display: .inlineBlock,
+        padding: .symmetric(vertical: 12.px, horizontal: 26.px),
+        radius: .all(.circular(9.px)),
+        color: Colors.white,
         fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-        fontSize: 14.px,
+        fontSize: 16.px,
         fontWeight: .w700,
-      ),
-      css('.gallery-grid').styles(
-        display: .flex,
-        margin: .only(top: 18.px),
-        flexWrap: .wrap,
-        gap: .all(10.px),
-      ),
-      css('.gallery-image').styles(
-        width: 140.px,
-        radius: .all(.circular(8.px)),
+        backgroundColor: AppColors.primary,
       ),
       // Grid of link-out cards — e.g. the About hub's quick links.
       css('.link-grid').styles(

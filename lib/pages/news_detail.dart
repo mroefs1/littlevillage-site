@@ -30,14 +30,26 @@ class NewsDetail extends StatelessComponent {
         breadcrumb: 'News & Events › ${post.title}',
         title: post.title,
         children: [
-          div(classes: 'detail-meta', [.text(formatDate(post.publishedDate))]),
-          if (post.heroImageUrl != null) img(src: post.heroImageUrl!, alt: 'Hero photo', classes: 'detail-hero'),
-          div(classes: 'detail-body', [
-            for (final paragraph in post.body.split('\n'))
-              if (paragraph.trim().isNotEmpty) p([.text(paragraph)]),
+          div(classes: 'detail-container', [
+            div(classes: 'detail-meta-bar', [
+              div(classes: 'detail-meta-item', [
+                span(classes: 'detail-meta-icon', [.text('📝')]),
+                span(classes: 'detail-meta-text', [.text('Published ${formatDate(post.publishedDate)}')]),
+              ]),
+            ]),
+            if (post.heroImageUrl != null)
+              div(classes: 'detail-hero', [
+                img(src: post.heroImageUrl!, alt: 'Hero photo', classes: 'detail-hero-image'),
+              ]),
+            div(classes: 'detail-body', [
+              for (final paragraph in post.body.split('\n'))
+                if (paragraph.trim().isNotEmpty) p([.text(paragraph)]),
+            ]),
+            if (post.link != null)
+              div(classes: 'detail-cta', [
+                a(href: post.link!, target: Target.blank, classes: 'detail-cta-btn', [.text('Read more →')]),
+              ]),
           ]),
-          if (post.link != null)
-            a(href: post.link!, target: Target.blank, classes: 'detail-link', [.text('Read more →')]),
         ],
       ),
     ]);

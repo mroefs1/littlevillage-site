@@ -7,6 +7,7 @@ class Program {
   final String category;
   final String? ageRange;
   final PortableText description;
+  final String? imageUrl;
   final List<String> relatedProgramSlugs;
 
   const Program({
@@ -16,6 +17,7 @@ class Program {
     required this.category,
     this.ageRange,
     required this.description,
+    this.imageUrl,
     this.relatedProgramSlugs = const [],
   });
 
@@ -27,6 +29,7 @@ class Program {
       category: json['category'] as String,
       ageRange: json['ageRange'] as String?,
       description: PortableText.fromJson(json['description'] as List<dynamic>?),
+      imageUrl: json['imageUrl'] as String?,
       relatedProgramSlugs:
           (json['relatedProgramSlugs'] as List<dynamic>? ?? const []).cast<String>(),
     );

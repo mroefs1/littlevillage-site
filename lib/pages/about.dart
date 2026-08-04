@@ -10,8 +10,8 @@ import '../components/seo_meta.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/content_repository.dart';
+import '../sanity/models/page_content.dart';
 import '../sanity/models/person.dart';
-import '../sanity/models/portable_text.dart';
 
 // The redesign drops the old link-grid hub; Mission/History/Founders/
 // Facilities/Staff/Board stay reachable via the compact `_subNav` row instead
@@ -47,7 +47,7 @@ class About extends AsyncStatelessComponent {
           ]),
           _subNav(),
           _stats(),
-          _mission(page?.body),
+          _mission(page),
           if (staff.isNotEmpty) _team(staff.take(3).toList()),
           _accreditation(),
           const CtaBand(),
@@ -86,7 +86,8 @@ class About extends AsyncStatelessComponent {
     ]);
   }
 
-  static Component _mission(PortableText? body) {
+  static Component _mission(PageContent? page) {
+    final body = page?.body;
     return div(classes: 'about-mission', [
       div(classes: 'about-mission-text', [
         h2([.text('Our mission')]),
@@ -102,7 +103,10 @@ class About extends AsyncStatelessComponent {
           ]),
       ]),
       div(classes: 'about-mission-photo', [
-        const PhotoPlaceholder('photo — campus exterior or classroom wide shot'),
+        if (page?.heroImageUrl != null)
+          img(src: page!.heroImageUrl!, alt: 'Campus photo', classes: 'about-mission-img')
+        else
+          const PhotoPlaceholder('photo — campus exterior or classroom wide shot'),
       ]),
     ]);
   }
@@ -202,6 +206,13 @@ class About extends AsyncStatelessComponent {
     ),
     css('.about-mission-photo').styles(flex: Flex(grow: 1)),
     css('.about-mission-photo .photo-placeholder').styles(height: 200.px),
+    css('.about-mission-img').styles(
+      display: .block,
+      width: 100.percent,
+      height: 200.px,
+      radius: .all(.circular(10.px)),
+      raw: {'object-fit': 'cover'},
+    ),
 
     // Team teaser
     css('.about-team').styles(margin: .only(top: 26.px)),
@@ -271,6 +282,7 @@ class About extends AsyncStatelessComponent {
       ),
       css('.about-mission').styles(flexDirection: .column),
       css('.about-mission-photo .photo-placeholder').styles(height: 160.px),
+      css('.about-mission-img').styles(height: 160.px),
       css('.about-team-cards').styles(flexDirection: .column),
     ]),
   ];

@@ -1,17 +1,21 @@
 import 'package:jaspr/dom.dart';
-import 'package:jaspr/jaspr.dart';
+import 'package:jaspr/server.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
 import '../components/content_page.dart';
 import '../components/faq_accordion.dart';
 import '../components/photo_placeholder.dart';
 import '../constants/theme.dart';
+import '../sanity/content_repository.dart';
+import '../sanity/models/page_content.dart';
 
-class Admissions extends StatelessComponent {
+class Admissions extends AsyncStatelessComponent {
   const Admissions({super.key});
 
   @override
-  Component build(BuildContext context) {
+  Future<Component> build(BuildContext context) async {
+    final page = await contentRepository.getPage('admissions');
+
     return ContentPage(
       breadcrumb: 'Admissions',
       title: "We'll walk you through it, step by step.",
@@ -23,7 +27,7 @@ class Admissions extends StatelessComponent {
           ),
         ]),
         _eligibility(),
-        _journey(),
+        _journey(page?.images ?? const []),
         _tuitionCallout(),
         _faq(),
         _ctaBand(),
@@ -56,7 +60,7 @@ class Admissions extends StatelessComponent {
     ]);
   }
 
-  static Component _journey() {
+  static Component _journey(List<PageImage> images) {
     const steps = [
       (
         n: '1',
@@ -90,14 +94,19 @@ class Admissions extends StatelessComponent {
     return div(classes: 'adm-journey', [
       h2([.text('The enrollment journey')]),
       div(classes: 'adm-journey-steps', [
-        for (final step in steps)
+        for (final (i, step) in steps.indexed)
           div(classes: 'adm-journey-step', [
             div(classes: 'adm-journey-step-badge', [.text(step.n)]),
             div(classes: 'adm-journey-step-body', [
               div(classes: 'adm-journey-step-title', [.text(step.title)]),
               div(classes: 'adm-journey-step-desc', [.text(step.desc)]),
             ]),
-            div(classes: 'adm-journey-step-photo', [PhotoPlaceholder('', height: 60.px)]),
+            div(classes: 'adm-journey-step-photo', [
+              if (i < images.length)
+                img(src: images[i].url, alt: images[i].alt, classes: 'adm-journey-step-img')
+              else
+                PhotoPlaceholder('', height: 60.px),
+            ]),
           ]),
       ]),
     ]);
@@ -261,6 +270,13 @@ class Admissions extends StatelessComponent {
       lineHeight: 1.5.em,
     ),
     css('.adm-journey-step-photo').styles(width: 90.px, raw: {'flex': 'none'}),
+    css('.adm-journey-step-img').styles(
+      display: .block,
+      width: 100.percent,
+      height: 60.px,
+      radius: .all(.circular(6.px)),
+      raw: {'object-fit': 'cover'},
+    ),
 
     // $0 tuition callout
     css('.adm-tuition').styles(
