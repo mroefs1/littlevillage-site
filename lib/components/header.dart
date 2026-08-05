@@ -85,7 +85,7 @@ class Header extends StatelessComponent {
           to: '/',
           classes: 'brand',
           child: .fragment([
-            div(classes: 'brand-mark', [.text('LV')]),
+            img(src: '/images/brand-mark.png', alt: 'Hagedorn Little Village School logo', classes: 'brand-mark'),
             div(classes: 'brand-name', [
               .text('Hagedorn Little Village School'),
               div(classes: 'brand-subtitle', [.text('Jack Joel Center for Special Children')]),
@@ -165,18 +165,10 @@ class Header extends StatelessComponent {
           gap: .all(11.px),
         ),
         css('.brand-mark').styles(
-          display: .flex,
+          display: .block,
           width: 42.px,
           height: 42.px,
-          radius: .all(.circular(21.px)),
-          justifyContent: .center,
-          alignItems: .center,
-          color: Colors.white,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-          fontSize: 13.px,
-          fontWeight: .w700,
-          lineHeight: 1.em,
-          backgroundColor: AppColors.primary,
+          raw: {'object-fit': 'contain'},
         ),
         css('.brand-name').styles(
           color: AppColors.ink,

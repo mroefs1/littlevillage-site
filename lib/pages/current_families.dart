@@ -27,12 +27,12 @@ final Uri _calendarEmbedUri = Uri.https('calendar.google.com', '/calendar/embed'
 });
 
 // Per the design handoff (current-families.html): a "welcome back" hero,
-// three feature cards (calendar / documents / parent portal), the calendar
-// embed, a documents list backed by the `doc` Sanity type (unused until
-// now), and a static quick-links band. Summer Recreation / Careers have no
-// Sanity content type yet and no portal backend exists (see CLAUDE.md's
-// "Data layer"), so those stay stub links — Parent Association links to its
-// real page (Batch 10).
+// feature cards (calendar / documents), the calendar embed, a documents
+// list backed by the `doc` Sanity type (unused until now), and a static
+// quick-links band. No parent portal — not a planned feature (see
+// CLAUDE.md's "Data layer"). Summer Recreation / Careers have no Sanity
+// content type yet, so those stay stub links — Parent Association links to
+// its real page (Batch 10).
 class CurrentFamilies extends AsyncStatelessComponent {
   const CurrentFamilies({super.key});
 
@@ -57,29 +57,21 @@ class CurrentFamilies extends AsyncStatelessComponent {
             ),
           ]),
           div(classes: 'cf-features', [
-            a(href: '#calendar', classes: 'cf-feature-card', [
-              div(classes: 'cf-feature-icon', [.text('📅')]),
-              div(classes: 'cf-feature-title', [.text('School Calendar')]),
+            Link(to: '/parent-association', classes: 'cf-feature-card', children: [
+              div(classes: 'cf-feature-icon', [.text('🤝')]),
+              div(classes: 'cf-feature-title', [.text('Parent Association')]),
               div(classes: 'cf-feature-desc', [
-                .text('Closings, breaks, half-days, and key dates for the school year.'),
+                .text('Board members, dues, and upcoming PA events and meetings.'),
               ]),
-              div(classes: 'cf-feature-cta', [.text('View full calendar →')]),
+              div(classes: 'cf-feature-cta', [.text('Visit Parent Association →')]),
             ]),
-            a(href: '#documents', classes: 'cf-feature-card', [
+            a(href: '/current-families#documents', classes: 'cf-feature-card', [
               div(classes: 'cf-feature-icon', [.text('📄')]),
               div(classes: 'cf-feature-title', [.text('Important Documents')]),
               div(classes: 'cf-feature-desc', [
                 .text('Handbooks, one-page calendars, and district paperwork.'),
               ]),
               div(classes: 'cf-feature-cta', [.text('Browse documents →')]),
-            ]),
-            a(href: '#', classes: 'cf-feature-card cf-feature-card-portal', [
-              div(classes: 'cf-feature-icon cf-feature-icon-portal', [.text('🔐')]),
-              div(classes: 'cf-feature-title', [.text('Parent Portal')]),
-              div(classes: 'cf-feature-desc', [
-                .text("Sign in to view your child's records, progress, and messages."),
-              ]),
-              div(classes: 'cf-feature-cta', [.text('Sign in →')]),
             ]),
           ]),
           section(classes: 'cf-section', id: 'calendar', [
@@ -166,7 +158,6 @@ class CurrentFamilies extends AsyncStatelessComponent {
         fontWeight: .w700,
       ),
     ]),
-    css('.cf-feature-card-portal').styles(backgroundColor: AppColors.lightBlueTint),
     css('.cf-feature-icon').styles(
       display: .flex,
       width: 56.px,
@@ -179,13 +170,6 @@ class CurrentFamilies extends AsyncStatelessComponent {
       raw: {
         'background-image':
             'repeating-linear-gradient(45deg, ${AppColors.borderLight.value}, ${AppColors.borderLight.value} 8px, ${AppColors.placeholderStripe.value} 8px, ${AppColors.placeholderStripe.value} 16px)',
-      },
-    ),
-    css('.cf-feature-icon-portal').styles(
-      border: .all(color: AppColors.primary, width: 2.px, style: .dashed),
-      raw: {
-        'background-image':
-            'repeating-linear-gradient(45deg, ${AppColors.pillTint.value}, ${AppColors.pillTint.value} 8px, ${AppColors.lightBlueTint.value} 8px, ${AppColors.lightBlueTint.value} 16px)',
       },
     ),
 
