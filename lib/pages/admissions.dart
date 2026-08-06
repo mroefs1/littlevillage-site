@@ -79,9 +79,7 @@ class Admissions extends AsyncStatelessComponent {
       (
         n: '3',
         title: 'Visit & meet the team',
-        desc:
-            "Tour the school, meet teachers and therapists, and see the classrooms. This is where most "
-            "families feel their shoulders drop.",
+        desc: "Tour the school, meet teachers and therapists, and see the classrooms.",
       ),
       (
         n: '4',
@@ -133,26 +131,26 @@ class Admissions extends AsyncStatelessComponent {
         'question': "What's the difference between EI and CPSE?",
         'answer':
             'Early Intervention (EI) serves children from birth to age 3. CPSE (Committee on Preschool Special '
-                "Education) takes over from age 3 through kindergarten entry, run through your school district. "
-                'We work with families through both.',
+            "Education) takes over from age 3 through kindergarten entry, run through your school district. "
+            'We work with families through both.',
       },
       {
         'question': 'Do I need a diagnosis before I contact you?',
         'answer':
             "No. If you have a concern about your child's development, that's reason enough to reach out. "
-                "We'll help you understand the evaluation process.",
+            "We'll help you understand the evaluation process.",
       },
       {
         'question': 'Is transportation provided?',
         'answer':
             'Yes. Once your child is placed with us, we coordinate transportation to and from school at no '
-                'cost to your family.',
+            'cost to your family.',
       },
       {
         'question': 'What if my child is already in another program?',
         'answer':
             "That's okay — we can still help. Reach out and we'll talk through your options, including "
-                'whether a transfer makes sense for your child.',
+            'whether a transfer makes sense for your child.',
       },
     ];
     return div(classes: 'adm-faq', [
@@ -202,7 +200,9 @@ class Admissions extends AsyncStatelessComponent {
     css('.adm-eligibility-check', [
       css('&').styles(
         padding: .symmetric(vertical: 16.px, horizontal: 20.px),
-        border: .only(right: .solid(color: AppColors.borderLight, width: 1.5.px)),
+        border: .only(
+          right: .solid(color: AppColors.borderLight, width: 1.5.px),
+        ),
         flex: Flex(grow: 1),
       ),
       css('&:last-child').styles(border: .none),
@@ -233,7 +233,12 @@ class Admissions extends AsyncStatelessComponent {
 
     // Enrollment journey
     css('.adm-journey').styles(margin: .only(top: 30.px)),
-    css('.adm-journey-steps').styles(display: .flex, margin: .only(top: 18.px), flexDirection: .column, gap: .all(14.px)),
+    css('.adm-journey-steps').styles(
+      display: .flex,
+      margin: .only(top: 18.px),
+      flexDirection: .column,
+      gap: .all(14.px),
+    ),
     css('.adm-journey-step').styles(
       display: .flex,
       padding: .symmetric(vertical: 16.px, horizontal: 18.px),
@@ -327,7 +332,11 @@ class Admissions extends AsyncStatelessComponent {
       fontSize: 28.px,
       fontWeight: .w700,
     ),
-    css('.adm-cta-subtitle').styles(margin: .only(top: 6.px), color: AppColors.pillTint, fontSize: 14.px),
+    css('.adm-cta-subtitle').styles(
+      margin: .only(top: 6.px),
+      color: AppColors.pillTint,
+      fontSize: 14.px,
+    ),
     css('.adm-cta-actions').styles(
       display: .flex,
       margin: .only(top: 20.px),
@@ -367,13 +376,18 @@ class Admissions extends AsyncStatelessComponent {
     css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
       css('.adm-eligibility-checks').styles(flexDirection: .column),
       css('.adm-eligibility-check').styles(
-        border: .only(right: .none(), bottom: .solid(color: AppColors.borderLight, width: 1.5.px)),
+        border: .only(
+          right: .none(),
+          bottom: .solid(color: AppColors.borderLight, width: 1.5.px),
+        ),
       ),
       css('.adm-eligibility-check:last-child').styles(border: .none),
       css('.adm-journey-step').styles(flexWrap: .wrap),
       css('.adm-journey-step-photo').styles(display: .none),
       css('.adm-tuition').styles(flexDirection: .column, textAlign: .center),
-      css('.adm-cta').styles(padding: .symmetric(vertical: 24.px, horizontal: 18.px)),
+      css('.adm-cta').styles(
+        padding: .symmetric(vertical: 24.px, horizontal: 18.px),
+      ),
       css('.adm-cta-title').styles(fontSize: 22.px),
     ]),
   ];
