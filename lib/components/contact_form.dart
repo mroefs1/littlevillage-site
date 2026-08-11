@@ -73,7 +73,7 @@ class ContactForm extends StatefulComponent {
     ),
     css('.contact-field-hint').styles(
       margin: .only(top: (-4).px),
-      color: AppColors.body,
+      color: AppColors.mutedTextLight,
       fontSize: 12.px,
     ),
     css('.contact-field select[aria-invalid="true"], .contact-field input[aria-invalid="true"]').styles(
@@ -87,7 +87,7 @@ class ContactForm extends StatefulComponent {
     ),
     css('.contact-form-success').styles(
       padding: .symmetric(vertical: 20.px),
-      color: AppColors.ink,
+      color: AppColors.navy,
       fontSize: 15.px,
       lineHeight: 1.5.em,
     ),
@@ -134,8 +134,7 @@ class _ContactFormState extends State<ContactForm> {
     }
 
     final responseInput =
-        _turnstileKey.currentNode?.querySelector('input[name="cf-turnstile-response"]')
-            as web.HTMLInputElement?;
+        _turnstileKey.currentNode?.querySelector('input[name="cf-turnstile-response"]') as web.HTMLInputElement?;
     final turnstileToken = responseInput?.value ?? '';
 
     setState(() {
@@ -220,10 +219,22 @@ class _ContactFormState extends State<ContactForm> {
         required: true,
         child: input(key: _nameKey, type: InputType.text, attributes: {'required': 'required'}),
       ),
-      _field("Child's date of birth", child: input(key: _dobKey, type: InputType.date)),
-      _field('County / school district (if known)', child: input(key: _countyKey, type: InputType.text)),
-      _field('Phone', child: input(key: _phoneKey, type: InputType.tel)),
-      _field('Email', child: input(key: _emailKey, type: InputType.email)),
+      _field(
+        "Child's date of birth",
+        child: input(key: _dobKey, type: InputType.date),
+      ),
+      _field(
+        'County / school district (if known)',
+        child: input(key: _countyKey, type: InputType.text),
+      ),
+      _field(
+        'Phone',
+        child: input(key: _phoneKey, type: InputType.tel),
+      ),
+      _field(
+        'Email',
+        child: input(key: _emailKey, type: InputType.email),
+      ),
       div(classes: 'contact-field-hint contact-field-full', [
         .text('Phone or email required'),
         _requiredMark(),
@@ -234,14 +245,18 @@ class _ContactFormState extends State<ContactForm> {
         required: true,
         child: textarea(key: _messageKey, rows: 4, required: true, []),
       ),
-      div(classes: 'contact-honeypot', attributes: {'aria-hidden': 'true'}, [
-        input(
-          key: _honeypotKey,
-          type: InputType.text,
-          name: 'website',
-          attributes: {'tabindex': '-1', 'autocomplete': 'off'},
-        ),
-      ]),
+      div(
+        classes: 'contact-honeypot',
+        attributes: {'aria-hidden': 'true'},
+        [
+          input(
+            key: _honeypotKey,
+            type: InputType.text,
+            name: 'website',
+            attributes: {'tabindex': '-1', 'autocomplete': 'off'},
+          ),
+        ],
+      ),
       div(
         key: _turnstileKey,
         classes: 'cf-turnstile',

@@ -12,6 +12,10 @@ class AppColors {
   static const blue = Color('#356e8d');
   static const sky = Color('#eaf5f8');
   static const cream = Color('#fffaf2');
+  // Not in the README's summary table, but recurs in the reference HTML
+  // itself (home.html's news/events section, contact.html's form card) —
+  // a near-white card/section background a step past plain white.
+  static const offWhite = Color('#f7fafb');
   // The only saturated accent — reserved for CTAs/active states. Matches
   // the handoff's literal hex; the WCAG AA pass against text/white is
   // deferred to 11.10 per the Step 11 plan, so this isn't contrast-checked

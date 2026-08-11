@@ -82,10 +82,10 @@ class Contact extends AsyncStatelessComponent {
   @css
   static List<StyleRule> get styles => [
     css('.contact-subtitle').styles(
-      maxWidth: 640.px,
+      maxWidth: 620.px,
       margin: .only(top: 10.px),
-      color: AppColors.body,
-      fontSize: 15.px,
+      color: AppColors.mutedText,
+      fontSize: 16.px,
       lineHeight: 1.55.em,
     ),
     css('.contact-grid').styles(
@@ -97,45 +97,46 @@ class Contact extends AsyncStatelessComponent {
 
     // Form card
     css('.contact-form-card').styles(
-      padding: .all(22.px),
-      border: .all(color: AppColors.borderLight, width: 2.px),
-      radius: .all(.circular(10.px)),
+      padding: .all(28.px),
+      border: .all(color: AppColors.line, width: 1.px),
+      radius: .all(.circular(Radii.xxl)),
       flex: Flex(grow: 1.3),
+      backgroundColor: AppColors.offWhite,
     ),
     css('.contact-form-title').styles(
-      margin: .only(bottom: 14.px),
-      color: AppColors.ink,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+      margin: .only(bottom: 4.px),
+      color: AppColors.navy,
+      fontFamily: .list([headingFontFamily, FontFamilies.serif]),
       fontSize: 19.px,
-      fontWeight: .w700,
+      fontWeight: .w600,
     ),
     css('.contact-form-legend').styles(
-      margin: .only(bottom: 12.px, top: (-8).px),
-      color: AppColors.body,
-      fontSize: 12.px,
+      margin: .only(bottom: 16.px),
+      color: AppColors.mutedTextLight,
+      fontSize: 13.px,
     ),
     css('.contact-form-grid').styles(
       display: .grid,
       gridTemplate: GridTemplate(columns: GridTracks([GridTrack(TrackSize.fr(1)), GridTrack(TrackSize.fr(1))])),
-      gap: .all(12.px),
+      gap: .all(16.px),
     ),
     css('.contact-field').styles(display: .flex, flexDirection: .column, gap: .all(4.px)),
     css('.contact-field-full').styles(gridPlacement: GridPlacement(columnStart: LinePlacement.span(2))),
-    css('.contact-field-label').styles(color: AppColors.body, fontSize: 12.px),
+    css('.contact-field-label').styles(color: AppColors.navy, fontSize: 13.px, fontWeight: .w600),
     css('.contact-field input, .contact-field textarea, .contact-field select', [
       css('&').styles(
         width: 100.percent,
-        padding: .symmetric(vertical: 9.px, horizontal: 10.px),
-        border: .all(color: AppColors.borderMedium, width: 1.5.px),
-        radius: .all(.circular(7.px)),
-        color: AppColors.ink,
+        padding: .symmetric(vertical: 10.px, horizontal: 12.px),
+        border: .all(color: AppColors.lineDark, width: 1.px),
+        radius: .all(.circular(Radii.sm)),
+        color: AppColors.navy,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
         fontSize: 14.px,
-        backgroundColor: Color('#fbfaf8'),
+        backgroundColor: Colors.white,
         raw: {'box-sizing': 'border-box'},
       ),
       css('&:focus').styles(
-        outline: Outline(color: AppColors.primary, width: OutlineWidth(1.5.px), style: .solid),
+        outline: Outline(color: AppColors.blue, width: OutlineWidth(1.5.px), style: .solid),
         raw: {'outline-offset': '1px'},
       ),
     ]),
@@ -147,35 +148,38 @@ class Contact extends AsyncStatelessComponent {
       gridPlacement: GridPlacement(columnStart: LinePlacement.span(2)),
     ),
     css('.contact-btn-primary').styles(
-      padding: .symmetric(vertical: 12.px, horizontal: 22.px),
+      padding: .symmetric(vertical: 14.px, horizontal: 24.px),
       border: .none,
-      radius: .all(.circular(9.px)),
+      radius: .all(.circular(Radii.pill)),
       color: Colors.white,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 16.px,
+      fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+      fontSize: 15.px,
       fontWeight: .w700,
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.coral,
       raw: {'cursor': 'pointer'},
     ),
-    // Info column
+    // Info column — plain gap-stacked rows, not a bordered/padded card.
     css('.contact-info-column').styles(display: .flex, flexDirection: .column, gap: .all(14.px), flex: Flex(grow: 1)),
-    css('.contact-info-card').styles(
-      padding: .all(18.px),
-      border: .all(color: AppColors.borderLight, width: 2.px),
-      radius: .all(.circular(10.px)),
-    ),
-    css('.contact-info-row').styles(margin: .only(top: 12.px)),
-    css('.contact-info-row:first-child').styles(margin: .zero),
-    css('.contact-info-label').styles(
-      color: AppColors.ink,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 16.px,
-      fontWeight: .w700,
-    ),
+    css('.contact-info-card').styles(display: .flex, flexDirection: .column, gap: .all(16.px)),
+    css('.contact-info-label').styles(color: AppColors.mutedTextLight, fontSize: 13.px),
     css('.contact-info-value').styles(
       margin: .only(top: 4.px),
-      color: AppColors.body,
-      fontSize: 14.px,
+      color: AppColors.navy,
+      fontSize: 15.px,
+      fontWeight: .w700,
+    ),
+    // Map placeholder: sky-toned stripes for this spot specifically.
+    // `photo_placeholder.dart`'s shared default (peach stripes) is for
+    // photo-shaped content elsewhere and stays untouched — this overrides
+    // just this page's instance via a more specific selector.
+    css('.contact-info-column .photo-placeholder').styles(
+      height: 200.px,
+      radius: .all(.circular(Radii.lg)),
+      color: AppColors.mutedTextLight,
+      raw: {
+        'background-image':
+            'repeating-linear-gradient(135deg, ${AppColors.sky.value}, ${AppColors.sky.value} 10px, ${AppColors.line.value} 10px, ${AppColors.line.value} 20px)',
+      },
     ),
 
     css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
