@@ -2,6 +2,10 @@ const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/sit
 const TURNSTILE_ACTION = 'contact-form';
 const ALLOWED_HOSTNAME = 'littlevillage-site.pages.dev';
 
+const RESEND_API_URL = 'https://api.resend.com/emails';
+const FROM_ADDRESS = 'Little Village School <contact@send.littlevillage.org>';
+const TO_ADDRESS = 'information@littlevillage.org';
+
 function jsonResponse(body, status) {
   return new Response(JSON.stringify(body), {
     status,
@@ -27,6 +31,42 @@ async function verifyTurnstile(token, remoteIp, secret) {
     (typeof result.hostname === 'string' && result.hostname.endsWith(`.${ALLOWED_HOSTNAME}`));
 
   return result.success === true && result.action === TURNSTILE_ACTION && hostnameOk;
+}
+
+function buildEmailText({ requestType, name, childDob, countyDistrict, phone, email, message }) {
+  const lines = [`Name: ${name}`];
+  if (!isBlank(childDob)) lines.push(`Child's date of birth: ${childDob}`);
+  if (!isBlank(countyDistrict)) lines.push(`County / school district: ${countyDistrict}`);
+  if (!isBlank(phone)) lines.push(`Phone: ${phone}`);
+  if (!isBlank(email)) lines.push(`Email: ${email}`);
+  lines.push('', 'Message:', message);
+  return lines.join('\n');
+}
+
+async function sendContactEmail(fields, env) {
+  const label = fields.requestType === 'tour' ? 'Tour Request' : 'General Inquiry';
+  const payload = {
+    from: FROM_ADDRESS,
+    to: [TO_ADDRESS],
+    subject: `${label}: ${fields.name}`,
+    text: buildEmailText(fields),
+  };
+  if (!isBlank(fields.email)) payload.reply_to = fields.email;
+
+  const response = await fetch(RESEND_API_URL, {
+    method: 'POST',
+    headers: {
+      authorization: `Bearer ${env.RESEND_API_KEY}`,
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  if (!response.ok) {
+    console.error('Resend send failed', response.status, await response.text());
+    return false;
+  }
+  return true;
 }
 
 export async function onRequestPost(context) {
@@ -86,6 +126,17 @@ export async function onRequestPost(context) {
   const verified = await verifyTurnstile(turnstileToken, remoteIp, env.TURNSTILE_SECRET_KEY);
   if (!verified) {
     return jsonResponse({ success: false, error: 'Verification failed. Please try again.' }, 400);
+  }
+
+  const sent = await sendContactEmail(
+    { requestType, name, childDob, countyDistrict, phone, email, message },
+    env
+  );
+  if (!sent) {
+    return jsonResponse(
+      { success: false, error: "We couldn't send your message right now. Please try again or call us directly." },
+      502
+    );
   }
 
   return jsonResponse({ success: true }, 200);
