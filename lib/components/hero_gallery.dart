@@ -35,7 +35,7 @@ class HeroGallery extends StatefulComponent {
     css('.hero-gallery').styles(
       display: .block,
       position: .absolute(top: .zero, left: .zero, right: .zero, bottom: .zero),
-      radius: .all(.circular(14.px)),
+      radius: .all(.circular(32.px)),
       overflow: .hidden,
     ),
     css('.hero-gallery-track').styles(
@@ -67,7 +67,7 @@ class HeroGallery extends StatefulComponent {
         transform: .translate(y: (-50).percent),
         justifyContent: .center,
         alignItems: .center,
-        color: AppColors.ink,
+        color: AppColors.navy,
         fontSize: 20.px,
         backgroundColor: .rgba(255, 255, 255, 0.85),
         raw: {'cursor': 'pointer'},
@@ -224,14 +224,18 @@ class _HeroGalleryState extends State<HeroGallery> {
             type: .button,
             onClick: _onPrev,
             attributes: const {'aria-label': 'Previous photo'},
-            [span(attributes: const {'aria-hidden': 'true'}, [.text('‹')])],
+            [
+              span(attributes: const {'aria-hidden': 'true'}, [.text('‹')]),
+            ],
           ),
           button(
             classes: 'hero-gallery-arrow hero-gallery-arrow-next',
             type: .button,
             onClick: _onNext,
             attributes: const {'aria-label': 'Next photo'},
-            [span(attributes: const {'aria-hidden': 'true'}, [.text('›')])],
+            [
+              span(attributes: const {'aria-hidden': 'true'}, [.text('›')]),
+            ],
           ),
         ],
       ],
