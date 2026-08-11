@@ -1,12 +1,12 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
 
+import '../components/contact_form.dart';
 import '../components/content_page.dart';
 import '../components/photo_placeholder.dart';
 import '../components/seo_meta.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
-import '../constants/turnstile.dart';
 import '../sanity/content_repository.dart';
 import '../sanity/models/site_settings.dart';
 
@@ -52,44 +52,7 @@ class Contact extends AsyncStatelessComponent {
   static Component _form() {
     return div(classes: 'contact-form-card', [
       div(classes: 'contact-form-title', [.text('Request Information')]),
-      form(classes: 'contact-form-grid', [
-        _field(
-          'What can we help with?',
-          full: true,
-          child: select(name: 'requestType', required: true, [
-            option(value: '', disabled: true, selected: true, [.text('Select one...')]),
-            option(value: 'general', [.text('General Inquiry')]),
-            option(value: 'tour', [.text('Schedule a Tour')]),
-          ]),
-        ),
-        _field('Parent / guardian name', child: const input(type: InputType.text), full: true),
-        _field("Child's date of birth", child: const input(type: InputType.date)),
-        _field('County / school district (if known)', child: const input(type: InputType.text)),
-        _field('Phone', child: const input(type: InputType.tel)),
-        _field('Email', child: const input(type: InputType.email)),
-        _field(
-          'What would you like us to know?',
-          child: const textarea(rows: 4, []),
-          full: true,
-        ),
-        // Renders inert until 9c.3 wires the submit handler and disabled-button state.
-        div(
-          classes: 'cf-turnstile',
-          attributes: {'data-sitekey': turnstileSiteKey, 'data-action': turnstileAction},
-          [],
-        ),
-        div(classes: 'contact-form-actions', [
-          button(type: ButtonType.button, classes: 'contact-btn-primary', [.text('Send request →')]),
-        ]),
-      ]),
-      script(src: 'https://challenges.cloudflare.com/turnstile/v0/api.js', async: true, defer: true),
-    ]);
-  }
-
-  static Component _field(String labelText, {required Component child, bool full = false}) {
-    return label(classes: full ? 'contact-field contact-field-full' : 'contact-field', [
-      div(classes: 'contact-field-label', [.text(labelText)]),
-      child,
+      const ContactForm(),
     ]);
   }
 

@@ -7,6 +7,8 @@
 import 'package:jaspr/server.dart';
 import 'package:littlevillage_site/components/collection_card.dart'
     as _collection_card;
+import 'package:littlevillage_site/components/contact_form.dart'
+    as _contact_form;
 import 'package:littlevillage_site/components/content_page.dart'
     as _content_page;
 import 'package:littlevillage_site/components/cta_band.dart' as _cta_band;
@@ -60,6 +62,9 @@ import 'package:littlevillage_site/app.dart' as _app;
 ServerOptions get defaultServerOptions => ServerOptions(
   clientId: 'main.client.dart.js',
   clients: {
+    _contact_form.ContactForm: ClientTarget<_contact_form.ContactForm>(
+      'contact_form',
+    ),
     _faq_accordion.FaqAccordion: ClientTarget<_faq_accordion.FaqAccordion>(
       'faq_accordion',
       params: __faq_accordionFaqAccordion,
@@ -82,6 +87,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._theme.globalStyles,
     ..._app.App.styles,
     ..._collection_card.CollectionCard.styles,
+    ..._contact_form.ContactForm.styles,
     ..._content_page.ContentPage.styles,
     ..._cta_band.CtaBand.styles,
     ..._faq_accordion.FaqAccordion.styles,

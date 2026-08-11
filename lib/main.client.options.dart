@@ -6,6 +6,8 @@
 
 import 'package:jaspr/client.dart';
 
+import 'package:littlevillage_site/components/contact_form.dart'
+    deferred as _contact_form;
 import 'package:littlevillage_site/components/faq_accordion.dart'
     deferred as _faq_accordion;
 import 'package:littlevillage_site/components/hero_gallery.dart'
@@ -33,6 +35,10 @@ import 'package:littlevillage_site/components/news_events_filter.dart'
 /// ```
 ClientOptions get defaultClientOptions => ClientOptions(
   clients: {
+    'contact_form': ClientLoader(
+      (p) => _contact_form.ContactForm(),
+      loader: _contact_form.loadLibrary,
+    ),
     'faq_accordion': ClientLoader(
       (p) => _faq_accordion.FaqAccordion(
         items: (p['items'] as List<Object?>)
