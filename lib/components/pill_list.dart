@@ -12,7 +12,9 @@ class PillList extends StatelessComponent {
 
   @override
   Component build(BuildContext context) {
-    return div(classes: 'pill-list', [for (final item in items) span(classes: 'pill', [.text(item)])]);
+    return div(classes: 'pill-list', [
+      for (final item in items) span(classes: 'pill', [.text(item)]),
+    ]);
   }
 
   @css
@@ -20,11 +22,12 @@ class PillList extends StatelessComponent {
     css('.pill-list').styles(display: .flex, flexWrap: .wrap, gap: .all(12.px)),
     css('.pill').styles(
       padding: .symmetric(vertical: 8.px, horizontal: 16.px),
-      border: .all(color: AppColors.borderMedium, width: 1.5.px),
-      radius: .all(.circular(20.px)),
-      color: AppColors.ink,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+      border: .all(color: AppColors.line, width: 1.px),
+      radius: .all(.circular(Radii.pill)),
+      color: AppColors.navy,
+      fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
       fontSize: 14.px,
+      fontWeight: .w600,
       backgroundColor: Colors.white,
     ),
   ];

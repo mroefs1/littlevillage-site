@@ -41,12 +41,25 @@ const _copyByCategory = <String, _ProgramCopy>{
       ),
       (
         label: 'Session',
-        desc: '30–60 minutes of play-based therapy targeting communication, motor skills, feeding, or social development.',
+        desc:
+            '30–60 minutes of play-based therapy targeting communication, motor skills, feeding, or social development.',
       ),
-      (label: 'Check-in', desc: 'Providers coach caregivers on carrying strategies into daily routines between visits.'),
-      (label: 'Progress review', desc: 'Every six months, the team and family review the IFSP and adjust goals together.'),
+      (
+        label: 'Check-in',
+        desc: 'Providers coach caregivers on carrying strategies into daily routines between visits.',
+      ),
+      (
+        label: 'Progress review',
+        desc: 'Every six months, the team and family review the IFSP and adjust goals together.',
+      ),
     ],
-    services: ['Speech & Language', 'Occupational Therapy', 'Physical Therapy', 'Special Instruction', 'Family Training'],
+    services: [
+      'Speech & Language',
+      'Occupational Therapy',
+      'Physical Therapy',
+      'Special Instruction',
+      'Family Training',
+    ],
   ),
   'Preschool': _ProgramCopy(
     heroPhotoCaption: 'photo — preschool classroom activity',
@@ -58,7 +71,13 @@ const _copyByCategory = <String, _ProgramCopy>{
       (label: '12:00 PM', desc: 'Lunch & supported peer social time.'),
       (label: '1:00 PM', desc: 'Outdoor play, music, or art, followed by dismissal prep.'),
     ],
-    services: ['Speech & Language', 'Occupational Therapy', 'Physical Therapy', 'Counseling', 'Adaptive Physical Education'],
+    services: [
+      'Speech & Language',
+      'Occupational Therapy',
+      'Physical Therapy',
+      'Counseling',
+      'Adaptive Physical Education',
+    ],
   ),
   'Elementary': _ProgramCopy(
     heroPhotoCaption: 'photo — elementary classroom or therapy room',
@@ -156,28 +175,35 @@ class ProgramDetail extends StatelessComponent {
 
   @css
   static List<StyleRule> get styles => [
-    css('.progd-hero').styles(display: .flex, margin: .only(top: 10.px), alignItems: .start, gap: .all(26.px)),
+    css('.progd-hero').styles(
+      display: .flex,
+      margin: .only(top: 10.px),
+      alignItems: .start,
+      gap: .all(26.px),
+    ),
     css('.progd-hero-photo').styles(flex: Flex(grow: 1)),
     css('.progd-hero-img').styles(
       display: .block,
       width: 100.percent,
       height: 220.px,
-      radius: .all(.circular(10.px)),
+      radius: .all(.circular(Radii.lg)),
       raw: {'object-fit': 'cover'},
     ),
     css('.progd-hero-body').styles(flex: Flex(grow: 1)),
     css('.progd-age-pill').styles(
       display: .inlineBlock,
-      padding: .symmetric(vertical: 4.px, horizontal: 12.px),
+      padding: .symmetric(vertical: 5.px, horizontal: 14.px),
       margin: .only(bottom: 12.px),
-      radius: .all(.circular(20.px)),
-      color: AppColors.primary,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 14.px,
-      backgroundColor: AppColors.pillTint,
+      radius: .all(.circular(Radii.pill)),
+      color: AppColors.navyDark,
+      fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+      fontSize: 13.px,
+      fontWeight: .w700,
+      backgroundColor: AppColors.yellow,
     ),
 
     css('.progd-timeline').styles(margin: .only(top: 26.px)),
+    css('.progd-timeline h2').styles(fontWeight: .w600),
     css('.progd-timeline-steps').styles(
       display: .flex,
       margin: .only(top: 14.px),
@@ -188,53 +214,59 @@ class ProgramDetail extends StatelessComponent {
       css('&').styles(
         display: .flex,
         padding: .symmetric(vertical: 12.px, horizontal: 16.px),
-        border: .all(color: AppColors.borderLight, width: 2.px),
-        radius: .all(.circular(8.px)),
+        border: .all(color: AppColors.line, width: 1.px),
+        radius: .all(.circular(Radii.sm)),
         alignItems: .start,
         gap: .all(14.px),
       ),
       css('.progd-timeline-step-label').styles(
         width: 88.px,
-        color: AppColors.primary,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        color: AppColors.coral,
         fontSize: 14.px,
         fontWeight: .w700,
         raw: {'flex': 'none'},
       ),
-      css('.progd-timeline-step-desc').styles(color: AppColors.ink, fontSize: 14.px),
+      css('.progd-timeline-step-desc').styles(color: AppColors.navy, fontSize: 14.px),
     ]),
 
     css('.progd-services').styles(margin: .only(top: 22.px)),
     css('.progd-services-title').styles(
       margin: .only(bottom: 10.px),
-      color: AppColors.ink,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 20.px,
-      fontWeight: .w700,
+      color: AppColors.navy,
+      fontFamily: .list([headingFontFamily, FontFamilies.serif]),
+      fontSize: 19.px,
+      fontWeight: .w600,
     ),
 
     css('.progd-how-to-start').styles(
       display: .flex,
-      padding: .symmetric(vertical: 18.px, horizontal: 22.px),
+      padding: .symmetric(vertical: 22.px, horizontal: 26.px),
       margin: .only(top: 24.px),
-      border: .all(color: AppColors.utilityBorder, width: 2.px),
-      radius: .all(.circular(10.px)),
+      radius: .all(.circular(Radii.xxl)),
       justifyContent: .spaceBetween,
       alignItems: .center,
       gap: .all(16.px),
-      backgroundColor: AppColors.lightBlueTint,
+      backgroundColor: AppColors.sky,
     ),
     css('.progd-how-to-start-title').styles(
-      color: AppColors.ink,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+      color: AppColors.navy,
+      fontFamily: .list([headingFontFamily, FontFamilies.serif]),
       fontSize: 17.px,
-      fontWeight: .w700,
+      fontWeight: .w600,
     ),
-    css('.progd-how-to-start-desc').styles(margin: .only(top: 3.px), color: AppColors.body, fontSize: 13.px),
+    css('.progd-how-to-start-desc').styles(
+      margin: .only(top: 3.px),
+      color: AppColors.mutedText,
+      fontSize: 13.px,
+    ),
+    // Plain coral text link, not a pill button — matches the same
+    // "in-card CTA" treatment used elsewhere (home's enrollment-teaser
+    // link, age-card/current-families card CTAs), reserving pill buttons
+    // for primary navigation actions.
     css('.progd-how-to-start-cta').styles(
-      color: AppColors.primary,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 15.px,
+      color: AppColors.coral,
+      fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+      fontSize: 14.px,
       fontWeight: .w700,
       whiteSpace: .noWrap,
     ),

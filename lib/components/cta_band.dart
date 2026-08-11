@@ -25,20 +25,28 @@ class CtaBand extends StatelessComponent {
 
   @css
   static List<StyleRule> get styles => [
+    // Light sky section with pill buttons — matches the same "closing CTA"
+    // pattern used on Admissions (which has its own local copy of this
+    // band rather than reusing this component; see admissions.dart's
+    // .adm-cta rules).
     css('.cta-band').styles(
-      padding: .all(30.px),
+      padding: .all(40.px),
       margin: .only(top: 28.px),
-      radius: .all(.circular(12.px)),
+      radius: .all(.circular(Radii.xxl)),
       textAlign: .center,
-      backgroundColor: AppColors.primary,
+      backgroundColor: AppColors.sky,
     ),
     css('.cta-band-title').styles(
-      color: Colors.white,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 28.px,
-      fontWeight: .w700,
+      color: AppColors.navy,
+      fontFamily: .list([headingFontFamily, FontFamilies.serif]),
+      fontSize: 26.px,
+      fontWeight: .w600,
     ),
-    css('.cta-band-subtitle').styles(margin: .only(top: 6.px), color: AppColors.pillTint, fontSize: 14.px),
+    css('.cta-band-subtitle').styles(
+      margin: .only(top: 6.px),
+      color: AppColors.mutedText,
+      fontSize: 15.px,
+    ),
     css('.cta-band-actions').styles(
       display: .flex,
       margin: .only(top: 20.px),
@@ -48,31 +56,33 @@ class CtaBand extends StatelessComponent {
       gap: .all(14.px),
     ),
     css('.cta-band-btn-primary').styles(
-      padding: .symmetric(vertical: 14.px, horizontal: 28.px),
-      radius: .all(.circular(9.px)),
-      color: AppColors.primary,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 18.px,
+      padding: .symmetric(vertical: 14.px, horizontal: 24.px),
+      radius: .all(.circular(Radii.pill)),
+      color: Colors.white,
+      fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+      fontSize: 15.px,
+      fontWeight: .w700,
+      backgroundColor: AppColors.coral,
+    ),
+    css('.cta-band-btn-secondary').styles(
+      padding: .symmetric(vertical: 14.px, horizontal: 24.px),
+      border: .all(color: AppColors.line, width: 2.px),
+      radius: .all(.circular(Radii.pill)),
+      color: AppColors.navy,
+      fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+      fontSize: 15.px,
       fontWeight: .w700,
       backgroundColor: Colors.white,
     ),
-    css('.cta-band-btn-secondary').styles(
-      padding: .symmetric(vertical: 12.px, horizontal: 26.px),
-      border: .all(color: Colors.white, width: 2.px),
-      radius: .all(.circular(9.px)),
-      color: Colors.white,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 18.px,
-      fontWeight: .w700,
-    ),
     css('.cta-band-btn-tertiary').styles(
-      padding: .symmetric(vertical: 12.px, horizontal: 26.px),
-      border: .all(color: AppColors.utilityBorder, width: 2.px),
-      radius: .all(.circular(9.px)),
-      color: Colors.white,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 18.px,
+      padding: .symmetric(vertical: 14.px, horizontal: 24.px),
+      border: .all(color: AppColors.line, width: 2.px),
+      radius: .all(.circular(Radii.pill)),
+      color: AppColors.navy,
+      fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+      fontSize: 15.px,
       fontWeight: .w700,
+      backgroundColor: Colors.white,
     ),
   ];
 }
