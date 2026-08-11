@@ -27,7 +27,7 @@ class Contact extends AsyncStatelessComponent {
         title: 'Contact | $siteName',
         description:
             "Whether you have a question, want to request information, or you're ready to schedule a tour — "
-            "reach out and we'll respond within one business day.",
+            "reach out and we'll be in touch soon.",
         path: '/contact',
       ),
       ContentPage(
@@ -37,7 +37,7 @@ class Contact extends AsyncStatelessComponent {
           p(classes: 'contact-subtitle', [
             .text(
               "Whether you have a question, want to request information, or you're ready to schedule a tour — "
-              "reach out and we'll respond within one business day.",
+              "reach out and we'll be in touch soon.",
             ),
           ]),
           div(classes: 'contact-grid', [

@@ -122,7 +122,7 @@ class _ContactFormState extends State<ContactForm> {
       if (data['success'] == true) {
         setState(() {
           _status = _SubmitStatus.success;
-          _feedback = "Thanks — we'll be in touch within one business day.";
+          _feedback = "Thanks — we'll be in touch soon.";
         });
       } else {
         setState(() {
