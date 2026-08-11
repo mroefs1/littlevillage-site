@@ -4,34 +4,60 @@ Replacement website for littlevillage.org (The Hagedorn Little Village School), 
 
 **Status:** Steps 1-8, 9 (News & Events detail pages), and 10 (Parent Association) are complete and live on the Cloudflare Pages preview. Full history of that work - including corrections and decisions made along the way - is archived in `docs/archive/completed-batches.md`. This file covers active/upcoming work only.
 
+**Launch target: mid-September 2026, at an in-person event.** Until then, all work targets the `littlevillage-site.pages.dev` preview only. Custom domain cutover and DNS changes are explicitly out of scope until launch week - do not touch DNS or add the custom domain to the Cloudflare Pages project before then, even if asked to "finish" the deploy pipeline.
+
 **Full plan and rationale:** see the "Little Village Site Rebuild - Jaspr + Sanity" Notion page.
 
 ## Tech stack (fixed, don't deviate without asking)
+
 - **Jaspr** - Dart web framework, `mode: static` (SSG). Not an SPA, not SSR, for now.
-- - **Styling:** Jaspr's native type-safe CSS-in-Dart (`css()`/`@css`/`Styles`). No CSS framework, no preprocessor.
-  - - **Sanity** - CMS, source of truth for all content. Same project/dataset as the existing Dart app.
-    - - **Cloudflare Pages** - static host. Confirmed working production host (littlevillage-site.pages.dev); custom domain cutover still pending.
-      - - **Serverpod** - not yet. Future addition once genuinely dynamic/authenticated features are needed (donation flow, parent/staff portal). Contact form backend will NOT use Serverpod - see Deploy Pipeline below.
-       
-        - ## Guiding principles
-        - - **Dart-first, minimal JS.** Avoid hand-written JS. Exceptions: Sanity client/tooling JS, and Cloudflare Pages Functions (which don't run Dart - see contact form below).
-          - - **Content boundary:** Sanity owns all editable content. Jaspr owns layout/logic only.
-            - - **Data layer:** never call the Sanity client directly from page components - always go through `ContentRepository` (`lib/sanity/`). This is what lets Serverpod slot in later without a content-layer rewrite.
-              - - **Work in batches, one screen/task at a time.** Finish, verify, and commit one batch before starting the next. This has consistently caught real bugs early (see archive for examples) - keep it even with more usage budget available.
-                - - **Nav is a hardcoded array in `header.dart`.** `SiteSettings.navigation` is queried but intentionally unused - follow the existing pattern, don't switch to Sanity-driven nav without discussing it first.
-                 
-                  - ## Active: Step 9b - Deploy Pipeline
-                 
-                  - Cloudflare Pages is already serving this preview build and is confirmed as the production host (`build.sh` installs the Dart SDK, since Cloudflare's build image doesn't ship one). Two real gaps remain: content freshness and the non-functional contact form.
-                 
-                  - - [ ] **9b.1 - Sanity webhook -> Cloudflare Pages Deploy Hook** - dashboard/console config on both sides, no code changes: a Cloudflare deploy hook triggered by a Sanity webhook on document publish/update/delete.
-                    - [ ] - [ ] **9b.2 - Cloudflare Pages Function: contact form endpoint** - new `functions/api/contact.js` (the one deliberate JS exception to Dart-first, since Pages Functions don't run Dart). Validates submissions, sends via Resend API, reads the API key from a Cloudflare secret.
-                    - [ ] - [ ] **9b.3 - Wire the contact form to the function** - convert the static Contact page into a real `@client` component with fetch-based submission, loading/success/error states, accessible error messaging.
-                    - [ ] - [ ] **9b.4 - Production custom domain cutover** - add littlevillage.org as a custom domain on the Cloudflare Pages project, update DNS. Sequenced last, after 9b.2/9b.3 are verified working on the preview URL.
-                   
-                    - [ ] ## Open question
-                    - [ ] `pages/support_us.dart` exists (added 2026-07-28, linked from the About dropdown) but isn't part of any documented batch, and the header's Donate pill still links to `href="#"`. Needs a decision: does Support Us replace the WordPress -> Give Lively Donate link, or is it separate? Where should the Donate pill point?
-                   
-                    - [ ] ## Reference: current WordPress nav (for parity-checking)
-                    - [ ] Programs and Enrollment (+ Educational Programs, Early Intervention, Preschool, Elementary, Therapeutic Services, Family Services, CPSE Evaluations, Enrollment Info, Summer Rec) - About Us (+ Mission, History, Founders, Admin Staff, Board Members, Upcoming Events, Compliance, Data Privacy & Security, Career Opportunities) - School Facilities - Media (+ Newsletters, In The News, Videos, Pictures) - Contact - Donate (external, Give Lively)
-                    - [ ] 
+- **Styling:** Jaspr's native type-safe CSS-in-Dart (`css()`/`@css`/`Styles`). No CSS framework, no preprocessor.
+- **Sanity** - CMS, source of truth for all content. Project `f537tj40`, dataset `production`. Same project/dataset as the existing Dart app. Schema lives in the separate `hlvs-studio` repo (`hlvs/schemaTypes/`).
+- **Cloudflare Pages** - static host. Preview build at `littlevillage-site.pages.dev` is the only target until launch.
+- **Serverpod** - not yet. Future addition once genuinely dynamic/authenticated features are needed (donation flow, parent/staff portal). Contact form backend will NOT use Serverpod - see Step 9c below.
+
+## Guiding principles
+
+- **Dart-first, minimal JS.** Avoid hand-written JS. Exceptions: Sanity client/tooling JS, and Cloudflare Pages Functions (which don't run Dart - see Step 9c).
+- **Content boundary:** Sanity owns all editable content. Jaspr owns layout/logic only.
+- **Data layer:** never call the Sanity client directly from page components - always go through `ContentRepository` (`lib/sanity/`). This is what lets Serverpod slot in later without a content-layer rewrite.
+- **Work in batches, one screen/task at a time.** Finish, verify, and commit one batch before starting the next.
+- **Nav is a hardcoded array in `header.dart`.** `SiteSettings.navigation` is queried but intentionally unused - follow the existing pattern, don't switch to Sanity-driven nav without discussing it first.
+
+## Complete: Step 9b - Sanity Rebuild Webhook
+
+Verified working 2026-08-10. Publishing/updating/deleting content in Sanity Studio triggers a Cloudflare Pages rebuild of `littlevillage-site.pages.dev` automatically. Dev preview only - no domain/DNS involved. See `docs/archive/completed-batches.md` for details if needed.
+
+## Active: Step 9c - Contact Form Backend
+
+**Design decision (finalized 2026-08-10, per discussion with admissions):** the separate "Request Information" and "Schedule a Tour" flows on the Contact page collapse into **one form** with a **mandatory** dropdown at the top: "General Inquiry" / "Schedule a Tour". No default selection - starts on a disabled placeholder option ("Select one..."). The dropdown only tags intent for routing/subject-line purposes; **both request types use the exact same fields** (name, child's DOB, county/district, phone, email, message). Admissions explicitly does NOT want a preferred-date/time field for tour requests - they'll handle scheduling back-and-forth themselves by email/phone after receiving the request.
+
+**Bot protection (both required, not optional):**
+
+- Honeypot field - a hidden field real users never fill in. If populated, silently return success without sending anything.
+- **Cloudflare Turnstile** - free, privacy-friendlier than reCAPTCHA. Public site key ships in the `@client` component. Secret key (`TURNSTILE_SECRET_KEY`, already added as a Cloudflare Pages secret) is verified server-side via the siteverify API before any submission is trusted. Consider the Cloudflare Pages Functions Turnstile plugin to simplify the server-side check rather than hand-rolling the fetch to siteverify - check current docs for the plugin's exact API before using it.
+
+**Resend (verified, ready to use):** sending domain `send.littlevillage.org` is verified in Resend. `RESEND_API_KEY` is already added as a Cloudflare Pages secret. **From address must use the verified subdomain** (e.g. `contact@send.littlevillage.org`) - Resend cannot send as an unverified address. Set `reply-to` to the submitter's email so replies go straight to the parent. **Destination inbox: `information@littlevillage.org`** (confirmed).
+
+- [x] **9c.1 - Function scaffold + validation (honeypot + Turnstile)** - `functions/api/contact.js` live. Validates `requestType` (exactly `"general"`/`"tour"`, 400 otherwise), name/message/phone-or-email, honeypot (silent `{success:true}`), and Turnstile via siteverify. Verified 2026-08-11 via curl against the preview across all listed cases (missing/invalid requestType, missing required fields, honeypot filled, missing/bad Turnstile token, malformed JSON) - correct status codes and JSON shapes confirmed.
+
+- [x] **9c.2 - Resend integration** - sends via Resend's raw REST API (no SDK/npm dependency, since the build pipeline is Dart-only with no node_modules step). From `send.littlevillage.org`, to `information@littlevillage.org`, subject/body branch on `requestType`, `reply_to` set to submitter's email. Resend failures return a distinct 502. Verified 2026-08-11 with a real end-to-end submission (real Turnstile token solved in a live browser, not automation - Turnstile blocks headless/scripted solves by design) - email confirmed arrived with correct reply-to.
+
+- [ ] **9c.3 - Wire the Contact page to the function, single form** - convert the relevant part of `contact.dart` into a Jaspr `@client` island (one of the few legitimate `@client` boundaries, alongside the FAQ accordion, filter pills, hero gallery, mobile nav). **Partially done ahead of schedule:** the mandatory dropdown (placeholder default, `general`/`tour` options) and the Turnstile widget script + container (site key/action in `lib/constants/turnstile.dart`, matching the server's `TURNSTILE_ACTION`) are already in `contact.dart` as static markup - pulled forward to unblock 9c.1/9c.2 curl verification. Still needed: the `@client` conversion itself, **submit button `disabled` bound to `requestType == null`**, removing the old static non-functional button wiring, and the actual `fetch('/api/contact', {method: 'POST', body: JSON.stringify(...)})` submit handler pulling the live Turnstile token out of the `cf-turnstile-response` hidden input. Client-side validation mirrors the server's required fields for instant feedback, but the server (9c.1) stays the real source of truth. Verify by actually submitting the real Contact page form on the preview and confirming a real email arrives.
+
+- [ ] **9c.4 - States & accessibility polish** - loading state (disable submit, spinner/pending indicator), success state (confirmation message, clear the form), error state (accessible inline error via an aria-live region, matching the 7.6 accessibility conventions - preserve what the user typed rather than clearing it on error). Specifically handle the case where the disabled-button UX gets bypassed (JS disabled, race condition, or a bug) - the 400 response from 9c.1's `requestType` validation needs a clear, accessible error message that points at the dropdown specifically, not a generic "something went wrong." Verify with a manual pass through all three states, plus a screen-reader spot-check of the error announcement.
+
+## Deferred until launch week (mid-September 2026): Step 9d - Custom Domain Cutover
+
+Do not start this step under any circumstances until explicitly told launch is imminent, even if 9b and 9c are both done and verified. Note: this is separate from the Resend subdomain (`send.littlevillage.org`) already set up for 9c - that's isolated and doesn't touch the site's main A/CNAME records.
+
+- [ ] **9d.1 - Production custom domain** - add littlevillage.org as a custom domain on the Cloudflare Pages project.
+- [ ] **9d.2 - DNS cutover at GoDaddy** - update DNS to point at Cloudflare.
+
+## Open question
+
+`pages/support_us.dart` exists (added 2026-07-28, linked from the About dropdown) but isn't part of any documented batch, and the header's Donate pill still links to `href="#"`. Needs a decision: does Support Us replace the WordPress -> Give Lively Donate link, or is it separate? Where should the Donate pill point?
+
+## Reference: current WordPress nav (for parity-checking)
+
+Programs and Enrollment (+ Educational Programs, Early Intervention, Preschool, Elementary, Therapeutic Services, Family Services, CPSE Evaluations, Enrollment Info, Summer Rec) - About Us (+ Mission, History, Founders, Admin Staff, Board Members, Upcoming Events, Compliance, Data Privacy & Security, Career Opportunities) - School Facilities - Media (+ Newsletters, In The News, Videos, Pictures) - Contact - Donate (external, Give Lively)
