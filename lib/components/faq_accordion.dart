@@ -19,33 +19,33 @@ class FaqAccordion extends StatefulComponent {
 
   @css
   static List<StyleRule> get styles => [
-    css('.faq-accordion').styles(display: .flex, flexDirection: .column, gap: .all(9.px)),
+    css('.faq-accordion').styles(display: .flex, flexDirection: .column, gap: .all(12.px)),
     css('.faq-item').styles(
-      border: .all(color: AppColors.borderLight, width: 2.px),
-      radius: .all(.circular(8.px)),
+      border: .all(color: AppColors.line, width: 1.px),
+      radius: .all(.circular(Radii.md)),
     ),
     css('.faq-question', [
       css('&').styles(
         display: .flex,
         width: 100.percent,
-        padding: .symmetric(vertical: 13.px, horizontal: 16.px),
+        padding: .symmetric(vertical: 16.px, horizontal: 20.px),
         border: .none,
         justifyContent: .spaceBetween,
         alignItems: .center,
-        color: AppColors.ink,
+        color: AppColors.navy,
         textAlign: .left,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-        fontSize: 16.px,
-        fontWeight: .w700,
+        fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+        fontSize: 15.px,
+        fontWeight: .w600,
         backgroundColor: Colors.transparent,
         raw: {'cursor': 'pointer'},
       ),
     ]),
-    css('.faq-icon').styles(color: AppColors.muted, fontSize: 20.px, fontWeight: .w400),
+    css('.faq-icon').styles(color: AppColors.coral, fontSize: 18.px, fontWeight: .w700),
     css('.faq-answer').styles(
-      padding: .only(left: 16.px, right: 16.px, bottom: 13.px),
-      color: AppColors.body,
-      fontSize: 13.px,
+      padding: .only(left: 20.px, right: 20.px, bottom: 16.px),
+      color: AppColors.mutedTextMid,
+      fontSize: 14.px,
       lineHeight: 1.5.em,
     ),
   ];

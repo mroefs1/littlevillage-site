@@ -41,22 +41,27 @@ class ContentPage extends StatelessComponent {
         flexDirection: .column,
       ),
       css('.page-breadcrumb').styles(
-        color: AppColors.muted,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-        fontSize: 12.px,
+        color: AppColors.mutedTextLight,
+        fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+        fontSize: 13.px,
       ),
       css('h1').styles(
         margin: .only(top: 6.px),
-        fontSize: 36.px,
-        lineHeight: 1.05.em,
+        fontSize: 38.px,
+        fontWeight: .w600,
+        letterSpacing: (-0.015).em,
+        lineHeight: 1.1.em,
       ),
       css('h2').styles(
         margin: .only(top: 30.px),
         fontSize: 22.px,
+        fontWeight: .w600,
         lineHeight: 1.15.em,
       ),
       css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
-        css('&').styles(padding: .only(top: 18.px, left: 20.px, right: 20.px, bottom: 40.px)),
+        css('&').styles(
+          padding: .only(top: 18.px, left: 20.px, right: 20.px, bottom: 40.px),
+        ),
         css('h1').styles(fontSize: 28.px),
       ]),
       // News/event detail pages: a centered column with a meta bar, hero
