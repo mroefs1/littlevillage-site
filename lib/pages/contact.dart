@@ -52,6 +52,10 @@ class Contact extends AsyncStatelessComponent {
   static Component _form() {
     return div(classes: 'contact-form-card', [
       div(classes: 'contact-form-title', [.text('Request Information')]),
+      div(classes: 'contact-form-legend', [
+        span(classes: 'contact-required-mark', attributes: {'aria-hidden': 'true'}, [.text('*')]),
+        .text(' Required'),
+      ]),
       const ContactForm(),
     ]);
   }
@@ -104,6 +108,11 @@ class Contact extends AsyncStatelessComponent {
       fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
       fontSize: 19.px,
       fontWeight: .w700,
+    ),
+    css('.contact-form-legend').styles(
+      margin: .only(bottom: 12.px, top: (-8).px),
+      color: AppColors.body,
+      fontSize: 12.px,
     ),
     css('.contact-form-grid').styles(
       display: .grid,

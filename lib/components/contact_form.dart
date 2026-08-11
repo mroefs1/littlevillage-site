@@ -10,6 +10,14 @@ import '../constants/turnstile.dart';
 
 enum _SubmitStatus { idle, submitting, success, error }
 
+// Matches the exact string functions/api/contact.js returns for a missing/
+// invalid requestType, so a 400 with this message (the disabled-button UX
+// bypassed somehow) can be pinned to the dropdown specifically instead of
+// showing a generic error.
+const _requestTypeRequiredMessage = 'Please select General Inquiry or Schedule a Tour.';
+
+const _dangerColor = Color('#b3261e');
+
 // The one interactive (@client) piece of the Contact page - everything else
 // (title, info column) stays static. Fields are uncontrolled (read via
 // GlobalNodeKey at submit time) rather than tracked in state, since a
@@ -29,9 +37,23 @@ class ContactForm extends StatefulComponent {
       margin: .only(top: 4.px),
       gridPlacement: GridPlacement(columnStart: LinePlacement.span(2)),
     ),
+    css('.contact-btn-primary').styles(display: .flex, justifyContent: .center, alignItems: .center, gap: .all(8.px)),
     css('.contact-btn-primary:disabled').styles(
       opacity: 0.55,
       raw: {'cursor': 'not-allowed'},
+    ),
+    css.keyframes('contact-spin', {
+      'from': Styles(transform: .rotate(0.deg)),
+      'to': Styles(transform: .rotate(360.deg)),
+    }),
+    css('.contact-spinner').styles(
+      display: .inlineBlock,
+      width: 14.px,
+      height: 14.px,
+      border: .all(color: Colors.white, width: 2.px),
+      radius: .all(.circular(50.percent)),
+      animation: Animation(name: 'contact-spin', duration: 700.ms, curve: .linear),
+      raw: {'border-top-color': 'transparent', 'animation-iteration-count': 'infinite'},
     ),
     css('.contact-honeypot').styles(
       position: .absolute(left: (-9999).px),
@@ -39,10 +61,28 @@ class ContactForm extends StatefulComponent {
       height: 1.px,
       overflow: .hidden,
     ),
+    css('.contact-required-mark').styles(color: _dangerColor, fontWeight: .w700),
+    css('.contact-required-sr').styles(
+      position: .absolute(),
+      width: 1.px,
+      height: 1.px,
+      padding: .zero,
+      margin: .all((-1).px),
+      overflow: .hidden,
+      raw: {'clip': 'rect(0, 0, 0, 0)', 'white-space': 'nowrap'},
+    ),
+    css('.contact-field-hint').styles(
+      margin: .only(top: (-4).px),
+      color: AppColors.body,
+      fontSize: 12.px,
+    ),
+    css('.contact-field select[aria-invalid="true"], .contact-field input[aria-invalid="true"]').styles(
+      border: .all(color: _dangerColor, width: 1.5.px),
+    ),
     css('.contact-form-feedback').styles(
       margin: .only(top: 4.px),
       gridPlacement: GridPlacement(columnStart: LinePlacement.span(2)),
-      color: AppColors.primary,
+      color: _dangerColor,
       fontSize: 13.px,
     ),
     css('.contact-form-success').styles(
@@ -67,6 +107,7 @@ class _ContactFormState extends State<ContactForm> {
   final _messageKey = GlobalNodeKey<web.HTMLTextAreaElement>();
   final _honeypotKey = GlobalNodeKey<web.HTMLInputElement>();
   final _turnstileKey = GlobalNodeKey<web.HTMLDivElement>();
+  final _requestTypeKey = GlobalNodeKey<web.HTMLSelectElement>();
 
   Future<void> _submit() async {
     final name = _nameKey.currentNode?.value.trim() ?? '';
@@ -75,7 +116,8 @@ class _ContactFormState extends State<ContactForm> {
     final email = _emailKey.currentNode?.value.trim() ?? '';
 
     if (_requestType == null) {
-      setState(() => _feedback = 'Please select General Inquiry or Schedule a Tour.');
+      setState(() => _feedback = _requestTypeRequiredMessage);
+      _requestTypeKey.currentNode?.focus();
       return;
     }
     if (name.isEmpty) {
@@ -125,10 +167,14 @@ class _ContactFormState extends State<ContactForm> {
           _feedback = "Thanks — we'll be in touch soon.";
         });
       } else {
+        final error = (data['error'] as String?) ?? 'Something went wrong. Please try again.';
         setState(() {
           _status = _SubmitStatus.error;
-          _feedback = (data['error'] as String?) ?? 'Something went wrong. Please try again.';
+          _feedback = error;
         });
+        if (error == _requestTypeRequiredMessage) {
+          _requestTypeKey.currentNode?.focus();
+        }
       }
     } catch (_) {
       setState(() {
@@ -141,19 +187,26 @@ class _ContactFormState extends State<ContactForm> {
   @override
   Component build(BuildContext context) {
     if (_status == _SubmitStatus.success) {
-      return div(classes: 'contact-form-success', [.text(_feedback!)]);
+      return div(classes: 'contact-form-success', attributes: {'role': 'status'}, [.text(_feedback!)]);
     }
 
     final isSubmitting = _status == _SubmitStatus.submitting;
+    final isRequestTypeError = _feedback == _requestTypeRequiredMessage;
 
     return form(classes: 'contact-form-grid', [
       _field(
         'What can we help with?',
         full: true,
+        required: true,
         child: select(
+          key: _requestTypeKey,
           name: 'requestType',
           required: true,
           onChange: (values) => setState(() => _requestType = values.isEmpty ? null : values.first),
+          attributes: {
+            if (isRequestTypeError) 'aria-invalid': 'true',
+            if (isRequestTypeError) 'aria-describedby': 'contact-form-feedback',
+          },
           [
             option(value: '', disabled: true, selected: _requestType == null, [.text('Select one...')]),
             option(value: 'general', selected: _requestType == 'general', [.text('General Inquiry')]),
@@ -161,15 +214,25 @@ class _ContactFormState extends State<ContactForm> {
           ],
         ),
       ),
-      _field('Parent / guardian name', full: true, child: input(key: _nameKey, type: InputType.text)),
+      _field(
+        'Parent / guardian name',
+        full: true,
+        required: true,
+        child: input(key: _nameKey, type: InputType.text, attributes: {'required': 'required'}),
+      ),
       _field("Child's date of birth", child: input(key: _dobKey, type: InputType.date)),
       _field('County / school district (if known)', child: input(key: _countyKey, type: InputType.text)),
       _field('Phone', child: input(key: _phoneKey, type: InputType.tel)),
       _field('Email', child: input(key: _emailKey, type: InputType.email)),
+      div(classes: 'contact-field-hint contact-field-full', [
+        .text('Phone or email required'),
+        _requiredMark(),
+      ]),
       _field(
         'What would you like us to know?',
         full: true,
-        child: textarea(key: _messageKey, rows: 4, []),
+        required: true,
+        child: textarea(key: _messageKey, rows: 4, required: true, []),
       ),
       div(classes: 'contact-honeypot', attributes: {'aria-hidden': 'true'}, [
         input(
@@ -186,24 +249,48 @@ class _ContactFormState extends State<ContactForm> {
         [],
       ),
       if (_feedback != null)
-        div(classes: 'contact-form-feedback', attributes: {'role': 'alert'}, [.text(_feedback!)]),
+        div(
+          id: 'contact-form-feedback',
+          classes: 'contact-form-feedback',
+          attributes: {'role': 'alert'},
+          [.text(_feedback!)],
+        ),
       div(classes: 'contact-form-actions', [
         button(
           type: ButtonType.button,
           classes: 'contact-btn-primary',
           disabled: _requestType == null || isSubmitting,
           onClick: _submit,
-          [.text(isSubmitting ? 'Sending…' : 'Send request →')],
+          attributes: {'aria-busy': '$isSubmitting'},
+          [
+            if (isSubmitting) span(classes: 'contact-spinner', attributes: {'aria-hidden': 'true'}, []),
+            .text(isSubmitting ? 'Sending…' : 'Send request →'),
+          ],
         ),
       ]),
       script(src: 'https://challenges.cloudflare.com/turnstile/v0/api.js', async: true, defer: true),
     ]);
   }
 
-  static Component _field(String labelText, {required Component child, bool full = false}) {
+  static Component _field(
+    String labelText, {
+    required Component child,
+    bool full = false,
+    bool required = false,
+  }) {
     return label(classes: full ? 'contact-field contact-field-full' : 'contact-field', [
-      div(classes: 'contact-field-label', [.text(labelText)]),
+      div(classes: 'contact-field-label', [
+        .text(labelText),
+        if (required) _requiredMark(),
+      ]),
       child,
+    ]);
+  }
+
+  static Component _requiredMark() {
+    return .fragment([
+      span(classes: 'contact-required-mark', attributes: {'aria-hidden': 'true'}, [.text(' *')]),
+      span(classes: 'contact-required-sr', [.text(' (required)')]),
     ]);
   }
 }
