@@ -6,6 +6,7 @@ import '../components/photo_placeholder.dart';
 import '../components/seo_meta.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
+import '../constants/turnstile.dart';
 import '../sanity/content_repository.dart';
 import '../sanity/models/site_settings.dart';
 
@@ -71,10 +72,17 @@ class Contact extends AsyncStatelessComponent {
           child: const textarea(rows: 4, []),
           full: true,
         ),
+        // Renders inert until 9c.3 wires the submit handler and disabled-button state.
+        div(
+          classes: 'cf-turnstile',
+          attributes: {'data-sitekey': turnstileSiteKey, 'data-action': turnstileAction},
+          [],
+        ),
         div(classes: 'contact-form-actions', [
           button(type: ButtonType.button, classes: 'contact-btn-primary', [.text('Send request →')]),
         ]),
       ]),
+      script(src: 'https://challenges.cloudflare.com/turnstile/v0/api.js', async: true, defer: true),
     ]);
   }
 
