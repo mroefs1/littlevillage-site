@@ -52,6 +52,15 @@ class Contact extends AsyncStatelessComponent {
     return div(classes: 'contact-form-card', [
       div(classes: 'contact-form-title', [.text('Request Information')]),
       form(classes: 'contact-form-grid', [
+        _field(
+          'What can we help with?',
+          full: true,
+          child: select(name: 'requestType', required: true, [
+            option(value: '', disabled: true, selected: true, [.text('Select one...')]),
+            option(value: 'general', [.text('General Inquiry')]),
+            option(value: 'tour', [.text('Schedule a Tour')]),
+          ]),
+        ),
         _field('Parent / guardian name', child: const input(type: InputType.text), full: true),
         _field("Child's date of birth", child: const input(type: InputType.date)),
         _field('County / school district (if known)', child: const input(type: InputType.text)),
@@ -64,7 +73,6 @@ class Contact extends AsyncStatelessComponent {
         ),
         div(classes: 'contact-form-actions', [
           button(type: ButtonType.button, classes: 'contact-btn-primary', [.text('Send request →')]),
-          button(type: ButtonType.button, classes: 'contact-btn-secondary', [.text('Schedule a Tour instead')]),
         ]),
       ]),
     ]);
@@ -134,7 +142,7 @@ class Contact extends AsyncStatelessComponent {
     css('.contact-field').styles(display: .flex, flexDirection: .column, gap: .all(4.px)),
     css('.contact-field-full').styles(gridPlacement: GridPlacement(columnStart: LinePlacement.span(2))),
     css('.contact-field-label').styles(color: AppColors.body, fontSize: 12.px),
-    css('.contact-field input, .contact-field textarea', [
+    css('.contact-field input, .contact-field textarea, .contact-field select', [
       css('&').styles(
         width: 100.percent,
         padding: .symmetric(vertical: 9.px, horizontal: 10.px),
@@ -169,18 +177,6 @@ class Contact extends AsyncStatelessComponent {
       backgroundColor: AppColors.primary,
       raw: {'cursor': 'pointer'},
     ),
-    css('.contact-btn-secondary').styles(
-      padding: .symmetric(vertical: 10.px, horizontal: 20.px),
-      border: .all(color: AppColors.primary, width: 2.px),
-      radius: .all(.circular(9.px)),
-      color: AppColors.primary,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 16.px,
-      fontWeight: .w700,
-      backgroundColor: Colors.white,
-      raw: {'cursor': 'pointer'},
-    ),
-
     // Info column
     css('.contact-info-column').styles(display: .flex, flexDirection: .column, gap: .all(14.px), flex: Flex(grow: 1)),
     css('.contact-info-card').styles(
