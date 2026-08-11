@@ -54,7 +54,7 @@ class Footer extends StatelessComponent {
         padding: .symmetric(vertical: 24.px, horizontal: 40.px),
         justifyContent: .spaceBetween,
         gap: .all(20.px),
-        backgroundColor: AppColors.footerNavy,
+        backgroundColor: AppColors.navyDarker,
       ),
       css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
         css('&').styles(
@@ -71,7 +71,7 @@ class Footer extends StatelessComponent {
         ),
         css('.footer-school-name').styles(
           color: Colors.white,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+          fontFamily: .list([headingFontFamily, FontFamilies.serif]),
           fontSize: 16.px,
           fontWeight: .w700,
         ),
@@ -97,8 +97,13 @@ class Footer extends StatelessComponent {
           fontSize: 13.px,
         ),
         css('.footer-column-title').styles(
-          color: Colors.white,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+          margin: .only(bottom: 10.px),
+          color: AppColors.yellow,
+          fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+          fontSize: 12.px,
+          fontWeight: .w700,
+          textTransform: .upperCase,
+          letterSpacing: 0.1.em,
         ),
       ]),
       // White outline, not the sitewide primary blue — on this dark navy

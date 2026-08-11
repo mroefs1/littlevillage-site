@@ -38,13 +38,13 @@ class MobileNav extends StatefulComponent {
           radius: .all(.circular(8.px)),
           justifyContent: .center,
           alignItems: .center,
-          color: AppColors.ink,
+          color: AppColors.navy,
           fontSize: 22.px,
           backgroundColor: Colors.transparent,
           raw: {'cursor': 'pointer'},
         ),
         css('&:focus-visible').styles(
-          outline: Outline(color: AppColors.primary, width: OutlineWidth(2.px), style: .solid),
+          outline: Outline(color: AppColors.blue, width: OutlineWidth(2.px), style: .solid),
           raw: {'outline-offset': '2px'},
         ),
       ]),
@@ -53,8 +53,10 @@ class MobileNav extends StatefulComponent {
           display: .none,
           position: .absolute(top: 100.percent, left: 0.px, right: 0.px),
           padding: .all(14.px),
-          border: .only(bottom: .solid(color: AppColors.borderLight, width: 2.px)),
-          shadow: BoxShadow(offsetX: 0.px, offsetY: 8.px, blur: 20.px, color: .rgba(44, 42, 38, 0.14)),
+          border: .only(
+            bottom: .solid(color: AppColors.line, width: 2.px),
+          ),
+          shadow: BoxShadow(offsetX: 0.px, offsetY: 8.px, blur: 20.px, color: .rgba(23, 51, 74, 0.14)),
           flexDirection: .column,
           alignItems: .stretch,
           gap: .all(2.px),
@@ -74,7 +76,10 @@ class MobileNav extends StatefulComponent {
       css('.nav-dropdown:hover > .nav-dropdown-menu, .nav-dropdown:focus-within > .nav-dropdown-menu').styles(
         display: .flex,
       ),
-      css('.request-info').styles(margin: .only(top: 8.px), textAlign: .center),
+      css('.request-info').styles(
+        margin: .only(top: 8.px),
+        textAlign: .center,
+      ),
     ]),
   ];
 }
@@ -91,10 +96,15 @@ class _MobileNavState extends State<MobileNav> {
         attributes: {'aria-expanded': '$_isOpen', 'aria-controls': 'primary-nav', 'aria-label': 'Toggle menu'},
         [.text(_isOpen ? '✕' : '☰')],
       ),
-      nav(id: 'primary-nav', classes: 'primary-nav${_isOpen ? ' open' : ''}', attributes: const {'aria-label': 'Primary'}, [
-        for (final item in component.items) _navItem(item),
-        Link(to: '/contact', classes: 'request-info', child: .text('Request Info')),
-      ]),
+      nav(
+        id: 'primary-nav',
+        classes: 'primary-nav${_isOpen ? ' open' : ''}',
+        attributes: const {'aria-label': 'Primary'},
+        [
+          for (final item in component.items) _navItem(item),
+          Link(to: '/contact', classes: 'request-info', child: .text('Request Info')),
+        ],
+      ),
     ]);
   }
 
@@ -111,7 +121,10 @@ class _MobileNavState extends State<MobileNav> {
       Link(
         to: path,
         child: hasDropdown
-            ? .fragment([.text(label), span(classes: 'nav-caret', [.text('▾')])])
+            ? .fragment([
+                .text(label),
+                span(classes: 'nav-caret', [.text('▾')]),
+              ])
             : .text(label),
       ),
       if (hasDropdown)

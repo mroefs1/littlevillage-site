@@ -53,7 +53,11 @@ class Header extends StatelessComponent {
         'children': aboutLinks,
       },
       {'label': 'Facilities', 'path': '/facilities'},
-      {'label': 'News & Events', 'path': '/news', 'aliases': const ['/events']},
+      {
+        'label': 'News & Events',
+        'path': '/news',
+        'aliases': const ['/events'],
+      },
       {
         'label': 'Current Families',
         'path': '/current-families',
@@ -103,16 +107,15 @@ class Header extends StatelessComponent {
       css('&').styles(
         display: .flex,
         padding: .symmetric(vertical: 7.px, horizontal: 40.px),
-        border: .only(bottom: .solid(color: AppColors.utilityBorder, width: 1.5.px)),
         justifyContent: .spaceBetween,
         alignItems: .center,
-        color: AppColors.utilityText,
+        color: Colors.white,
         fontSize: 12.px,
-        backgroundColor: AppColors.lightBlueTint,
+        backgroundColor: AppColors.navyDark,
       ),
       css('.utility-contact').styles(
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-        fontSize: 14.px,
+        fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+        fontSize: 13.px,
       ),
       // The full contact line is too long to wrap gracefully at mobile/
       // tablet widths — hidden there, keeping just the donate pill visible;
@@ -128,20 +131,24 @@ class Header extends StatelessComponent {
           gap: .all(12.px),
         ),
         css('.utility-social').styles(
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+          fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
           fontSize: 14.px,
         ),
         css('.donate-pill').styles(
           padding: .symmetric(vertical: 5.px, horizontal: 14.px),
-          radius: .all(.circular(7.px)),
+          radius: .all(.circular(Radii.pill)),
           color: Colors.white,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+          fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
           fontSize: 14.px,
           fontWeight: .w700,
-          backgroundColor: AppColors.accent,
+          backgroundColor: AppColors.coral,
         ),
+        // White outline, not the sitewide blue — against this dark navy
+        // utility-bar background, blue only clears ~2:1 contrast, well
+        // under the 3:1 WCAG floor for a visible focus indicator (same
+        // reasoning as the footer's focus-visible override).
         css('.donate-pill:focus-visible').styles(
-          outline: Outline(color: AppColors.primary, width: OutlineWidth(2.px), style: .solid),
+          outline: Outline(color: Colors.white, width: OutlineWidth(2.px), style: .solid),
           raw: {'outline-offset': '2px'},
         ),
       ]),
@@ -151,12 +158,16 @@ class Header extends StatelessComponent {
         display: .flex,
         position: .relative(),
         padding: .symmetric(vertical: 14.px, horizontal: 40.px),
-        border: .only(bottom: .solid(color: AppColors.borderLight, width: 2.px)),
+        border: .only(
+          bottom: .solid(color: AppColors.line, width: 2.px),
+        ),
         justifyContent: .spaceBetween,
         alignItems: .center,
       ),
       css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
-        css('.header-main').styles(padding: .symmetric(vertical: 12.px, horizontal: 20.px)),
+        css('.header-main').styles(
+          padding: .symmetric(vertical: 12.px, horizontal: 20.px),
+        ),
       ]),
       css('.brand', [
         css('&').styles(
@@ -166,26 +177,29 @@ class Header extends StatelessComponent {
         ),
         css('.brand-mark').styles(
           display: .block,
-          width: 42.px,
-          height: 42.px,
+          width: 48.px,
+          height: 48.px,
+          padding: .all(9.px),
+          radius: .all(.circular(50.percent)),
+          backgroundColor: AppColors.yellow,
           raw: {'object-fit': 'contain'},
         ),
         css('.brand-name').styles(
-          color: AppColors.ink,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+          color: AppColors.navy,
+          fontFamily: .list([headingFontFamily, FontFamilies.serif]),
           fontSize: 18.px,
           fontWeight: .w700,
           lineHeight: 1.em,
         ),
         css('.brand-subtitle').styles(
           margin: .only(top: 2.px),
-          color: AppColors.muted,
+          color: AppColors.mutedTextLight,
           fontSize: 11.px,
           fontWeight: .w400,
         ),
       ]),
       css('.brand:focus-visible').styles(
-        outline: Outline(color: AppColors.primary, width: OutlineWidth(2.px), style: .solid),
+        outline: Outline(color: AppColors.blue, width: OutlineWidth(2.px), style: .solid),
         raw: {'outline-offset': '3px'},
       ),
       css('nav', [
@@ -195,13 +209,14 @@ class Header extends StatelessComponent {
           gap: .all(20.px),
         ),
         css('a').styles(
-          color: AppColors.ink,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-          fontSize: 16.px,
+          color: AppColors.blue,
+          fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+          fontSize: 15.px,
+          fontWeight: .w600,
         ),
         css('a:focus-visible').styles(
           radius: .all(.circular(4.px)),
-          outline: Outline(color: AppColors.primary, width: OutlineWidth(2.px), style: .solid),
+          outline: Outline(color: AppColors.blue, width: OutlineWidth(2.px), style: .solid),
           raw: {'outline-offset': '3px'},
         ),
         css('div.active').styles(
@@ -213,14 +228,14 @@ class Header extends StatelessComponent {
           position: .absolute(bottom: (-6).px, left: 0.px, right: 0.px),
           height: 2.px,
           radius: .circular(1.px),
-          backgroundColor: AppColors.primary,
+          backgroundColor: AppColors.blue,
         ),
         css('.request-info').styles(
-          padding: .symmetric(vertical: 8.px, horizontal: 16.px),
-          radius: .all(.circular(8.px)),
+          padding: .symmetric(vertical: 10.px, horizontal: 18.px),
+          radius: .all(.circular(Radii.pill)),
           color: Colors.white,
           fontWeight: .w700,
-          backgroundColor: AppColors.primary,
+          backgroundColor: AppColors.coral,
         ),
 
         // Dropdown menus for Programs/About — pure CSS, toggled by
@@ -235,9 +250,9 @@ class Header extends StatelessComponent {
           position: .absolute(top: 100.percent, left: 0.px),
           minWidth: 190.px,
           padding: .all(8.px),
-          border: .all(color: AppColors.borderLight, width: 2.px),
-          radius: .all(.circular(10.px)),
-          shadow: BoxShadow(offsetX: 0.px, offsetY: 8.px, blur: 20.px, color: .rgba(44, 42, 38, 0.14)),
+          border: .all(color: AppColors.line, width: 2.px),
+          radius: .all(.circular(Radii.sm)),
+          shadow: BoxShadow(offsetX: 0.px, offsetY: 8.px, blur: 20.px, color: .rgba(23, 51, 74, 0.14)),
           flexDirection: .column,
           gap: .all(2.px),
           backgroundColor: Colors.white,
@@ -248,13 +263,13 @@ class Header extends StatelessComponent {
         ),
         css('.nav-dropdown-link').styles(
           padding: .symmetric(vertical: 8.px, horizontal: 12.px),
-          radius: .all(.circular(6.px)),
-          color: AppColors.ink,
+          radius: .all(.circular(Radii.sm)),
+          color: AppColors.navy,
           fontSize: 14.px,
         ),
         css('.nav-dropdown-link:hover').styles(
-          color: AppColors.primary,
-          backgroundColor: AppColors.shadedBg,
+          color: AppColors.blue,
+          backgroundColor: AppColors.sky,
         ),
       ]),
     ]),
