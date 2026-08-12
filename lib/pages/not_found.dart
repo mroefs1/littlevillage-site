@@ -24,13 +24,17 @@ class NotFound extends StatelessComponent {
         ),
       ]),
       Link(to: '/', classes: 'not-found-home-btn', child: .text('Back to Homepage')),
-      nav(classes: 'not-found-links', attributes: const {'aria-label': 'Helpful links'}, [
-        Link(to: '/programs', child: .text('Programs & Enrollment')),
-        Link(to: '/admissions', child: .text('Admissions')),
-        Link(to: '/about', child: .text('About Us')),
-        Link(to: '/news', child: .text('News & Events')),
-        Link(to: '/contact', child: .text('Contact')),
-      ]),
+      nav(
+        classes: 'not-found-links',
+        attributes: const {'aria-label': 'Helpful links'},
+        [
+          Link(to: '/programs', child: .text('Programs & Enrollment')),
+          Link(to: '/admissions', child: .text('Admissions')),
+          Link(to: '/about', child: .text('About Us')),
+          Link(to: '/news', child: .text('News & Events')),
+          Link(to: '/contact', child: .text('Contact')),
+        ],
+      ),
     ]);
   }
 
@@ -45,8 +49,8 @@ class NotFound extends StatelessComponent {
         textAlign: .center,
       ),
       css('.not-found-code').styles(
-        color: AppColors.primary,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        color: AppColors.navy,
+        fontFamily: .list([headingFontFamily, FontFamilies.serif]),
         fontSize: 72.px,
         fontWeight: .w700,
         lineHeight: 1.em,
@@ -54,24 +58,25 @@ class NotFound extends StatelessComponent {
       css('h1').styles(
         margin: .only(top: 10.px),
         fontSize: 32.px,
+        fontWeight: .w600,
         lineHeight: 1.1.em,
       ),
       css('.not-found-body').styles(
         maxWidth: 480.px,
         margin: .only(top: 14.px),
-        color: AppColors.body,
-        fontSize: 15.px,
+        color: AppColors.mutedText,
+        fontSize: 16.px,
         lineHeight: 1.55.em,
       ),
       css('.not-found-home-btn').styles(
-        padding: .symmetric(vertical: 13.px, horizontal: 26.px),
+        padding: .symmetric(vertical: 14.px, horizontal: 26.px),
         margin: .only(top: 26.px),
-        radius: .all(.circular(9.px)),
+        radius: .all(.circular(Radii.pill)),
         color: Colors.white,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-        fontSize: 17.px,
+        fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+        fontSize: 16.px,
         fontWeight: .w700,
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.coral,
       ),
       css('.not-found-links', [
         css('&').styles(
@@ -82,10 +87,10 @@ class NotFound extends StatelessComponent {
           gap: .all(18.px),
         ),
         css('a').styles(
-          color: AppColors.primary,
-          fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+          color: AppColors.blue,
+          fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
           fontSize: 14.px,
-          fontWeight: .w700,
+          fontWeight: .w600,
         ),
         css('a:hover').styles(textDecoration: TextDecoration(line: .underline)),
       ]),

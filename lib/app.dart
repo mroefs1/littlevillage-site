@@ -52,83 +52,88 @@ class App extends AsyncStatelessComponent {
     return div(classes: 'app-shell', [
       a(href: '#main-content', classes: 'skip-link', [.text('Skip to main content')]),
       Header(programs: programs),
-      main_(id: 'main-content', attributes: const {'tabindex': '-1'}, classes: 'app-content', [
-        Router(
-          errorBuilder: (context, state) {
-            context.setStatusCode(404);
-            return const NotFound();
-          },
-          routes: [
-            Route(
-              path: '/',
-              title: 'Home',
-              builder: (context, state) => Home(
-                newsPosts: newsPosts.take(2).toList(),
-                events: events.take(2).toList(),
-                heroGallery: siteSettings.heroGallery,
-                programs: programs,
-              ),
-            ),
-            Route(path: '/about', title: 'About', builder: (context, state) => const About()),
-            Route(path: '/mission', title: 'Mission Statement', builder: (context, state) => const Mission()),
-            Route(path: '/history', title: 'Our History', builder: (context, state) => const OurHistory()),
-            Route(path: '/founders', title: 'Founders', builder: (context, state) => const Founders()),
-            Route(path: '/staff', title: 'Admin Staff', builder: (context, state) => const Staff()),
-            Route(path: '/board', title: 'Board Members', builder: (context, state) => const Board()),
-            Route(path: '/support-us', title: 'Support Us', builder: (context, state) => const SupportUs()),
-            Route(path: '/facilities', title: 'School Facilities', builder: (context, state) => const Facilities()),
-            Route(
-              path: '/programs',
-              title: 'Programs',
-              builder: (context, state) => Programs(programs: programs),
-            ),
-            for (final program in programs)
+      main_(
+        id: 'main-content',
+        attributes: const {'tabindex': '-1'},
+        classes: 'app-content',
+        [
+          Router(
+            errorBuilder: (context, state) {
+              context.setStatusCode(404);
+              return const NotFound();
+            },
+            routes: [
               Route(
-                path: '/programs/${program.slug}',
-                title: program.title,
-                builder: (context, state) => ProgramDetail(program),
+                path: '/',
+                title: 'Home',
+                builder: (context, state) => Home(
+                  newsPosts: newsPosts.take(2).toList(),
+                  events: events.take(2).toList(),
+                  heroGallery: siteSettings.heroGallery,
+                  programs: programs,
+                ),
               ),
-            Route(path: '/admissions', title: 'Admissions', builder: (context, state) => const Admissions()),
-            Route(
-              path: '/news',
-              title: 'News & Events',
-              builder: (context, state) => NewsEvents(newsPosts: newsPosts, events: events, newsletters: newsletters),
-            ),
-            for (final post in newsPosts)
-              if (post.slug != null)
+              Route(path: '/about', title: 'About', builder: (context, state) => const About()),
+              Route(path: '/mission', title: 'Mission Statement', builder: (context, state) => const Mission()),
+              Route(path: '/history', title: 'Our History', builder: (context, state) => const OurHistory()),
+              Route(path: '/founders', title: 'Founders', builder: (context, state) => const Founders()),
+              Route(path: '/staff', title: 'Admin Staff', builder: (context, state) => const Staff()),
+              Route(path: '/board', title: 'Board Members', builder: (context, state) => const Board()),
+              Route(path: '/support-us', title: 'Support Us', builder: (context, state) => const SupportUs()),
+              Route(path: '/facilities', title: 'School Facilities', builder: (context, state) => const Facilities()),
+              Route(
+                path: '/programs',
+                title: 'Programs',
+                builder: (context, state) => Programs(programs: programs),
+              ),
+              for (final program in programs)
                 Route(
-                  path: '/news/${post.slug}',
-                  title: post.title,
-                  builder: (context, state) => NewsDetail(post),
-                  settings: RouteSettings(lastMod: post.publishedDate),
+                  path: '/programs/${program.slug}',
+                  title: program.title,
+                  builder: (context, state) => ProgramDetail(program),
                 ),
-            for (final event in events)
-              if (event.slug != null)
-                Route(
-                  path: '/events/${event.slug}',
-                  title: event.title,
-                  builder: (context, state) => EventDetail(event),
-                  settings: RouteSettings(lastMod: event.publishedDate),
-                ),
-            Route(path: '/contact', title: 'Contact', builder: (context, state) => const Contact()),
-            Route(
-              path: '/current-families',
-              title: 'Current Families',
-              builder: (context, state) => const CurrentFamilies(),
-            ),
-            Route(
-              path: '/parent-association',
-              title: 'Parent Association',
-              builder: (context, state) => const ParentAssociation(),
-            ),
-            // Literal `/404.html` (not `/404`) so the static build writes this
-            // route straight to `build/jaspr/404.html` — the filename Netlify,
-            // Vercel, and GitHub Pages look for by convention to serve on an
-            // unmatched path.
-            Route(path: '/404.html', title: 'Page Not Found', builder: (context, state) => const NotFound()),
-          ],
-        ),
-      ]),
+              Route(path: '/admissions', title: 'Admissions', builder: (context, state) => const Admissions()),
+              Route(
+                path: '/news',
+                title: 'News & Events',
+                builder: (context, state) => NewsEvents(newsPosts: newsPosts, events: events, newsletters: newsletters),
+              ),
+              for (final post in newsPosts)
+                if (post.slug != null)
+                  Route(
+                    path: '/news/${post.slug}',
+                    title: post.title,
+                    builder: (context, state) => NewsDetail(post),
+                    settings: RouteSettings(lastMod: post.publishedDate),
+                  ),
+              for (final event in events)
+                if (event.slug != null)
+                  Route(
+                    path: '/events/${event.slug}',
+                    title: event.title,
+                    builder: (context, state) => EventDetail(event),
+                    settings: RouteSettings(lastMod: event.publishedDate),
+                  ),
+              Route(path: '/contact', title: 'Contact', builder: (context, state) => const Contact()),
+              Route(
+                path: '/current-families',
+                title: 'Current Families',
+                builder: (context, state) => const CurrentFamilies(),
+              ),
+              Route(
+                path: '/parent-association',
+                title: 'Parent Association',
+                builder: (context, state) => const ParentAssociation(),
+              ),
+              // Literal `/404.html` (not `/404`) so the static build writes this
+              // route straight to `build/jaspr/404.html` — the filename Netlify,
+              // Vercel, and GitHub Pages look for by convention to serve on an
+              // unmatched path.
+              Route(path: '/404.html', title: 'Page Not Found', builder: (context, state) => const NotFound()),
+            ],
+          ),
+        ],
+      ),
       const Footer(),
     ]);
   }
@@ -156,7 +161,7 @@ class App extends AsyncStatelessComponent {
         color: Colors.white,
         fontSize: 14.px,
         fontWeight: .w700,
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.blue,
         raw: {'z-index': '100', 'transition': 'top 0.15s ease-in-out'},
       ),
       css('&:focus').styles(

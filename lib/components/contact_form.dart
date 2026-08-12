@@ -91,6 +91,18 @@ class ContactForm extends StatefulComponent {
       fontSize: 15.px,
       lineHeight: 1.5.em,
     ),
+    // Missing before 11.10: contact.dart's mobile breakpoint collapses
+    // .contact-form-grid to a single explicit column, but this widget
+    // (defined in this separate file) still spanned 2 columns at every
+    // width with no override, forcing the browser to auto-generate an
+    // implicit second grid column to fit it - which silently defeated the
+    // mobile single-column layout even though the container's own
+    // grid-template-columns was correctly set to 1fr.
+    css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+      css('.contact-form-grid .cf-turnstile').styles(
+        gridPlacement: GridPlacement(columnStart: LinePlacement.span(1)),
+      ),
+    ]),
   ];
 }
 

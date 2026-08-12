@@ -44,8 +44,8 @@ class SupportUs extends StatelessComponent {
     css('.support-us-subtitle').styles(
       maxWidth: 640.px,
       margin: .only(top: 10.px, bottom: 24.px),
-      color: AppColors.body,
-      fontSize: 15.px,
+      color: AppColors.mutedText,
+      fontSize: 16.px,
       lineHeight: 1.55.em,
     ),
   ];

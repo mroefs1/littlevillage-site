@@ -27,18 +27,18 @@ class PhotoPlaceholder extends StatelessComponent {
       display: .flex,
       height: 140.px,
       padding: .all(12.px),
-      border: .all(color: AppColors.placeholderBorder, width: 2.px, style: .dashed),
-      radius: .all(.circular(8.px)),
+      border: .all(color: AppColors.peachDark, width: 2.px, style: .dashed),
+      radius: .all(.circular(Radii.sm)),
       justifyContent: .center,
       alignItems: .center,
-      color: AppColors.muted,
+      color: AppColors.mutedTextMid,
       textAlign: .center,
       fontFamily: FontFamilies.uiMonospace,
       fontSize: 12.px,
       fontWeight: .w600,
       raw: {
         'background-image':
-            'repeating-linear-gradient(45deg, ${AppColors.borderLight.value}, ${AppColors.borderLight.value} 9px, ${AppColors.placeholderStripe.value} 9px, ${AppColors.placeholderStripe.value} 18px)',
+            'repeating-linear-gradient(45deg, ${AppColors.peach.value}, ${AppColors.peach.value} 9px, ${AppColors.peachDark.value} 9px, ${AppColors.peachDark.value} 18px)',
       },
     ),
   ];
