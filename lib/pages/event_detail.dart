@@ -36,7 +36,9 @@ class EventDetail extends StatelessComponent {
         children: [
           div(classes: 'detail-container', [
             div(classes: 'detail-meta-bar', [
-              _metaItem('📅', [strong([.text(formatDate(event.eventDate))])]),
+              _metaItem('📅', [
+                strong([.text(formatDate(event.eventDate))]),
+              ]),
               _metaItem('📍', [.text(event.location)]),
               _metaItem('📝', [.text('Published ${formatDate(event.publishedDate)}')]),
             ]),
@@ -55,7 +57,9 @@ class EventDetail extends StatelessComponent {
             ]),
             if (event.ticketLink != null)
               div(classes: 'detail-cta', [
-                a(href: event.ticketLink!, target: Target.blank, classes: 'detail-cta-btn', [.text('Tickets / RSVP →')]),
+                a(href: event.ticketLink!, target: Target.blank, classes: 'detail-cta-btn', [
+                  .text('Tickets / RSVP →'),
+                ]),
               ]),
             if (event.photoGalleryUrls.isNotEmpty) ...[
               div(classes: 'evd-gallery-heading', [.text('Event photos')]),
@@ -81,10 +85,10 @@ class EventDetail extends StatelessComponent {
   static List<StyleRule> get styles => [
     css('.evd-gallery-heading').styles(
       margin: .only(top: 26.px, bottom: 14.px),
-      color: AppColors.ink,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-      fontSize: 20.px,
-      fontWeight: .w700,
+      color: AppColors.navy,
+      fontFamily: .list([headingFontFamily, FontFamilies.serif]),
+      fontSize: 19.px,
+      fontWeight: .w600,
     ),
     css('.evd-gallery-grid').styles(
       display: .grid,
@@ -93,7 +97,7 @@ class EventDetail extends StatelessComponent {
     ),
     css('.evd-gallery-image').styles(
       width: 100.percent,
-      radius: .all(.circular(8.px)),
+      radius: .all(.circular(Radii.sm)),
       raw: {'aspect-ratio': '1', 'object-fit': 'cover'},
     ),
     css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [

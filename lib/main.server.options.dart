@@ -34,6 +34,7 @@ import 'package:littlevillage_site/pages/current_families.dart'
     as _current_families;
 import 'package:littlevillage_site/pages/event_detail.dart' as _event_detail;
 import 'package:littlevillage_site/pages/home.dart' as _home;
+import 'package:littlevillage_site/pages/news_events.dart' as _news_events;
 import 'package:littlevillage_site/pages/not_found.dart' as _not_found;
 import 'package:littlevillage_site/pages/parent_association.dart'
     as _parent_association;
@@ -105,6 +106,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._current_families.CurrentFamilies.styles,
     ..._event_detail.EventDetail.styles,
     ..._home.Home.styles,
+    ..._news_events.NewsEvents.styles,
     ..._not_found.NotFound.styles,
     ..._parent_association.ParentAssociation.styles,
     ..._program_detail.ProgramDetail.styles,

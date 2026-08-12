@@ -22,23 +22,27 @@ class NewsEventsFilter extends StatefulComponent {
 
   @css
   static List<StyleRule> get styles => [
-    css('.filter-pills').styles(display: .flex, margin: .only(top: 6.px), gap: .all(10.px)),
+    css('.filter-pills').styles(
+      display: .flex,
+      margin: .only(top: 6.px),
+      gap: .all(10.px),
+    ),
     css('.filter-pill', [
       css('&').styles(
         padding: .symmetric(vertical: 7.px, horizontal: 16.px),
-        border: .all(color: AppColors.borderMedium, width: 1.5.px),
-        radius: .all(.circular(20.px)),
-        color: AppColors.ink,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        border: .all(color: AppColors.line, width: 1.px),
+        radius: .all(.circular(Radii.pill)),
+        color: AppColors.navy,
+        fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
         fontSize: 14.px,
-        fontWeight: .w700,
+        fontWeight: .w600,
         backgroundColor: Colors.white,
         raw: {'cursor': 'pointer'},
       ),
       css('&.active').styles(
-        border: .all(color: AppColors.primary, width: 1.5.px),
+        border: .all(color: AppColors.coral, width: 1.px),
         color: Colors.white,
-        backgroundColor: AppColors.primary,
+        backgroundColor: AppColors.coral,
       ),
     ]),
   ];

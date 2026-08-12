@@ -5,6 +5,7 @@ import '../components/content_page.dart';
 import '../components/news_events_filter.dart';
 import '../components/seo_meta.dart';
 import '../constants/seo.dart';
+import '../constants/theme.dart';
 import '../sanity/models/event_item.dart';
 import '../sanity/models/news_post.dart';
 import '../sanity/models/newsletter.dart';
@@ -37,7 +38,9 @@ class NewsEvents extends StatelessComponent {
         breadcrumb: 'News & Events',
         title: 'News & Events',
         children: [
-          p([.text('Fundraisers, milestones, and everything happening around the school.')]),
+          p(classes: 'news-events-subtitle', [
+            .text('Fundraisers, milestones, and everything happening around the school.'),
+          ]),
           NewsEventsFilter(
             newsItems: [for (final post in newsPosts) _newsItem(post)],
             eventItems: [for (final event in events) _eventItem(event)],
@@ -93,4 +96,15 @@ class NewsEvents extends StatelessComponent {
     if (trimmed.length <= 140) return trimmed;
     return '${trimmed.substring(0, 140).trimRight()}…';
   }
+
+  @css
+  static List<StyleRule> get styles => [
+    css('.news-events-subtitle').styles(
+      maxWidth: 640.px,
+      margin: .only(top: 10.px),
+      color: AppColors.mutedText,
+      fontSize: 16.px,
+      lineHeight: 1.55.em,
+    ),
+  ];
 }
