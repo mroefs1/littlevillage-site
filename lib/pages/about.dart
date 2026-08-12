@@ -145,8 +145,8 @@ class About extends AsyncStatelessComponent {
     css('.about-subtitle').styles(
       maxWidth: 640.px,
       margin: .only(top: 10.px),
-      color: AppColors.body,
-      fontSize: 15.px,
+      color: AppColors.mutedText,
+      fontSize: 16.px,
       lineHeight: 1.55.em,
     ),
 
@@ -159,37 +159,38 @@ class About extends AsyncStatelessComponent {
         gap: .all(18.px),
       ),
       css('a').styles(
-        color: AppColors.primary,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        color: AppColors.blue,
+        fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
         fontSize: 14.px,
-        fontWeight: .w700,
+        fontWeight: .w600,
       ),
     ]),
 
-    // Stat strip
+    // Stat strip — same individual-card treatment as the homepage trust
+    // strip, not one shared bordered box.
     css('.about-stats').styles(
       display: .flex,
       margin: .only(top: 18.px),
-      border: .all(color: AppColors.borderLight, width: 2.px),
-      radius: .all(.circular(10.px)),
-      overflow: .hidden,
+      flexWrap: .wrap,
+      gap: .all(14.px),
     ),
     css('.about-stat').styles(
-      padding: .all(16.px),
+      padding: .all(18.px),
       border: .only(
-        right: .solid(color: AppColors.borderLight, width: 1.5.px),
+        left: .solid(color: AppColors.yellow, width: 3.px),
       ),
+      radius: .all(.circular(Radii.md)),
       flex: Flex(grow: 1),
       textAlign: .center,
+      backgroundColor: Colors.white,
     ),
-    css('.about-stat:last-child').styles(border: .none),
     css('.about-stat-value').styles(
-      color: AppColors.primary,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+      color: AppColors.navy,
+      fontFamily: .list([headingFontFamily, FontFamilies.serif]),
       fontSize: 24.px,
-      fontWeight: .w700,
+      fontWeight: .w600,
     ),
-    css('.about-stat-label').styles(color: AppColors.body, fontSize: 12.px),
+    css('.about-stat-label').styles(color: AppColors.mutedTextLight, fontSize: 12.px),
 
     // Mission
     css('.about-mission').styles(
@@ -199,7 +200,7 @@ class About extends AsyncStatelessComponent {
       gap: .all(26.px),
     ),
     css('.about-mission-text').styles(flex: Flex(grow: 1)),
-    css('.about-mission-text h2').styles(margin: .zero),
+    css('.about-mission-text h2').styles(margin: .zero, fontWeight: .w600),
     css('.about-mission-text .body-content').styles(
       maxWidth: 480.px,
       margin: .only(top: 10.px),
@@ -210,7 +211,7 @@ class About extends AsyncStatelessComponent {
       display: .block,
       width: 100.percent,
       height: 200.px,
-      radius: .all(.circular(10.px)),
+      radius: .all(.circular(Radii.lg)),
       raw: {'object-fit': 'cover'},
     ),
 
@@ -219,12 +220,13 @@ class About extends AsyncStatelessComponent {
     css('.about-team h2').styles(
       margin: .only(bottom: 14.px),
       fontSize: 22.px,
+      fontWeight: .w600,
     ),
     css('.about-team-cards').styles(display: .flex, gap: .all(16.px)),
     css('.about-team-card').styles(
-      padding: .all(14.px),
-      border: .all(color: AppColors.borderLight, width: 2.px),
-      radius: .all(.circular(10.px)),
+      padding: .all(16.px),
+      border: .all(color: AppColors.line, width: 1.px),
+      radius: .all(.circular(Radii.lg)),
       flex: Flex(grow: 1),
       textAlign: .center,
       backgroundColor: Colors.white,
@@ -240,46 +242,41 @@ class About extends AsyncStatelessComponent {
       width: 72.px,
       height: 72.px,
       margin: .only(bottom: 10.px),
-      border: .all(color: AppColors.placeholderBorder, width: 2.px, style: .dashed),
+      border: .all(color: AppColors.peachDark, width: 2.px, style: .dashed),
       radius: .all(.circular(36.px)),
       raw: {
         'margin-left': 'auto',
         'margin-right': 'auto',
         'background-image':
-            'repeating-linear-gradient(45deg, ${AppColors.borderLight.value}, ${AppColors.borderLight.value} 8px, ${AppColors.placeholderStripe.value} 8px, ${AppColors.placeholderStripe.value} 16px)',
+            'repeating-linear-gradient(45deg, ${AppColors.peach.value}, ${AppColors.peach.value} 8px, ${AppColors.peachDark.value} 8px, ${AppColors.peachDark.value} 16px)',
       },
     ),
     css('.about-team-name').styles(
-      color: AppColors.ink,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+      color: AppColors.navy,
+      fontFamily: .list([headingFontFamily, FontFamilies.serif]),
       fontSize: 15.px,
-      fontWeight: .w700,
+      fontWeight: .w600,
     ),
-    css('.about-team-title').styles(color: AppColors.muted, fontSize: 12.px),
+    css('.about-team-title').styles(color: AppColors.mutedTextLight, fontSize: 12.px),
 
     // Accreditation strip
     css('.about-accreditation').styles(
-      padding: .symmetric(vertical: 16.px, horizontal: 22.px),
+      padding: .symmetric(vertical: 20.px, horizontal: 24.px),
       margin: .only(top: 18.px),
-      border: .all(color: AppColors.borderLight, width: 2.px),
-      radius: .all(.circular(10.px)),
-      backgroundColor: AppColors.shadedBg,
+      radius: .all(.circular(Radii.xxl)),
+      backgroundColor: AppColors.mint,
     ),
     css('.about-accreditation-title').styles(
       margin: .only(bottom: 8.px),
-      color: AppColors.ink,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+      color: AppColors.navy,
+      fontFamily: .list([headingFontFamily, FontFamilies.serif]),
       fontSize: 16.px,
-      fontWeight: .w700,
+      fontWeight: .w600,
     ),
-    css('.about-accreditation-body').styles(color: AppColors.body, fontSize: 13.px, lineHeight: 1.5.em),
+    css('.about-accreditation-body').styles(color: AppColors.mutedTextMid, fontSize: 13.px, lineHeight: 1.5.em),
 
     css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
-      css('.about-stats').styles(flexWrap: .wrap),
-      css('.about-stat').styles(
-        minWidth: 50.percent,
-        border: .only(right: .none(), bottom: .solid(color: AppColors.borderLight, width: 1.5.px)),
-      ),
+      css('.about-stat').styles(minWidth: 50.percent),
       css('.about-mission').styles(flexDirection: .column),
       css('.about-mission-photo .photo-placeholder').styles(height: 160.px),
       css('.about-mission-img').styles(height: 160.px),

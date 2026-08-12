@@ -98,13 +98,13 @@ class PortableTextView extends StatelessComponent {
   static List<StyleRule> get styles => [
     css('.body-content', [
       css('&').styles(
-        color: AppColors.body,
-        fontSize: 14.px,
-        lineHeight: 1.55.em,
+        color: AppColors.mutedText,
+        fontSize: 15.px,
+        lineHeight: 1.6.em,
       ),
       css('& h2, & h3, & h4').styles(
         margin: .only(top: 22.px),
-        color: AppColors.ink,
+        color: AppColors.navy,
       ),
       css('& h2:first-child, & h3:first-child, & h4:first-child').styles(
         margin: .zero,
@@ -116,7 +116,10 @@ class PortableTextView extends StatelessComponent {
         margin: .only(top: 10.px),
       ),
       css('li').styles(margin: .only(top: 6.px)),
-      css('img').styles(maxWidth: 100.percent, margin: .only(top: 14.px)),
+      css('img').styles(
+        maxWidth: 100.percent,
+        margin: .only(top: 14.px),
+      ),
     ]),
   ];
 }
