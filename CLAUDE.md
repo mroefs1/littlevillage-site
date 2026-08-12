@@ -24,6 +24,10 @@ Replacement website for littlevillage.org (The Hagedorn Little Village School), 
 - **Work in batches, one screen/task at a time.** Finish, verify, and commit one batch before starting the next.
 - **Nav is a hardcoded array in `header.dart`.** `SiteSettings.navigation` is queried but intentionally unused - follow the existing pattern, don't switch to Sanity-driven nav without discussing it first.
 
+## Known area of concern: Dart SDK pinning in `build.sh`
+
+`build.sh` fetches the Dart SDK itself (Cloudflare's build image doesn't ship Dart) and used to always grab `channels/stable/release/latest`. **On 2026-08-12, Dart 3.13.0 broke the Cloudflare build** - `jaspr build` crashed and then hung (not a clean failure) partway through static route generation, on `/history`, with a `NoSuchMethodError: The method '&' was called on null` several layers deep inside `dart:_compact_hash`, inside Jaspr's async SSR rebuild machinery (`AsyncBuildOwner`/`TaskChain`) - not application code. The exact same commit built cleanly, repeatedly, all session on a local machine running Dart 3.12.1. Fix: `build.sh` now pins `DART_SDK_VERSION="3.12.1"` explicitly instead of `latest`. **If a future Cloudflare build fails or hangs with no code-level explanation, check this first** - it may mean Dart shipped a new stable release that regressed something Jaspr depends on, same failure mode as this incident. Bump the pin deliberately (test locally on the new version first) rather than silently reverting to `latest`.
+
 ## Complete: Step 9b - Sanity Rebuild Webhook
 
 Verified working 2026-08-10. Publishing/updating/deleting content in Sanity Studio triggers a Cloudflare Pages rebuild of `littlevillage-site.pages.dev` automatically. Dev preview only - no domain/DNS involved. See `docs/archive/completed-batches.md` for details if needed.
