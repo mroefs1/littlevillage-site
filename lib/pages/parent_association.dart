@@ -146,29 +146,32 @@ class ParentAssociation extends AsyncStatelessComponent {
     ),
     css('.pa-dues-item', [
       css('&').styles(
-        padding: .all(14.px),
-        border: .all(color: AppColors.borderLight, width: 2.px),
-        radius: .all(.circular(10.px)),
+        padding: .all(18.px),
+        radius: .all(.circular(Radii.lg)),
         flex: Flex(grow: 1),
-        backgroundColor: AppColors.shadedBg,
+        backgroundColor: AppColors.peach,
       ),
       css('.pa-dues-label').styles(
         display: .block,
-        color: AppColors.muted,
+        color: AppColors.mutedTextLight,
         fontSize: 12.px,
       ),
       css('.pa-dues-value').styles(
         display: .block,
         margin: .only(top: 2.px),
-        color: AppColors.primary,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        color: AppColors.navy,
+        fontFamily: .list([headingFontFamily, FontFamilies.serif]),
         fontSize: 20.px,
-        fontWeight: .w700,
+        fontWeight: .w600,
       ),
     ]),
+    css('.pa-dues-item:nth-child(2)').styles(backgroundColor: AppColors.mint),
 
     css('.pa-section').styles(margin: .only(top: 28.px)),
-    css('.pa-section h2').styles(margin: .only(bottom: 10.px)),
+    css('.pa-section h2').styles(
+      margin: .only(bottom: 10.px),
+      fontWeight: .w600,
+    ),
 
     css('.pa-board-list').styles(
       padding: .zero,
@@ -177,13 +180,14 @@ class ParentAssociation extends AsyncStatelessComponent {
     ),
     css('.pa-board-item').styles(
       padding: .symmetric(vertical: 8.px, horizontal: 0.px),
-      border: .only(bottom: .solid(color: AppColors.borderLight, width: 1.5.px)),
-      color: AppColors.body,
+      border: .only(
+        bottom: .solid(color: AppColors.line, width: 1.px),
+      ),
+      color: AppColors.mutedText,
       fontSize: 14.px,
     ),
     css('.pa-board-role').styles(
-      color: AppColors.ink,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+      color: AppColors.navy,
       fontWeight: .w700,
     ),
 
@@ -196,17 +200,18 @@ class ParentAssociation extends AsyncStatelessComponent {
       css('&').styles(
         display: .flex,
         padding: .symmetric(vertical: 8.px, horizontal: 0.px),
-        border: .only(bottom: .solid(color: AppColors.borderLight, width: 1.5.px)),
+        border: .only(
+          bottom: .solid(color: AppColors.line, width: 1.px),
+        ),
         alignItems: .center,
         gap: .all(10.px),
       ),
       css('.pa-contact-name').styles(
-        color: AppColors.ink,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        color: AppColors.navy,
         fontSize: 14.px,
         fontWeight: .w700,
       ),
-      css('.pa-contact-email').styles(color: AppColors.primary, fontSize: 13.px),
+      css('.pa-contact-email').styles(color: AppColors.coral, fontSize: 13.px),
     ]),
 
     css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [

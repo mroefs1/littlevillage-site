@@ -57,14 +57,18 @@ class CurrentFamilies extends AsyncStatelessComponent {
             ),
           ]),
           div(classes: 'cf-features', [
-            Link(to: '/parent-association', classes: 'cf-feature-card', children: [
-              div(classes: 'cf-feature-icon', [.text('🤝')]),
-              div(classes: 'cf-feature-title', [.text('Parent Association')]),
-              div(classes: 'cf-feature-desc', [
-                .text('Board members, dues, and upcoming PA events and meetings.'),
-              ]),
-              div(classes: 'cf-feature-cta', [.text('Visit Parent Association →')]),
-            ]),
+            Link(
+              to: '/parent-association',
+              classes: 'cf-feature-card',
+              children: [
+                div(classes: 'cf-feature-icon', [.text('🤝')]),
+                div(classes: 'cf-feature-title', [.text('Parent Association')]),
+                div(classes: 'cf-feature-desc', [
+                  .text('Board members, dues, and upcoming PA events and meetings.'),
+                ]),
+                div(classes: 'cf-feature-cta', [.text('Visit Parent Association →')]),
+              ],
+            ),
             a(href: '/current-families#documents', classes: 'cf-feature-card', [
               div(classes: 'cf-feature-icon', [.text('📄')]),
               div(classes: 'cf-feature-title', [.text('Important Documents')]),
@@ -118,8 +122,8 @@ class CurrentFamilies extends AsyncStatelessComponent {
     css('.cf-subtitle').styles(
       maxWidth: 640.px,
       margin: .only(top: 10.px),
-      color: AppColors.body,
-      fontSize: 15.px,
+      color: AppColors.mutedText,
+      fontSize: 16.px,
       lineHeight: 1.55.em,
     ),
 
@@ -131,61 +135,69 @@ class CurrentFamilies extends AsyncStatelessComponent {
     css('.cf-feature-card', [
       css('&').styles(
         display: .block,
-        padding: .all(18.px),
-        border: .all(color: AppColors.borderMedium, width: 2.px),
-        radius: .all(.circular(10.px)),
+        padding: .all(20.px),
+        border: .all(color: AppColors.line, width: 1.px),
+        radius: .all(.circular(Radii.lg)),
         flex: Flex(grow: 1),
         backgroundColor: Colors.white,
       ),
       css('.cf-feature-title').styles(
         margin: .only(top: 12.px),
-        color: AppColors.ink,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
-        fontSize: 18.px,
-        fontWeight: .w700,
+        color: AppColors.navy,
+        fontFamily: .list([headingFontFamily, FontFamilies.serif]),
+        fontSize: 17.px,
+        fontWeight: .w600,
       ),
       css('.cf-feature-desc').styles(
         margin: .only(top: 4.px),
-        color: AppColors.body,
+        color: AppColors.mutedTextMid,
         fontSize: 13.px,
         lineHeight: 1.5.em,
       ),
       css('.cf-feature-cta').styles(
         margin: .only(top: 10.px),
-        color: AppColors.primary,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        color: AppColors.coral,
+        fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
         fontSize: 14.px,
         fontWeight: .w700,
       ),
     ]),
+    // First card (Parent Association) gets a peach icon tile, second
+    // (Documents) mint — same per-icon differentiation as the homepage's
+    // Current Families band in 11.3.
     css('.cf-feature-icon').styles(
       display: .flex,
       width: 56.px,
       height: 56.px,
-      border: .all(color: AppColors.placeholderBorder, width: 2.px, style: .dashed),
-      radius: .all(.circular(8.px)),
+      radius: .all(.circular(Radii.sm)),
       justifyContent: .center,
       alignItems: .center,
       fontSize: 22.px,
       raw: {
         'background-image':
-            'repeating-linear-gradient(45deg, ${AppColors.borderLight.value}, ${AppColors.borderLight.value} 8px, ${AppColors.placeholderStripe.value} 8px, ${AppColors.placeholderStripe.value} 16px)',
+            'repeating-linear-gradient(135deg, ${AppColors.peach.value}, ${AppColors.peach.value} 8px, ${AppColors.peachDark.value} 8px, ${AppColors.peachDark.value} 16px)',
+      },
+    ),
+    css('.cf-feature-card:nth-child(2) .cf-feature-icon').styles(
+      raw: {
+        'background-image':
+            'repeating-linear-gradient(135deg, ${AppColors.mint.value}, ${AppColors.mint.value} 8px, ${AppColors.mintDark.value} 8px, ${AppColors.mintDark.value} 16px)',
       },
     ),
 
     css('.cf-section').styles(
       padding: .symmetric(vertical: 20.px, horizontal: 22.px),
       margin: .only(top: 20.px),
-      border: .all(color: AppColors.borderLight, width: 2.px),
-      radius: .all(.circular(10.px)),
+      border: .all(color: AppColors.line, width: 1.px),
+      radius: .all(.circular(Radii.xl)),
     ),
-    css('.cf-section h2').styles(margin: .zero),
+    css('.cf-section h2').styles(margin: .zero, fontWeight: .w600),
     css('.cf-calendar-embed').styles(
       display: .block,
       width: 100.percent,
       margin: .only(top: 14.px),
       border: .none,
-      radius: .all(.circular(8.px)),
+      radius: .all(.circular(Radii.sm)),
     ),
 
     css('.cf-documents').styles(
@@ -198,29 +210,30 @@ class CurrentFamilies extends AsyncStatelessComponent {
       css('&').styles(
         display: .flex,
         padding: .symmetric(vertical: 10.px, horizontal: 14.px),
-        border: .all(color: AppColors.borderLight, width: 2.px),
-        radius: .all(.circular(8.px)),
+        border: .all(color: AppColors.line, width: 1.px),
+        radius: .all(.circular(Radii.sm)),
         alignItems: .center,
         gap: .all(10.px),
+        backgroundColor: Colors.white,
       ),
       css('.cf-document-title').styles(
-        color: AppColors.ink,
-        fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+        color: AppColors.navy,
         fontSize: 14.px,
+        fontWeight: .w600,
       ),
     ]),
 
+    // Quick-links row — light sky band, not a bordered/shaded box.
     css('.cf-quicklinks').styles(
       display: .flex,
       padding: .symmetric(vertical: 16.px, horizontal: 22.px),
       margin: .only(top: 20.px),
-      border: .all(color: AppColors.borderLight, width: 2.px),
-      radius: .all(.circular(10.px)),
+      radius: .all(.circular(Radii.xl)),
       gap: .all(26.px),
-      color: AppColors.ink,
-      fontFamily: .list([headingFontFamily, FontFamilies.cursive]),
+      color: AppColors.coral,
       fontSize: 15.px,
-      backgroundColor: AppColors.shadedBg,
+      fontWeight: .w700,
+      backgroundColor: AppColors.sky,
     ),
 
     css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
