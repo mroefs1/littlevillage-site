@@ -1,4 +1,4 @@
-const siteName = 'Hagedorn Little Village School';
+const siteName = 'The Hagedorn Little Village School';
 
 // Placeholder for the eventual production domain — update once hosting is
 // finalized (see CLAUDE.md "Deploy pipeline"). Used to build absolute
