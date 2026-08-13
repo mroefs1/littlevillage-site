@@ -50,6 +50,7 @@ class CurrentFamilies extends AsyncStatelessComponent {
       ContentPage(
         breadcrumb: 'Current Families',
         title: 'Welcome back.',
+        insetPercent: 0,
         children: [
           p(classes: 'cf-subtitle', [
             .text(

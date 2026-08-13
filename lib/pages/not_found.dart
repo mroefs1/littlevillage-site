@@ -43,7 +43,10 @@ class NotFound extends StatelessComponent {
     css('.not-found', [
       css('&').styles(
         display: .flex,
-        padding: .only(top: 70.px, left: 40.px, right: 40.px, bottom: 90.px),
+        // Left/right in percent (matching the sitewide 10% inset rule) also
+        // covers the mobile breakpoint automatically, unlike the old fixed
+        // 40px value which had no mobile override at all.
+        padding: .only(top: 70.px, left: 10.percent, right: 10.percent, bottom: 90.px),
         flexDirection: .column,
         alignItems: .center,
         textAlign: .center,

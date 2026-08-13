@@ -32,8 +32,6 @@ import 'package:littlevillage_site/pages/admissions.dart' as _admissions;
 import 'package:littlevillage_site/pages/contact.dart' as _contact;
 import 'package:littlevillage_site/pages/current_families.dart'
     as _current_families;
-import 'package:littlevillage_site/pages/data_privacy_and_security.dart'
-    as _data_privacy_and_security;
 import 'package:littlevillage_site/pages/event_detail.dart' as _event_detail;
 import 'package:littlevillage_site/pages/home.dart' as _home;
 import 'package:littlevillage_site/pages/news_events.dart' as _news_events;
@@ -106,7 +104,6 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._admissions.Admissions.styles,
     ..._contact.Contact.styles,
     ..._current_families.CurrentFamilies.styles,
-    ..._data_privacy_and_security.DataPrivacyAndSecurity.styles,
     ..._event_detail.EventDetail.styles,
     ..._home.Home.styles,
     ..._news_events.NewsEvents.styles,

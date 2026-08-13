@@ -12,23 +12,39 @@ class ContentPage extends StatelessComponent {
   final String breadcrumb;
   final String title;
   final List<Component> children;
+  // Horizontal inset applied to both the H1 and `children`, so the title's
+  // left edge lines up with the body content instead of the breadcrumb's
+  // (the breadcrumb always stays at `.page`'s own left edge regardless).
+  // Sitewide default; pass 0 to opt out (Current Families, for its
+  // full-width calendar embed) or a different value to override the inset
+  // amount (Data Privacy and Security uses 15, since its body runs
+  // unusually long and includes a full-width video embed).
+  final double insetPercent;
 
   const ContentPage({
     required this.breadcrumb,
     required this.title,
     this.children = const [],
+    this.insetPercent = 10,
     super.key,
   });
 
   @override
   Component build(BuildContext context) {
+    final inset = insetPercent > 0;
+    final insetStyles = inset
+        ? Styles(padding: Padding.symmetric(horizontal: Unit.percent(insetPercent)))
+        : null;
     return section(classes: 'page', [
       div(classes: 'page-breadcrumb', [
         Link(to: '/', child: .text('Home')),
         .text(' › $breadcrumb'),
       ]),
-      h1([.text(title)]),
-      ...children,
+      h1(styles: insetStyles, [.text(title)]),
+      if (inset)
+        div(styles: insetStyles, children)
+      else
+        ...children,
     ]);
   }
 
