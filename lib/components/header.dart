@@ -34,7 +34,6 @@ class Header extends StatelessComponent {
       {'label': 'Board Members', 'path': '/board'},
       {'label': 'Compliance', 'path': '/compliance'},
       {'label': 'Data Privacy and Security', 'path': '/data-privacy-and-security'},
-      {'label': 'Support Us', 'path': '/support-us'},
     ];
 
     // Nav data is handed to `MobileNav` (the @client hydration boundary for
@@ -59,7 +58,6 @@ class Header extends StatelessComponent {
           '/board',
           '/compliance',
           '/data-privacy-and-security',
-          '/support-us',
         ],
         'children': aboutLinks,
       },
@@ -79,6 +77,7 @@ class Header extends StatelessComponent {
         ],
       },
       {'label': 'Contact', 'path': '/contact'},
+      {'label': 'Support Us', 'path': '/support-us'},
     ];
 
     // Both the utility bar and the main brand/nav row live inside one
