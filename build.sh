@@ -19,4 +19,4 @@ dart --version
 dart pub global activate jaspr_cli
 export PATH="$PATH:$HOME/.pub-cache/bin"
 
-jaspr build
+jaspr build --sitemap-domain=https://www.littlevillage.org --sitemap-exclude='/404\.html'
