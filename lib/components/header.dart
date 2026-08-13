@@ -92,7 +92,7 @@ class Header extends StatelessComponent {
         ]),
         div(classes: 'utility-actions', [
           span(classes: 'utility-social', [.text('f ▸ ◎')]),
-          a(href: '#', classes: 'donate-pill', [.text('♥ Donate')]),
+          Link(to: '/support-us', classes: 'donate-pill', child: .text('♥ Donate')),
         ]),
       ]),
       div(classes: 'header-main', [

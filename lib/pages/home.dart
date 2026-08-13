@@ -264,7 +264,7 @@ class Home extends StatelessComponent {
         div(classes: 'donate-band-title', [.text('Your gift keeps it free for every family.')]),
         div(classes: 'donate-band-subtitle', [.text("Events & donations fund what public money doesn't.")]),
       ]),
-      a(href: '#', classes: 'donate-band-button', [.text('♥ Donate')]),
+      Link(to: '/support-us', classes: 'donate-band-button', child: .text('♥ Donate')),
     ]);
   }
 
