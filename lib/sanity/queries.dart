@@ -33,6 +33,9 @@ const String pageBySlugQuery = '''
     ...,
     _type == "image" => {
       "imageUrl": asset->url
+    },
+    _type == "fileDownload" => {
+      "fileUrl": file.asset->url
     }
   }
 }
