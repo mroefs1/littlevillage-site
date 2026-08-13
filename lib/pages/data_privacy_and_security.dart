@@ -1,3 +1,4 @@
+import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
 
 import '../components/content_page.dart';
@@ -26,9 +27,19 @@ class DataPrivacyAndSecurity extends AsyncStatelessComponent {
         breadcrumb: 'About Us › Data Privacy and Security',
         title: title,
         children: [
-          if (page != null) PortableTextView(page.body),
+          // This page's body runs unusually long and includes a full-width
+          // video embed, so it gets its own inset column rather than using
+          // `.page`'s full width like the shorter About sub-pages do — the
+          // video shrinks along with it since `.video-embed-frame` is 100%
+          // of its container.
+          if (page != null) div(classes: 'dps-body', [PortableTextView(page.body)]),
         ],
       ),
     ]);
   }
+
+  @css
+  static List<StyleRule> get styles => [
+    css('.dps-body').styles(padding: .symmetric(horizontal: 15.percent)),
+  ];
 }
