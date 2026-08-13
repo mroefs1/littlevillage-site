@@ -16,7 +16,8 @@ const String siteSettingsQuery = '''
   heroGallery[]{
     "url": asset->url,
     alt
-  }
+  },
+  donateUrl
 }
 ''';
 

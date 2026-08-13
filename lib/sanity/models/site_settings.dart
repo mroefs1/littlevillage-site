@@ -56,6 +56,7 @@ class SiteSettings {
   final String? phone;
   final String? email;
   final List<HeroGalleryImage> heroGallery;
+  final String? donateUrl;
 
   const SiteSettings({
     this.navigation = const [],
@@ -64,6 +65,7 @@ class SiteSettings {
     this.phone,
     this.email,
     this.heroGallery = const [],
+    this.donateUrl,
   });
 
   factory SiteSettings.fromJson(Map<String, dynamic> json) {
@@ -82,6 +84,7 @@ class SiteSettings {
       heroGallery: (json['heroGallery'] as List<dynamic>? ?? const [])
           .map((item) => HeroGalleryImage.fromJson(item as Map<String, dynamic>))
           .toList(),
+      donateUrl: json['donateUrl'] as String?,
     );
   }
 }
