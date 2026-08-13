@@ -22,6 +22,7 @@ class PortableTextView extends StatelessComponent {
   static List<Component> _renderBlocks(List<Map<String, dynamic>> blocks) {
     final result = <Component>[];
     var i = 0;
+    var sectionIndex = 0;
     while (i < blocks.length) {
       if (blocks[i]['listItem'] == 'bullet') {
         final items = <Component>[];
@@ -44,10 +45,43 @@ class PortableTextView extends StatelessComponent {
         result.add(div(classes: 'link-grid', cards));
         continue;
       }
+      if (blocks[i]['_type'] == 'serviceSection') {
+        result.add(_serviceSectionCard(blocks[i], sectionIndex));
+        sectionIndex++;
+        i++;
+        continue;
+      }
       result.add(_renderBlock(blocks[i]));
       i++;
     }
     return result;
+  }
+
+  // Card background cycles through the same pastel tokens used elsewhere
+  // for per-item striping (e.g. the homepage age cards, PA dues cards) —
+  // the color is assigned here by position, not stored as Sanity content,
+  // since it's a presentation concern, not editorial content.
+  static const _sectionColors = [
+    AppColors.peach,
+    AppColors.sky,
+    AppColors.mint,
+    AppColors.peachDark,
+    AppColors.mintDark,
+    AppColors.offWhite,
+    AppColors.cream,
+  ];
+
+  static Component _serviceSectionCard(Map<String, dynamic> block, int index) {
+    final title = block['title'] as String? ?? '';
+    final body = (block['body'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>();
+    return div(
+      classes: 'service-section',
+      styles: Styles(backgroundColor: _sectionColors[index % _sectionColors.length]),
+      [
+        div(classes: 'service-section-title', [.text(title)]),
+        ..._renderBlocks(body),
+      ],
+    );
   }
 
   static Component _fileDownloadCard(Map<String, dynamic> block) {
@@ -187,6 +221,19 @@ class PortableTextView extends StatelessComponent {
       css('img').styles(
         maxWidth: 100.percent,
         margin: .only(top: 14.px),
+      ),
+    ]),
+    css('.service-section', [
+      css('&').styles(
+        padding: .all(32.px),
+        margin: .only(top: 20.px),
+        radius: .all(.circular(Radii.xxl)),
+      ),
+      css('.service-section-title').styles(
+        color: AppColors.navy,
+        fontFamily: .list([headingFontFamily, FontFamilies.serif]),
+        fontSize: 21.px,
+        fontWeight: .w600,
       ),
     ]),
     css('.video-embed', [

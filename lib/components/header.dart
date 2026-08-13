@@ -24,6 +24,9 @@ class Header extends StatelessComponent {
       for (final category in _ageBandCategories)
         for (final program in programs)
           if (program.category == category) {'label': program.title, 'path': '/programs/${program.slug}'},
+      // Not an age-band `program` document — a standalone content page, so
+      // it's appended here rather than driven by the category loop above.
+      {'label': 'Therapeutic Services', 'path': '/programs/therapeutic-services'},
     ];
 
     const aboutLinks = [

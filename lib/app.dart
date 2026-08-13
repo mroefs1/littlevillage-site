@@ -26,6 +26,7 @@ import 'pages/program_detail.dart';
 import 'pages/programs.dart';
 import 'pages/staff.dart';
 import 'pages/support_us.dart';
+import 'pages/therapeutic_services.dart';
 import 'sanity/content_repository.dart';
 
 // The root layout shell of the site: header, routed page content, footer.
@@ -100,6 +101,11 @@ class App extends AsyncStatelessComponent {
                   title: program.title,
                   builder: (context, state) => ProgramDetail(program),
                 ),
+              Route(
+                path: '/programs/therapeutic-services',
+                title: 'Therapeutic Services',
+                builder: (context, state) => const TherapeuticServices(),
+              ),
               Route(path: '/admissions', title: 'Admissions', builder: (context, state) => const Admissions()),
               Route(
                 path: '/news',
