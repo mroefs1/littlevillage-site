@@ -1,7 +1,7 @@
 import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
-import 'package:jaspr_router/jaspr_router.dart';
 
+import '../components/admissions_teaser.dart';
 import '../components/content_page.dart';
 import '../components/cta_band.dart';
 import '../components/photo_placeholder.dart';
@@ -14,8 +14,11 @@ import '../sanity/models/program.dart';
 
 // Per-category copy that isn't modeled in the `program` schema — the
 // session/day timeline and services-pill list are fixed, structural content
-// for exactly three categories (same reasoning as Admissions' hardcoded
-// steps/FAQ), not long-form copy Sanity should own.
+// for exactly two categories now (same reasoning as Admissions' hardcoded
+// steps/FAQ), not long-form copy Sanity should own. Early Intervention had
+// its own entry here until Step 16, when it moved to a fully redesigned,
+// Sanity-driven page (`early_intervention.dart`) — Preschool and Elementary
+// keep this treatment for now, redesigned later the same way.
 class _ProgramCopy {
   final String heroPhotoCaption;
   final String timelineTitle;
@@ -31,36 +34,6 @@ class _ProgramCopy {
 }
 
 const _copyByCategory = <String, _ProgramCopy>{
-  'Early Intervention': _ProgramCopy(
-    heroPhotoCaption: 'photo — home visit or center-based EI session',
-    timelineTitle: 'What a session looks like',
-    timeline: [
-      (
-        label: 'Arrival',
-        desc: "Your Early Intervention provider arrives at the agreed time and setting — home, center, or daycare.",
-      ),
-      (
-        label: 'Session',
-        desc:
-            '30–60 minutes of play-based therapy targeting communication, motor skills, feeding, or social development.',
-      ),
-      (
-        label: 'Check-in',
-        desc: 'Providers coach caregivers on carrying strategies into daily routines between visits.',
-      ),
-      (
-        label: 'Progress review',
-        desc: 'Every six months, the team and family review the IFSP and adjust goals together.',
-      ),
-    ],
-    services: [
-      'Speech & Language',
-      'Occupational Therapy',
-      'Physical Therapy',
-      'Special Instruction',
-      'Family Training',
-    ],
-  ),
   'Preschool': _ProgramCopy(
     heroPhotoCaption: 'photo — preschool classroom activity',
     timelineTitle: 'A typical preschool day',
@@ -137,7 +110,7 @@ class ProgramDetail extends StatelessComponent {
             ]),
           ]),
           if (copy != null) ..._timelineAndServices(copy),
-          _howToStart(),
+          const AdmissionsTeaser(),
           const CtaBand(),
         ],
       ),
@@ -161,16 +134,6 @@ class ProgramDetail extends StatelessComponent {
         PillList(copy.services),
       ]),
     ];
-  }
-
-  static Component _howToStart() {
-    return div(classes: 'progd-how-to-start', [
-      div([
-        div(classes: 'progd-how-to-start-title', [.text('Ready to see if this program is the right fit?')]),
-        div(classes: 'progd-how-to-start-desc', [.text('Read the full step-by-step admissions guide.')]),
-      ]),
-      Link(to: '/admissions', classes: 'progd-how-to-start-cta', child: .text('Admissions guide →')),
-    ]);
   }
 
   @css
@@ -238,44 +201,10 @@ class ProgramDetail extends StatelessComponent {
       fontWeight: .w600,
     ),
 
-    css('.progd-how-to-start').styles(
-      display: .flex,
-      padding: .symmetric(vertical: 22.px, horizontal: 26.px),
-      margin: .only(top: 24.px),
-      radius: .all(.circular(Radii.xxl)),
-      justifyContent: .spaceBetween,
-      alignItems: .center,
-      gap: .all(16.px),
-      backgroundColor: AppColors.sky,
-    ),
-    css('.progd-how-to-start-title').styles(
-      color: AppColors.navy,
-      fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 17.px,
-      fontWeight: .w600,
-    ),
-    css('.progd-how-to-start-desc').styles(
-      margin: .only(top: 3.px),
-      color: AppColors.mutedText,
-      fontSize: 13.px,
-    ),
-    // Plain coral text link, not a pill button — matches the same
-    // "in-card CTA" treatment used elsewhere (home's enrollment-teaser
-    // link, age-card/current-families card CTAs), reserving pill buttons
-    // for primary navigation actions.
-    css('.progd-how-to-start-cta').styles(
-      color: AppColors.coral,
-      fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-      fontSize: 14.px,
-      fontWeight: .w700,
-      whiteSpace: .noWrap,
-    ),
-
     css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
       css('.progd-hero').styles(flexDirection: .column, alignItems: .stretch),
       css('.progd-timeline-step').styles(flexDirection: .column, gap: .all(4.px)),
       css('.progd-timeline-step-label').styles(width: .auto),
-      css('.progd-how-to-start').styles(flexDirection: .column, textAlign: .center),
     ]),
   ];
 }

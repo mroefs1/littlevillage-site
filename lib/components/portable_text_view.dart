@@ -22,7 +22,9 @@ class PortableTextView extends StatelessComponent {
   static List<Component> _renderBlocks(List<Map<String, dynamic>> blocks) {
     final result = <Component>[];
     var i = 0;
-    var sectionIndex = 0;
+    // Shared across serviceSection and processStep so colors keep cycling
+    // rather than each type restarting at the same first color.
+    var colorIndex = 0;
     while (i < blocks.length) {
       if (blocks[i]['listItem'] == 'bullet') {
         final items = <Component>[];
@@ -45,9 +47,22 @@ class PortableTextView extends StatelessComponent {
         result.add(div(classes: 'link-grid', cards));
         continue;
       }
+      // Consecutive processStep blocks group into one row, same convention
+      // as fileDownload above (e.g. a 3-column Referral/Evaluation/Services
+      // band), rather than each step stacking as a separate full-width row.
+      if (blocks[i]['_type'] == 'processStep') {
+        final steps = <Component>[];
+        while (i < blocks.length && blocks[i]['_type'] == 'processStep') {
+          steps.add(_processStepCard(blocks[i], colorIndex));
+          colorIndex++;
+          i++;
+        }
+        result.add(div(classes: 'process-steps', steps));
+        continue;
+      }
       if (blocks[i]['_type'] == 'serviceSection') {
-        result.add(_serviceSectionCard(blocks[i], sectionIndex));
-        sectionIndex++;
+        result.add(_serviceSectionCard(blocks[i], colorIndex));
+        colorIndex++;
         i++;
         continue;
       }
@@ -79,6 +94,19 @@ class PortableTextView extends StatelessComponent {
       styles: Styles(backgroundColor: _sectionColors[index % _sectionColors.length]),
       [
         div(classes: 'service-section-title', [.text(title)]),
+        ..._renderBlocks(body),
+      ],
+    );
+  }
+
+  static Component _processStepCard(Map<String, dynamic> block, int index) {
+    final title = block['title'] as String? ?? '';
+    final body = (block['body'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>();
+    return div(
+      classes: 'process-step',
+      styles: Styles(backgroundColor: _sectionColors[index % _sectionColors.length]),
+      [
+        div(classes: 'process-step-title', [.text(title)]),
         ..._renderBlocks(body),
       ],
     );
@@ -233,6 +261,25 @@ class PortableTextView extends StatelessComponent {
         color: AppColors.navy,
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
         fontSize: 21.px,
+        fontWeight: .w600,
+      ),
+    ]),
+    css('.process-steps').styles(
+      display: .flex,
+      margin: .only(top: 20.px),
+      flexWrap: .wrap,
+      gap: .all(20.px),
+    ),
+    css('.process-step', [
+      css('&').styles(
+        padding: .all(28.px),
+        radius: .all(.circular(Radii.xxl)),
+        flex: Flex(grow: 1, basis: 240.px),
+      ),
+      css('.process-step-title').styles(
+        color: AppColors.navy,
+        fontFamily: .list([headingFontFamily, FontFamilies.serif]),
+        fontSize: 19.px,
         fontWeight: .w600,
       ),
     ]),

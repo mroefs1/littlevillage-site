@@ -5,6 +5,8 @@
 // Generated with jaspr_builder
 
 import 'package:jaspr/server.dart';
+import 'package:littlevillage_site/components/admissions_teaser.dart'
+    as _admissions_teaser;
 import 'package:littlevillage_site/components/collection_card.dart'
     as _collection_card;
 import 'package:littlevillage_site/components/contact_form.dart'
@@ -89,6 +91,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
   styles: () => [
     ..._theme.globalStyles,
     ..._app.App.styles,
+    ..._admissions_teaser.AdmissionsTeaser.styles,
     ..._collection_card.CollectionCard.styles,
     ..._contact_form.ContactForm.styles,
     ..._content_page.ContentPage.styles,

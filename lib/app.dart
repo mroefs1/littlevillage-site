@@ -12,6 +12,7 @@ import 'pages/compliance.dart';
 import 'pages/contact.dart';
 import 'pages/current_families.dart';
 import 'pages/data_privacy_and_security.dart';
+import 'pages/early_intervention.dart';
 import 'pages/event_detail.dart';
 import 'pages/facilities.dart';
 import 'pages/founders.dart';
@@ -99,7 +100,12 @@ class App extends AsyncStatelessComponent {
                 Route(
                   path: '/programs/${program.slug}',
                   title: program.title,
-                  builder: (context, state) => ProgramDetail(program),
+                  // Early Intervention has its own redesigned page (Step
+                  // 16) - every other program still uses the shared
+                  // ProgramDetail template.
+                  builder: (context, state) => program.slug == 'early-intervention'
+                      ? EarlyIntervention(program)
+                      : ProgramDetail(program),
                 ),
               Route(
                 path: '/programs/therapeutic-services',
