@@ -8,8 +8,10 @@ import 'constants/theme.dart';
 import 'pages/about.dart';
 import 'pages/admissions.dart';
 import 'pages/board.dart';
+import 'pages/compliance.dart';
 import 'pages/contact.dart';
 import 'pages/current_families.dart';
+import 'pages/data_privacy_and_security.dart';
 import 'pages/event_detail.dart';
 import 'pages/facilities.dart';
 import 'pages/founders.dart';
@@ -80,6 +82,12 @@ class App extends AsyncStatelessComponent {
               Route(path: '/staff', title: 'Admin Staff', builder: (context, state) => const Staff()),
               Route(path: '/board', title: 'Board Members', builder: (context, state) => const Board()),
               Route(path: '/support-us', title: 'Support Us', builder: (context, state) => const SupportUs()),
+              Route(path: '/compliance', title: 'Compliance', builder: (context, state) => const Compliance()),
+              Route(
+                path: '/data-privacy-and-security',
+                title: 'Data Privacy and Security',
+                builder: (context, state) => const DataPrivacyAndSecurity(),
+              ),
               Route(path: '/facilities', title: 'School Facilities', builder: (context, state) => const Facilities()),
               Route(
                 path: '/programs',

@@ -32,6 +32,8 @@ class Header extends StatelessComponent {
       {'label': 'Founders', 'path': '/founders'},
       {'label': 'Admin Staff', 'path': '/staff'},
       {'label': 'Board Members', 'path': '/board'},
+      {'label': 'Compliance', 'path': '/compliance'},
+      {'label': 'Data Privacy and Security', 'path': '/data-privacy-and-security'},
       {'label': 'Support Us', 'path': '/support-us'},
     ];
 
@@ -49,7 +51,16 @@ class Header extends StatelessComponent {
       {
         'label': 'About',
         'path': '/about',
-        'aliases': const ['/mission', '/history', '/founders', '/staff', '/board', '/support-us'],
+        'aliases': const [
+          '/mission',
+          '/history',
+          '/founders',
+          '/staff',
+          '/board',
+          '/compliance',
+          '/data-privacy-and-security',
+          '/support-us',
+        ],
         'children': aboutLinks,
       },
       {'label': 'Facilities', 'path': '/facilities'},
