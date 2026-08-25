@@ -50,15 +50,20 @@ class ProgramHero extends StatelessComponent {
       alignItems: .start,
       gap: .all(26.px),
     ),
-    css('.progd-hero-photo').styles(flex: Flex(grow: 1)),
+    // 1fr photo / 1.4fr text, matching the design handoff's hero grid. Both
+    // columns need an explicit zero basis: with the default `auto` basis the
+    // grow factors only divide up *leftover* space, so the long intro
+    // paragraph claimed nearly the whole row and squeezed the photo to a
+    // sliver.
+    css('.progd-hero-photo').styles(flex: Flex(grow: 1, shrink: 1, basis: 0.px)),
     css('.progd-hero-img').styles(
       display: .block,
       width: 100.percent,
-      height: 220.px,
+      aspectRatio: AspectRatio(4, 3),
       radius: .all(.circular(Radii.lg)),
       raw: {'object-fit': 'cover'},
     ),
-    css('.progd-hero-body').styles(flex: Flex(grow: 1)),
+    css('.progd-hero-body').styles(flex: Flex(grow: 1.4, shrink: 1, basis: 0.px)),
     css('.progd-age-pill').styles(
       display: .inlineBlock,
       padding: .symmetric(vertical: 5.px, horizontal: 14.px),
