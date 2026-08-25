@@ -1,4 +1,5 @@
 import 'client.dart';
+import 'models/careers.dart';
 import 'models/document.dart';
 import 'models/event_item.dart';
 import 'models/news_post.dart';
@@ -27,6 +28,7 @@ abstract class ContentRepository {
   Future<Program?> getProgram(String slug);
   Future<List<StaffMember>> getStaffMembers();
   Future<List<BoardMember>> getBoardMembers();
+  Future<CareersInfo?> getCareersInfo();
   Future<ParentAssociationInfo?> getParentAssociationInfo();
   Future<List<PaEventItem>> getPaEvents();
 }
@@ -117,6 +119,13 @@ class SanityContentRepository implements ContentRepository {
     return (result as List<dynamic>)
         .map((item) => BoardMember.fromJson(item as Map<String, dynamic>))
         .toList();
+  }
+
+  @override
+  Future<CareersInfo?> getCareersInfo() async {
+    final result = await _client.fetch(careersQuery);
+    if (result == null) return null;
+    return CareersInfo.fromJson(result as Map<String, dynamic>);
   }
 
   @override

@@ -8,6 +8,7 @@ import 'constants/theme.dart';
 import 'pages/about.dart';
 import 'pages/admissions.dart';
 import 'pages/board.dart';
+import 'pages/careers.dart';
 import 'pages/compliance.dart';
 import 'pages/contact.dart';
 import 'pages/cpse_evaluations.dart';
@@ -90,6 +91,7 @@ class App extends AsyncStatelessComponent {
               Route(path: '/board', title: 'Board Members', builder: (context, state) => const Board()),
               Route(path: '/support-us', title: 'Support Us', builder: (context, state) => const SupportUs()),
               Route(path: '/compliance', title: 'Compliance', builder: (context, state) => const Compliance()),
+              Route(path: '/careers', title: 'Career Opportunities', builder: (context, state) => const Careers()),
               Route(
                 path: '/data-privacy-and-security',
                 title: 'Data Privacy and Security',

@@ -143,6 +143,14 @@ const String boardMembersQuery = '''
 }
 ''';
 
+const String careersQuery = '''
+*[_type == "careers"][0]{
+  intro,
+  indeedUrl,
+  positions[]{title, url, group}
+}
+''';
+
 const String parentAssociationQuery = '''
 *[_type == "parentAssociation"][0]{
   intro,

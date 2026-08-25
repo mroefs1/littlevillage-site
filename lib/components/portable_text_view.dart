@@ -239,6 +239,19 @@ class PortableTextView extends StatelessComponent {
       css('& h2:first-child, & h3:first-child, & h4:first-child').styles(
         margin: .zero,
       ),
+      // Inline links inside body copy. The sitewide `a` reset in theme.dart
+      // is `color: inherit; text-decoration: none`, so without this rule a
+      // portable-text link renders identically to the prose around it — not
+      // just low-contrast, but with no distinction at all (found 2026-08-25:
+      // the Data Privacy page's 10 real hyperlinks were invisible as links).
+      // Coral is the established link/CTA color and was contrast-verified in
+      // 11.10; the underline carries the distinction without relying on color
+      // alone, per WCAG 1.4.1. `.link-card` anchors are excluded — those are
+      // whole cards with their own treatment, not inline links.
+      css('& a:not(.link-card)').styles(
+        color: AppColors.coral,
+        textDecoration: TextDecoration(line: .underline),
+      ),
       css('p').styles(margin: .only(top: 10.px)),
       css('p:first-child').styles(margin: .zero),
       css('ul').styles(
