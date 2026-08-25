@@ -10,6 +10,7 @@ import 'pages/admissions.dart';
 import 'pages/board.dart';
 import 'pages/compliance.dart';
 import 'pages/contact.dart';
+import 'pages/cpse_evaluations.dart';
 import 'pages/current_families.dart';
 import 'pages/data_privacy_and_security.dart';
 import 'pages/early_intervention.dart';
@@ -117,6 +118,11 @@ class App extends AsyncStatelessComponent {
                 path: '/programs/therapeutic-services',
                 title: 'Therapeutic Services',
                 builder: (context, state) => const TherapeuticServices(),
+              ),
+              Route(
+                path: '/programs/cpse-evaluations',
+                title: 'CPSE Evaluations',
+                builder: (context, state) => const CpseEvaluations(),
               ),
               Route(path: '/admissions', title: 'Admissions', builder: (context, state) => const Admissions()),
               Route(
