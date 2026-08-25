@@ -28,6 +28,8 @@ import 'package:littlevillage_site/components/photo_placeholder.dart'
 import 'package:littlevillage_site/components/pill_list.dart' as _pill_list;
 import 'package:littlevillage_site/components/portable_text_view.dart'
     as _portable_text_view;
+import 'package:littlevillage_site/components/program_layout.dart'
+    as _program_layout;
 import 'package:littlevillage_site/constants/theme.dart' as _theme;
 import 'package:littlevillage_site/pages/about.dart' as _about;
 import 'package:littlevillage_site/pages/admissions.dart' as _admissions;
@@ -40,8 +42,6 @@ import 'package:littlevillage_site/pages/news_events.dart' as _news_events;
 import 'package:littlevillage_site/pages/not_found.dart' as _not_found;
 import 'package:littlevillage_site/pages/parent_association.dart'
     as _parent_association;
-import 'package:littlevillage_site/pages/program_detail.dart'
-    as _program_detail;
 import 'package:littlevillage_site/pages/programs.dart' as _programs;
 import 'package:littlevillage_site/pages/support_us.dart' as _support_us;
 import 'package:littlevillage_site/pages/therapeutic_services.dart'
@@ -105,6 +105,8 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._photo_placeholder.PhotoPlaceholder.styles,
     ..._pill_list.PillList.styles,
     ..._portable_text_view.PortableTextView.styles,
+    ..._program_layout.ProgramHero.styles,
+    ..._program_layout.ProgramServices.styles,
     ..._about.About.styles,
     ..._admissions.Admissions.styles,
     ..._contact.Contact.styles,
@@ -114,7 +116,6 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._news_events.NewsEvents.styles,
     ..._not_found.NotFound.styles,
     ..._parent_association.ParentAssociation.styles,
-    ..._program_detail.ProgramDetail.styles,
     ..._programs.Programs.styles,
     ..._support_us.SupportUs.styles,
     ..._therapeutic_services.TherapeuticServices.styles,

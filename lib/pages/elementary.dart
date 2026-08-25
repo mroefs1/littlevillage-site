@@ -14,21 +14,21 @@ const _servicesIncluded = [
   'Speech & Language',
   'Occupational Therapy',
   'Physical Therapy',
-  'Special Instruction',
-  'Family Training',
+  'Counseling & Social Work',
+  'Adaptive Physical Education',
+  'Transportation',
 ];
 
-// Early Intervention's own redesigned detail page (Step 16). Backed by the
-// same `program` Sanity document as every other age band (passed in
-// pre-fetched from app.dart), so nav, the Programs hub card, and the homepage
-// age-locator card all keep working unchanged — only this page's own
-// rendering differs. Its hero/services markup and CSS moved into the shared
-// `program_layout.dart` in Step 17, when Preschool and Elementary got the
-// same treatment.
-class EarlyIntervention extends StatelessComponent {
+// The Elementary School program's own detail page (Step 17), redesigned to
+// match Early Intervention: a Sanity-driven CSE process band and one card per
+// program/service, replacing the shared template's hardcoded day timeline.
+// Still backed by the same `program` document (passed in pre-fetched from
+// app.dart), so nav, the Programs hub card, and the homepage age-locator
+// card keep working unchanged.
+class Elementary extends StatelessComponent {
   final Program program;
 
-  const EarlyIntervention(this.program, {super.key});
+  const Elementary(this.program, {super.key});
 
   @override
   Component build(BuildContext context) {

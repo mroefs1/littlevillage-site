@@ -13,6 +13,7 @@ import 'pages/contact.dart';
 import 'pages/current_families.dart';
 import 'pages/data_privacy_and_security.dart';
 import 'pages/early_intervention.dart';
+import 'pages/elementary.dart';
 import 'pages/event_detail.dart';
 import 'pages/facilities.dart';
 import 'pages/founders.dart';
@@ -23,6 +24,7 @@ import 'pages/news_detail.dart';
 import 'pages/not_found.dart';
 import 'pages/news_events.dart';
 import 'pages/parent_association.dart';
+import 'pages/preschool.dart';
 import 'pages/program_detail.dart';
 import 'pages/programs.dart';
 import 'pages/staff.dart';
@@ -100,12 +102,16 @@ class App extends AsyncStatelessComponent {
                 Route(
                   path: '/programs/${program.slug}',
                   title: program.title,
-                  // Early Intervention has its own redesigned page (Step
-                  // 16) - every other program still uses the shared
-                  // ProgramDetail template.
-                  builder: (context, state) => program.slug == 'early-intervention'
-                      ? EarlyIntervention(program)
-                      : ProgramDetail(program),
+                  // Each of the three age bands has its own redesigned page
+                  // (Step 16 for Early Intervention, Step 17 for the other
+                  // two). ProgramDetail is the generic fallback for any
+                  // program document added to Sanity later.
+                  builder: (context, state) => switch (program.slug) {
+                    'early-intervention' => EarlyIntervention(program),
+                    'preschool' => Preschool(program),
+                    'elementary' => Elementary(program),
+                    _ => ProgramDetail(program),
+                  },
                 ),
               Route(
                 path: '/programs/therapeutic-services',
