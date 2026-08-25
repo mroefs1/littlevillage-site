@@ -17,6 +17,7 @@ import 'pages/early_intervention.dart';
 import 'pages/elementary.dart';
 import 'pages/event_detail.dart';
 import 'pages/facilities.dart';
+import 'pages/family_services.dart';
 import 'pages/founders.dart';
 import 'pages/history.dart';
 import 'pages/home.dart';
@@ -29,6 +30,7 @@ import 'pages/preschool.dart';
 import 'pages/program_detail.dart';
 import 'pages/programs.dart';
 import 'pages/staff.dart';
+import 'pages/summer_recreation.dart';
 import 'pages/support_us.dart';
 import 'pages/therapeutic_services.dart';
 import 'sanity/content_repository.dart';
@@ -120,9 +122,21 @@ class App extends AsyncStatelessComponent {
                 builder: (context, state) => const TherapeuticServices(),
               ),
               Route(
+                path: '/programs/family-services',
+                title: 'Family Services',
+                builder: (context, state) => const FamilyServices(),
+              ),
+              Route(
                 path: '/programs/cpse-evaluations',
                 title: 'CPSE Evaluations',
                 builder: (context, state) => const CpseEvaluations(),
+              ),
+              // Legacy slug kept: CARP is the program's real name (Creative
+              // Arts and Recreation Program), not a typo.
+              Route(
+                path: '/programs/summer-carp',
+                title: 'Summer Recreation Program',
+                builder: (context, state) => const SummerRecreation(),
               ),
               Route(path: '/admissions', title: 'Admissions', builder: (context, state) => const Admissions()),
               Route(

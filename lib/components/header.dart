@@ -27,7 +27,9 @@ class Header extends StatelessComponent {
       // Not an age-band `program` document — a standalone content page, so
       // it's appended here rather than driven by the category loop above.
       {'label': 'Therapeutic Services', 'path': '/programs/therapeutic-services'},
+      {'label': 'Family Services', 'path': '/programs/family-services'},
       {'label': 'CPSE Evaluations', 'path': '/programs/cpse-evaluations'},
+      {'label': 'Summer CARP', 'path': '/programs/summer-carp'},
     ];
 
     const aboutLinks = [
