@@ -88,11 +88,14 @@ class Breakpoints {
   // The desktop nav row switches to the hamburger here rather than at
   // `tablet`: with 8 top-level items plus the Request Info pill (Media was
   // added in Step 21), the row stops fitting on one line below ~1200px and
-  // pushes the page into horizontal overflow (measured: it needs ~1230px, so
-  // 1260 leaves a little slack for font-rendering differences). Only
+  // pushes the page into horizontal overflow. Re-measured 2026-08-25 after
+  // the Contact item was removed and the pill relabelled "Contact": the row
+  // now fits down to ~1120px (was ~1230px with 8 items), so this dropped
+  // 1260 -> 1140, keeping ~20px of slack for font-rendering differences.
+  // Re-probe this if nav items are added or removed again. Only
   // `mobile_nav.dart` uses this — the utility bar still collapses at
   // `tablet`.
-  static const nav = Unit.pixels(1260);
+  static const nav = Unit.pixels(1140);
   static const tablet = Unit.pixels(1024);
   static const mobile = Unit.pixels(768);
   static const small = Unit.pixels(480);

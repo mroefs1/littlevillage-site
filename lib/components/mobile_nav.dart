@@ -109,7 +109,7 @@ class _MobileNavState extends State<MobileNav> {
         attributes: const {'aria-label': 'Primary'},
         [
           for (final item in component.items) _navItem(item),
-          Link(to: '/contact', classes: 'request-info', child: .text('Request Info')),
+          Link(to: '/contact', classes: 'request-info', child: .text('Contact')),
         ],
       ),
     ]);

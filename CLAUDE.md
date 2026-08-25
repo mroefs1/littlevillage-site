@@ -317,6 +317,16 @@ This keeps the two protections the allowlist was really providing - excluding Sa
 
 Note: this does mean a rebuild fires for any non-asset, non-draft document, including types that currently only serve the Flutter app. Per Mike that's fine and intended - `emergency_notification` is slated to serve the website too.
 
+## Complete: Nav simplification (2026-08-25)
+
+Management decided Contact and Request Info in the nav bar were redundant. The separate **Contact** nav item is removed and the **Request Info** pill is relabelled **Contact** (it already pointed at `/contact`). Nav is now: Programs · Admissions · About · Facilities · News & Events · Current Families · Media · Support Us, plus the Contact pill.
+
+**`Breakpoints.nav` re-measured and lowered 1260 -> 1140 as a result.** That breakpoint exists because the desktop row stops fitting at narrow widths (see Step 21); with one fewer item and a shorter pill label the row now fits down to ~1120px instead of ~1230px, so leaving it at 1260 would have pushed desktop users onto the hamburger for no reason. **Re-probe this value whenever nav items are added or removed** - the way to do it is to temporarily set the breakpoint very low, build, and sweep viewport widths looking for the first sign of horizontal overflow.
+
+**Verified:** `dart analyze` clean, 32 routes. Desktop row confirmed to hold exactly the 8 items above plus the pill, with no duplicate Contact entry; a real click on the pill lands on `/contact`. Mobile flyout drops from 30 to 29 visible links with the pill reading "Contact" and no duplicate. Swept 375-1920px: no label wrapping and no horizontal overflow anywhere, hamburger switching in at 1140. Zero console errors on fresh loads of `/`, `/contact` and `/media`.
+
+**Note:** the footer's "Get started" column still says "Request info" (also linking to `/contact`) - left as-is since the request was scoped to the nav bar, but worth a look if the wording should match.
+
 ## Deferred until launch week (mid-September 2026): Step 9d - Custom Domain Cutover
 
 Do not start this step under any circumstances until explicitly told launch is imminent, even if 9b and 9c are both done and verified. Note: this is separate from the Resend subdomain (`send.littlevillage.org`) already set up for 9c - that's isolated and doesn't touch the site's main A/CNAME records.

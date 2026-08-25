@@ -97,7 +97,9 @@ class Header extends StatelessComponent {
           {'label': 'Videos', 'path': '/media/videos'},
         ],
       },
-      {'label': 'Contact', 'path': '/contact'},
+      // No 'Contact' item: the nav's own pill links to /contact and is
+      // labelled "Contact", so a separate entry was redundant (decided
+      // 2026-08-25).
       {'label': 'Support Us', 'path': '/support-us'},
     ];
 
