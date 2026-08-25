@@ -307,7 +307,15 @@ Requested 2026-08-25. Ports the legacy Media section into `/media` with three su
 
 **Also fixed here: dropdown children were unreachable from the mobile menu sitewide (pre-existing).** Opening the hamburger flyout showed only top-level labels - Programs' 7 children, About's 8, Current Families' 2 and Media's 3 were all `display: none`, so every sub-page was unreachable from the mobile nav. Cause was a CSS specificity bug, not a missing rule: `mobile_nav.dart` correctly set `display: flex` and relative positioning for exactly this, but its bare `.nav-dropdown-menu` selector (one class) was outranked by `header nav .nav-dropdown-menu` (one class, two elements) regardless of the media query. Scoping the mobile rule to `.primary-nav .nav-dropdown-menu` (two classes) restores the intended behaviour. Verified: the open mobile flyout now exposes all 30 links including every dropdown child, while desktop dropdowns still sit closed at rest and open on hover.
 
-**Still outstanding for Mike (dashboard work, not code):** the Step 9b.2 Sanity webhook is filtered to an explicit allowlist of document types, so `careers`, `pressItem` and `video` will not trigger a Cloudflare rebuild on publish until they're added. **Recommended instead: replace the allowlist with a negative filter** (e.g. `!(_type match "sanity.*") && !(_id in path("drafts.**"))`), which keeps the asset-upload and draft protection but covers every current and future type automatically. The allowlist's failure mode is silent - everything looks correct locally.
+**Sanity webhook filter replaced (done by Mike, 2026-08-25).** The Step 9b.2 webhook had been filtered to an explicit allowlist of document types, which meant every new type needed remembering in a dashboard nobody looks at - and forgetting it fails *silently*: the Studio works, publishing works, the site just quietly stops rebuilding. Replaced with a negative filter:
+
+```
+!(_type match "sanity.*") && !(_id in path("drafts.**"))
+```
+
+This keeps the two protections the allowlist was really providing - excluding Sanity's own asset documents (one is created per upload, so a migration like 21.2 would otherwise fire ~24 rebuilds) and excluding drafts - while covering `careers`, `pressItem`, `video` and **anything added later** with no further dashboard work. Do not reintroduce a type allowlist here.
+
+Note: this does mean a rebuild fires for any non-asset, non-draft document, including types that currently only serve the Flutter app. Per Mike that's fine and intended - `emergency_notification` is slated to serve the website too.
 
 ## Deferred until launch week (mid-September 2026): Step 9d - Custom Domain Cutover
 
