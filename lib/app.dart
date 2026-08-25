@@ -22,6 +22,10 @@ import 'pages/family_services.dart';
 import 'pages/founders.dart';
 import 'pages/history.dart';
 import 'pages/home.dart';
+import 'pages/media.dart';
+import 'pages/media_in_the_news.dart';
+import 'pages/media_newsletters.dart';
+import 'pages/media_videos.dart';
 import 'pages/mission.dart';
 import 'pages/news_detail.dart';
 import 'pages/not_found.dart';
@@ -162,6 +166,18 @@ class App extends AsyncStatelessComponent {
                     builder: (context, state) => EventDetail(event),
                     settings: RouteSettings(lastMod: event.publishedDate),
                   ),
+              Route(path: '/media', title: 'Media', builder: (context, state) => const Media()),
+              Route(
+                path: '/media/newsletters',
+                title: 'Newsletters',
+                builder: (context, state) => const MediaNewsletters(),
+              ),
+              Route(
+                path: '/media/in-the-news',
+                title: 'In The News',
+                builder: (context, state) => const MediaInTheNews(),
+              ),
+              Route(path: '/media/videos', title: 'Videos', builder: (context, state) => const MediaVideos()),
               Route(path: '/contact', title: 'Contact', builder: (context, state) => const Contact()),
               Route(
                 path: '/current-families',

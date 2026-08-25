@@ -30,6 +30,7 @@ import 'package:littlevillage_site/components/portable_text_view.dart'
     as _portable_text_view;
 import 'package:littlevillage_site/components/program_layout.dart'
     as _program_layout;
+import 'package:littlevillage_site/components/video_embed.dart' as _video_embed;
 import 'package:littlevillage_site/constants/theme.dart' as _theme;
 import 'package:littlevillage_site/pages/about.dart' as _about;
 import 'package:littlevillage_site/pages/admissions.dart' as _admissions;
@@ -38,6 +39,8 @@ import 'package:littlevillage_site/pages/current_families.dart'
     as _current_families;
 import 'package:littlevillage_site/pages/event_detail.dart' as _event_detail;
 import 'package:littlevillage_site/pages/home.dart' as _home;
+import 'package:littlevillage_site/pages/media_in_the_news.dart'
+    as _media_in_the_news;
 import 'package:littlevillage_site/pages/news_events.dart' as _news_events;
 import 'package:littlevillage_site/pages/not_found.dart' as _not_found;
 import 'package:littlevillage_site/pages/parent_association.dart'
@@ -107,12 +110,14 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._portable_text_view.PortableTextView.styles,
     ..._program_layout.ProgramHero.styles,
     ..._program_layout.ProgramServices.styles,
+    ..._video_embed.VideoEmbed.styles,
     ..._about.About.styles,
     ..._admissions.Admissions.styles,
     ..._contact.Contact.styles,
     ..._current_families.CurrentFamilies.styles,
     ..._event_detail.EventDetail.styles,
     ..._home.Home.styles,
+    ..._media_in_the_news.MediaInTheNews.styles,
     ..._news_events.NewsEvents.styles,
     ..._not_found.NotFound.styles,
     ..._parent_association.ParentAssociation.styles,

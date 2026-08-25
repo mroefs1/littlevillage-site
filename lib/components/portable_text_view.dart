@@ -3,6 +3,7 @@ import 'package:jaspr/jaspr.dart';
 
 import '../constants/theme.dart';
 import '../sanity/models/portable_text.dart';
+import 'video_embed.dart';
 
 // Renders Sanity `blockContent` (portable text) into Jaspr markup. Supports
 // exactly what the `blockContent` schema allows — block styles (normal,
@@ -129,49 +130,13 @@ class PortableTextView extends StatelessComponent {
     return a(href: fileUrl, target: Target.blank, classes: 'link-card', content);
   }
 
-  static Component _videoEmbed(Map<String, dynamic> block) {
-    final url = block['url'] as String?;
-    final caption = block['caption'] as String?;
-    final videoId = url == null ? null : _extractYoutubeId(url);
-    if (videoId == null) return .fragment([]);
-    return div(classes: 'video-embed', [
-      iframe(
-        src: 'https://www.youtube-nocookie.com/embed/$videoId',
-        allow:
-            'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
-        loading: MediaLoading.lazy,
-        classes: 'video-embed-frame',
-        attributes: {'title': caption ?? 'Embedded video', 'allowfullscreen': 'true'},
-        const [],
-      ),
-      if (caption != null) p(classes: 'video-embed-caption', [.text(caption)]),
-    ]);
-  }
-
-  // Accepts the editor-friendly URL shapes a Sanity `videoEmbed.url` field
-  // would realistically hold — watch?v=, youtu.be/, and embed/ — rather
-  // than assuming one specific format.
-  static String? _extractYoutubeId(String url) {
-    final uri = Uri.tryParse(url);
-    if (uri == null) return null;
-    final fromQuery = uri.queryParameters['v'];
-    if (fromQuery != null && fromQuery.isNotEmpty) return fromQuery;
-    final segments = uri.pathSegments.where((segment) => segment.isNotEmpty).toList();
-    if (segments.isEmpty) return null;
-    if (uri.host.contains('youtu.be')) return segments.first;
-    if (segments.first == 'embed' || segments.first == 'shorts') {
-      return segments.length > 1 ? segments[1] : null;
-    }
-    return null;
-  }
-
   static Component _renderBlock(Map<String, dynamic> block) {
     if (block['_type'] == 'image') {
       final url = block['imageUrl'] as String?;
       return url == null ? .fragment([]) : img(src: url, alt: 'Photo');
     }
     if (block['_type'] == 'videoEmbed') {
-      return _videoEmbed(block);
+      return VideoEmbed(url: block['url'] as String?, caption: block['caption'] as String?);
     }
 
     final spans = _renderSpans(block);
@@ -294,21 +259,6 @@ class PortableTextView extends StatelessComponent {
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
         fontSize: 19.px,
         fontWeight: .w600,
-      ),
-    ]),
-    css('.video-embed', [
-      css('&').styles(margin: .only(top: 14.px)),
-      css('.video-embed-frame').styles(
-        display: .block,
-        width: 100.percent,
-        aspectRatio: AspectRatio(16, 9),
-        border: .none,
-        radius: .all(.circular(Radii.md)),
-      ),
-      css('.video-embed-caption').styles(
-        margin: .only(top: 8.px),
-        color: AppColors.mutedTextLight,
-        fontSize: 13.px,
       ),
     ]),
   ];

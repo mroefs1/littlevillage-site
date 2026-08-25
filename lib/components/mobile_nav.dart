@@ -5,7 +5,7 @@ import 'package:jaspr_router/jaspr_router.dart';
 import '../constants/theme.dart';
 
 // The primary nav, hydrated as one @client boundary so the hamburger toggle
-// (mobile/tablet only, <= Breakpoints.tablet) has open/closed state. Above
+// (mobile/tablet only, <= Breakpoints.nav) has open/closed state. Above
 // that breakpoint this renders as the plain always-visible horizontal nav
 // with the existing pure-CSS (:hover/:focus-within) Programs/About dropdowns
 // — those don't need JS and stay CSS-only even inside this boundary.
@@ -28,7 +28,7 @@ class MobileNav extends StatefulComponent {
   @css
   static List<StyleRule> get styles => [
     css('.nav-toggle').styles(display: .none),
-    css.media(MediaQuery.screen(maxWidth: Breakpoints.tablet), [
+    css.media(MediaQuery.screen(maxWidth: Breakpoints.nav), [
       css('.nav-toggle', [
         css('&').styles(
           display: .flex,
@@ -65,7 +65,14 @@ class MobileNav extends StatefulComponent {
         ),
         css('&.open').styles(display: .flex),
       ]),
-      css('.nav-dropdown-menu').styles(
+      // Scoped to `.primary-nav` deliberately, for specificity: header.dart's
+      // desktop rule is `header nav .nav-dropdown-menu` (one class, two
+      // elements), which outranks a bare `.nav-dropdown-menu` no matter that
+      // this sits in a media query — so the intended mobile behaviour (each
+      // dropdown's children listed inline in the open flyout) silently never
+      // applied, leaving every sub-page unreachable from the mobile menu.
+      // Two classes beats one class + two elements.
+      css('.primary-nav .nav-dropdown-menu').styles(
         display: .flex,
         position: .relative(top: .zero, left: .zero),
         padding: .zero,

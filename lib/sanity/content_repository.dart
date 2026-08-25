@@ -2,6 +2,7 @@ import 'client.dart';
 import 'models/careers.dart';
 import 'models/document.dart';
 import 'models/event_item.dart';
+import 'models/media.dart';
 import 'models/news_post.dart';
 import 'models/newsletter.dart';
 import 'models/pa_event_item.dart';
@@ -29,6 +30,8 @@ abstract class ContentRepository {
   Future<List<StaffMember>> getStaffMembers();
   Future<List<BoardMember>> getBoardMembers();
   Future<CareersInfo?> getCareersInfo();
+  Future<List<PressItem>> getPressItems();
+  Future<List<VideoItem>> getVideos();
   Future<ParentAssociationInfo?> getParentAssociationInfo();
   Future<List<PaEventItem>> getPaEvents();
 }
@@ -126,6 +129,22 @@ class SanityContentRepository implements ContentRepository {
     final result = await _client.fetch(careersQuery);
     if (result == null) return null;
     return CareersInfo.fromJson(result as Map<String, dynamic>);
+  }
+
+  @override
+  Future<List<PressItem>> getPressItems() async {
+    final result = await _client.fetch(pressItemListQuery);
+    return (result as List<dynamic>)
+        .map((item) => PressItem.fromJson(item as Map<String, dynamic>))
+        .toList();
+  }
+
+  @override
+  Future<List<VideoItem>> getVideos() async {
+    final result = await _client.fetch(videoListQuery);
+    return (result as List<dynamic>)
+        .map((item) => VideoItem.fromJson(item as Map<String, dynamic>))
+        .toList();
   }
 
   @override

@@ -84,6 +84,19 @@ class Header extends StatelessComponent {
           {'label': 'Parent Association', 'path': '/parent-association'},
         ],
       },
+      // Fourth dropdown, matching the legacy nav's own Media menu. Pictures
+      // is deliberately absent — the legacy version is a WordPress category
+      // archive, dropped for now.
+      {
+        'label': 'Media',
+        'path': '/media',
+        'aliases': const ['/media/newsletters', '/media/in-the-news', '/media/videos'],
+        'children': const [
+          {'label': 'Newsletters', 'path': '/media/newsletters'},
+          {'label': 'In The News', 'path': '/media/in-the-news'},
+          {'label': 'Videos', 'path': '/media/videos'},
+        ],
+      },
       {'label': 'Contact', 'path': '/contact'},
       {'label': 'Support Us', 'path': '/support-us'},
     ];
@@ -253,8 +266,23 @@ class Header extends StatelessComponent {
           backgroundColor: AppColors.coral,
         ),
 
-        // Dropdown menus for Programs/About — pure CSS, toggled by
-        // :hover and :focus-within (keyboard) on the nav item, no JS.
+        // Dropdown menus for Programs/About/Current Families/Media — pure
+        // CSS, toggled by :hover and :focus-within (keyboard) on the nav
+        // item, no JS.
+        //
+        // `white-space: nowrap` matters: adding Media as a fourth dropdown in
+        // Step 21 pushed the row wide enough that "Current Families" broke
+        // onto two lines, leaving that one item 42px tall against its
+        // neighbours' 21px and visibly misaligning the whole row. A top-level
+        // nav label should never wrap.
+        // Two separate rules, and `&`-relative: this block is nested under
+        // `css('nav', ...)` and `.primary-nav` IS that <nav>, so a
+        // `.primary-nav > div` selector here compiles to
+        // `header nav .primary-nav > div` and never matches. Jaspr also only
+        // prefixes the FIRST selector in a comma-separated list, so combining
+        // these two would silently leave the second one unscoped.
+        css('& > div').styles(whiteSpace: .noWrap),
+        css('& > a').styles(whiteSpace: .noWrap),
         css('.nav-dropdown').styles(position: .relative()),
         css('.nav-caret').styles(
           margin: .only(left: 3.px),

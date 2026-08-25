@@ -143,6 +143,33 @@ const String boardMembersQuery = '''
 }
 ''';
 
+// Thumbnails are requested at a display width via Sanity's image pipeline
+// rather than migrating WordPress's own 150x150 crops, which were far too
+// small to use. `w=560` covers the rendered card size at 2x.
+const String pressItemListQuery = '''
+*[_type == "pressItem"] | order(date desc){
+  title,
+  publication,
+  date,
+  dateLabel,
+  "thumbnailUrl": thumbnail.asset->url + "?w=560&fit=max&auto=format",
+  "thumbnailAlt": thumbnail.alt,
+  links[]{
+    label,
+    href,
+    "fileUrl": file.asset->url
+  }
+}
+''';
+
+const String videoListQuery = '''
+*[_type == "video"] | order(date desc){
+  title,
+  youtubeUrl,
+  description
+}
+''';
+
 const String careersQuery = '''
 *[_type == "careers"][0]{
   intro,

@@ -85,6 +85,14 @@ class Spacing {
 // toggle — the desktop nav (8 items + brand + request-info button) doesn't
 // fit inside 1024px once side padding is accounted for.
 class Breakpoints {
+  // The desktop nav row switches to the hamburger here rather than at
+  // `tablet`: with 8 top-level items plus the Request Info pill (Media was
+  // added in Step 21), the row stops fitting on one line below ~1200px and
+  // pushes the page into horizontal overflow (measured: it needs ~1230px, so
+  // 1260 leaves a little slack for font-rendering differences). Only
+  // `mobile_nav.dart` uses this — the utility bar still collapses at
+  // `tablet`.
+  static const nav = Unit.pixels(1260);
   static const tablet = Unit.pixels(1024);
   static const mobile = Unit.pixels(768);
   static const small = Unit.pixels(480);
