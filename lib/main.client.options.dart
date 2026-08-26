@@ -6,6 +6,8 @@
 
 import 'package:jaspr/client.dart';
 
+import 'package:littlevillage_site/components/accessibility_panel.dart'
+    deferred as _accessibility_panel;
 import 'package:littlevillage_site/components/contact_form.dart'
     deferred as _contact_form;
 import 'package:littlevillage_site/components/faq_accordion.dart'
@@ -37,6 +39,10 @@ import 'package:littlevillage_site/components/news_events_filter.dart'
 /// ```
 ClientOptions get defaultClientOptions => ClientOptions(
   clients: {
+    'accessibility_panel': ClientLoader(
+      (p) => _accessibility_panel.AccessibilityPanel(),
+      loader: _accessibility_panel.loadLibrary,
+    ),
     'contact_form': ClientLoader(
       (p) => _contact_form.ContactForm(),
       loader: _contact_form.loadLibrary,

@@ -5,6 +5,8 @@
 // Generated with jaspr_builder
 
 import 'package:jaspr/server.dart';
+import 'package:littlevillage_site/components/accessibility_panel.dart'
+    as _accessibility_panel;
 import 'package:littlevillage_site/components/admissions_teaser.dart'
     as _admissions_teaser;
 import 'package:littlevillage_site/components/collection_card.dart'
@@ -72,6 +74,10 @@ import 'package:littlevillage_site/app.dart' as _app;
 ServerOptions get defaultServerOptions => ServerOptions(
   clientId: 'main.client.dart.js',
   clients: {
+    _accessibility_panel.AccessibilityPanel:
+        ClientTarget<_accessibility_panel.AccessibilityPanel>(
+          'accessibility_panel',
+        ),
     _contact_form.ContactForm: ClientTarget<_contact_form.ContactForm>(
       'contact_form',
     ),
@@ -98,6 +104,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
   styles: () => [
     ..._theme.globalStyles,
     ..._app.App.styles,
+    ..._accessibility_panel.AccessibilityPanel.styles,
     ..._admissions_teaser.AdmissionsTeaser.styles,
     ..._collection_card.CollectionCard.styles,
     ..._contact_form.ContactForm.styles,

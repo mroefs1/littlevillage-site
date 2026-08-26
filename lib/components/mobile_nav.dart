@@ -28,8 +28,22 @@ class MobileNav extends StatefulComponent {
   @css
   static List<StyleRule> get styles => [
     css('.nav-toggle').styles(display: .none),
-    css.media(MediaQuery.screen(maxWidth: Breakpoints.nav), [
-      css('.nav-toggle', [
+    // Collapsed twice, from the same rules. `Breakpoints.nav` is in `em`, so
+    // it already follows the browser's own font-size preference - but a media
+    // query cannot see a root font-size set by the accessibility panel, so a
+    // visitor who scales text there would keep the desktop row and overflow
+    // it. The row needs ~1140px at the default size, so the scaled cases get
+    // their own threshold at the worst case (1.25x -> ~1425px), keyed off the
+    // presence of `data-text-size`, which is only set when non-default.
+    ..._collapsedNav(''),
+    ..._collapsedNav('html[data-text-size] '),
+  ];
+
+  static List<StyleRule> _collapsedNav(String scope) => [
+    css.media(
+      MediaQuery.screen(maxWidth: scope.isEmpty ? Breakpoints.nav : const Unit.pixels(1425)),
+      [
+      css('$scope.nav-toggle', [
         css('&').styles(
           display: .flex,
           width: 40.px,
@@ -48,7 +62,7 @@ class MobileNav extends StatefulComponent {
           raw: {'outline-offset': '2px'},
         ),
       ]),
-      css('.primary-nav', [
+      css('$scope.primary-nav', [
         css('&').styles(
           display: .none,
           position: .absolute(top: 100.percent, left: 0.px, right: 0.px),
@@ -72,7 +86,7 @@ class MobileNav extends StatefulComponent {
       // dropdown's children listed inline in the open flyout) silently never
       // applied, leaving every sub-page unreachable from the mobile menu.
       // Two classes beats one class + two elements.
-      css('.primary-nav .nav-dropdown-menu').styles(
+      css('$scope.primary-nav .nav-dropdown-menu').styles(
         display: .flex,
         position: .relative(top: .zero, left: .zero),
         padding: .zero,
@@ -80,14 +94,15 @@ class MobileNav extends StatefulComponent {
         border: .none,
         shadow: BoxShadow(offsetX: 0.px, offsetY: 0.px, blur: 0.px, color: Colors.transparent),
       ),
-      css('.nav-dropdown:hover > .nav-dropdown-menu, .nav-dropdown:focus-within > .nav-dropdown-menu').styles(
+      css('$scope.nav-dropdown:hover > .nav-dropdown-menu, $scope.nav-dropdown:focus-within > .nav-dropdown-menu').styles(
         display: .flex,
       ),
-      css('.request-info').styles(
+      css('$scope.request-info').styles(
         margin: .only(top: 8.px),
         textAlign: .center,
       ),
-    ]),
+    ],
+    ),
   ];
 }
 

@@ -140,7 +140,7 @@ class LanguageSwitcher extends StatefulComponent {
       // the one affordance here that doesn't require reading English.
       css.media(MediaQuery.screen(maxWidth: Breakpoints.small), [
         css('.language-switcher-select').styles(
-          maxWidth: 110.px,
+          maxWidth: 96.px,
           raw: {'text-overflow': 'ellipsis'},
         ),
       ]),

@@ -132,7 +132,11 @@ class _HeroGalleryState extends State<HeroGallery> {
   void initState() {
     super.initState();
     if (kIsWeb) {
-      _reducedMotion = web.window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      // Either source counts: the OS-level preference, or the site's own
+      // display panel for visitors who have not set one.
+      _reducedMotion =
+          web.window.matchMedia('(prefers-reduced-motion: reduce)').matches ||
+          web.document.documentElement?.getAttribute('data-reduce-motion') == 'true';
     }
     _autoEnabled = !_reducedMotion;
     _startAuto();

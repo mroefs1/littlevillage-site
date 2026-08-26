@@ -4,6 +4,7 @@ import 'package:jaspr_router/jaspr_router.dart';
 
 import '../constants/theme.dart';
 import '../sanity/models/program.dart';
+import 'accessibility_panel.dart';
 import 'language_switcher.dart';
 import 'mobile_nav.dart';
 
@@ -120,6 +121,7 @@ class Header extends StatelessComponent {
           // `.utility-contact` hides at tablet), so the switcher stays
           // reachable on mobile without disturbing that breakpoint.
           const LanguageSwitcher(),
+          const AccessibilityPanel(),
           span(classes: 'utility-social', [.text('f ▸ ◎')]),
           Link(to: '/support-us', classes: 'donate-pill', child: .text('♥ Donate')),
         ]),
@@ -181,6 +183,12 @@ class Header extends StatelessComponent {
       css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
         css('&').styles(padding: .symmetric(vertical: 7.px, horizontal: 20.px)),
         css('.utility-actions').styles(gap: .all(10.px)),
+        // These are placeholder glyphs, not links - there are no social
+        // accounts wired up behind them. With the language switcher and the
+        // display panel both in this bar there is no room for decoration at
+        // phone widths, and dropping them is the only change here that costs
+        // a visitor nothing.
+        css('.utility-social').styles(display: .none),
       ]),
       css('.utility-actions', [
         css('&').styles(

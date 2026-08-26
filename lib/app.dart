@@ -3,6 +3,7 @@ import 'package:jaspr/server.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
 import 'components/footer.dart';
+import 'components/accessibility_panel.dart';
 import 'components/header.dart';
 import 'constants/theme.dart';
 import 'pages/about.dart';
@@ -65,6 +66,10 @@ class App extends AsyncStatelessComponent {
 
     return div(classes: 'app-shell', [
       a(href: '#main-content', classes: 'skip-link', [.text('Skip to main content')]),
+      // Applies saved display preferences before first paint, so a
+      // visitor who chose larger text never sees the page at the default
+      // size first and then jump.
+      const AccessibilityBoot(),
       Header(programs: programs),
       main_(
         id: 'main-content',
