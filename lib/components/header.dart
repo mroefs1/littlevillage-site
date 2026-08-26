@@ -4,6 +4,7 @@ import 'package:jaspr_router/jaspr_router.dart';
 
 import '../constants/theme.dart';
 import '../sanity/models/program.dart';
+import 'language_switcher.dart';
 import 'mobile_nav.dart';
 
 // Same three age-band categories, in the same display order, as the
@@ -113,6 +114,12 @@ class Header extends StatelessComponent {
           .text('📞 516-520-6000 · ✉ information@littlevillage.org · Seaford, NY'),
         ]),
         div(classes: 'utility-actions', [
+          // In the utility bar rather than the nav row: that row is already
+          // tight enough that `Breakpoints.nav` has been re-measured twice,
+          // and `.utility-actions` stays visible at every width (only
+          // `.utility-contact` hides at tablet), so the switcher stays
+          // reachable on mobile without disturbing that breakpoint.
+          const LanguageSwitcher(),
           span(classes: 'utility-social', [.text('f ▸ ◎')]),
           Link(to: '/support-us', classes: 'donate-pill', child: .text('♥ Donate')),
         ]),
@@ -123,10 +130,19 @@ class Header extends StatelessComponent {
           classes: 'brand',
           child: .fragment([
             img(src: '/images/brand-mark.png', alt: 'Hagedorn Little Village School logo', classes: 'brand-mark'),
-            div(classes: 'brand-name', [
-              .text('The Hagedorn Little Village School'),
-              div(classes: 'brand-subtitle', [.text('Jack Joel Center for Special Children')]),
-            ]),
+            // The school's name and its center's name are proper nouns,
+            // exempted from machine translation so they stay constant in
+            // every language. Without this, Arabic rendered the name as a
+            // transliteration no family could search for or say aloud to a
+            // receptionist.
+            div(
+              classes: 'brand-name notranslate',
+              attributes: const {'translate': 'no'},
+              [
+                .text('The Hagedorn Little Village School'),
+                div(classes: 'brand-subtitle', [.text('Jack Joel Center for Special Children')]),
+              ],
+            ),
           ]),
         ),
         MobileNav(activePath: activePath, items: navItems),
@@ -157,6 +173,15 @@ class Header extends StatelessComponent {
         css('&').styles(justifyContent: .end),
         css('.utility-contact').styles(display: .none),
       ]),
+      // At 375px the bar's three actions need exactly the width its 40px
+      // side padding leaves, so the social icons and donate pill wrapped to
+      // a second line once the language switcher joined them. Dropping to
+      // 20px here also brings this bar in line with every content section,
+      // which has always used 20px at mobile while this one kept 40px.
+      css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
+        css('&').styles(padding: .symmetric(vertical: 7.px, horizontal: 20.px)),
+        css('.utility-actions').styles(gap: .all(10.px)),
+      ]),
       css('.utility-actions', [
         css('&').styles(
           display: .flex,
@@ -166,6 +191,10 @@ class Header extends StatelessComponent {
         css('.utility-social').styles(
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
           fontSize: 14.px,
+          // Flex can shrink this below its intrinsic width on very narrow
+          // phones, which wraps the icon run onto a second line and makes
+          // the whole bar taller. It's five characters — never wrap it.
+          whiteSpace: .noWrap,
         ),
         css('.donate-pill').styles(
           padding: .symmetric(vertical: 5.px, horizontal: 14.px),
@@ -174,6 +203,11 @@ class Header extends StatelessComponent {
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
           fontSize: 14.px,
           fontWeight: .w700,
+          // A pill that wraps stops reading as a pill. Its homepage
+          // counterpart (`.donate-band-button`) already sets this; the
+          // header copy never did, and flex shrink can wrap it on very
+          // narrow phones.
+          whiteSpace: .noWrap,
           backgroundColor: AppColors.coral,
         ),
         // White outline, not the sitewide blue — against this dark navy

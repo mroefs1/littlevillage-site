@@ -11,7 +11,13 @@ class Footer extends StatelessComponent {
   Component build(BuildContext context) {
     return footer([
       div(classes: 'footer-about', [
-        div(classes: 'footer-school-name', [.text('The Hagedorn Little Village School')]),
+        // Proper noun, exempted from machine translation for the same
+        // reason as the header's copy of the name (see `header.dart`).
+        div(
+          classes: 'footer-school-name notranslate',
+          attributes: const {'translate': 'no'},
+          [.text('The Hagedorn Little Village School')],
+        ),
         div(classes: 'footer-address', [
           .text('Seaford, NY · 516-520-6000'),
           br(),

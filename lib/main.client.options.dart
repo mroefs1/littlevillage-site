@@ -12,6 +12,8 @@ import 'package:littlevillage_site/components/faq_accordion.dart'
     deferred as _faq_accordion;
 import 'package:littlevillage_site/components/hero_gallery.dart'
     deferred as _hero_gallery;
+import 'package:littlevillage_site/components/language_switcher.dart'
+    deferred as _language_switcher;
 import 'package:littlevillage_site/components/mobile_nav.dart'
     deferred as _mobile_nav;
 import 'package:littlevillage_site/components/news_events_filter.dart'
@@ -55,6 +57,10 @@ ClientOptions get defaultClientOptions => ClientOptions(
             .toList(),
       ),
       loader: _hero_gallery.loadLibrary,
+    ),
+    'language_switcher': ClientLoader(
+      (p) => _language_switcher.LanguageSwitcher(),
+      loader: _language_switcher.loadLibrary,
     ),
     'mobile_nav': ClientLoader(
       (p) => _mobile_nav.MobileNav(

@@ -20,6 +20,8 @@ import 'package:littlevillage_site/components/footer.dart' as _footer;
 import 'package:littlevillage_site/components/header.dart' as _header;
 import 'package:littlevillage_site/components/hero_gallery.dart'
     as _hero_gallery;
+import 'package:littlevillage_site/components/language_switcher.dart'
+    as _language_switcher;
 import 'package:littlevillage_site/components/mobile_nav.dart' as _mobile_nav;
 import 'package:littlevillage_site/components/news_events_filter.dart'
     as _news_events_filter;
@@ -81,6 +83,8 @@ ServerOptions get defaultServerOptions => ServerOptions(
       'hero_gallery',
       params: __hero_galleryHeroGallery,
     ),
+    _language_switcher.LanguageSwitcher:
+        ClientTarget<_language_switcher.LanguageSwitcher>('language_switcher'),
     _mobile_nav.MobileNav: ClientTarget<_mobile_nav.MobileNav>(
       'mobile_nav',
       params: __mobile_navMobileNav,
@@ -103,6 +107,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._footer.Footer.styles,
     ..._header.Header.styles,
     ..._hero_gallery.HeroGallery.styles,
+    ..._language_switcher.LanguageSwitcher.styles,
     ..._mobile_nav.MobileNav.styles,
     ..._news_events_filter.NewsEventsFilter.styles,
     ..._photo_placeholder.PhotoPlaceholder.styles,
