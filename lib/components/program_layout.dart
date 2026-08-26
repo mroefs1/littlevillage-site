@@ -71,7 +71,7 @@ class ProgramHero extends StatelessComponent {
       radius: .all(.circular(Radii.pill)),
       color: AppColors.navyDark,
       fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-      fontSize: 13.px,
+      fontSize: 0.8125.rem,
       fontWeight: .w700,
       backgroundColor: AppColors.yellow,
     ),
@@ -104,7 +104,7 @@ class ProgramServices extends StatelessComponent {
       margin: .only(bottom: 10.px),
       color: AppColors.navy,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 19.px,
+      fontSize: 1.1875.rem,
       fontWeight: .w600,
     ),
   ];

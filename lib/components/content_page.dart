@@ -59,18 +59,18 @@ class ContentPage extends StatelessComponent {
       css('.page-breadcrumb').styles(
         color: AppColors.mutedTextLight,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 13.px,
+        fontSize: 0.8125.rem,
       ),
       css('h1').styles(
         margin: .only(top: 6.px),
-        fontSize: 38.px,
+        fontSize: 2.375.rem,
         fontWeight: .w600,
         letterSpacing: (-0.015).em,
         lineHeight: 1.1.em,
       ),
       css('h2').styles(
         margin: .only(top: 30.px),
-        fontSize: 22.px,
+        fontSize: 1.375.rem,
         fontWeight: .w600,
         lineHeight: 1.15.em,
       ),
@@ -78,7 +78,7 @@ class ContentPage extends StatelessComponent {
         css('&').styles(
           padding: .only(top: 18.px, left: 20.px, right: 20.px, bottom: 40.px),
         ),
-        css('h1').styles(fontSize: 28.px),
+        css('h1').styles(fontSize: 1.75.rem),
       ]),
       // News/event detail pages: a centered column with a meta bar, hero
       // image (auto height so it scales without cropping regardless of the
@@ -93,7 +93,7 @@ class ContentPage extends StatelessComponent {
       ),
       css('.detail-meta-item').styles(display: .flex, alignItems: .center, gap: .all(6.px)),
       css('.detail-meta-icon').styles(color: AppColors.mutedTextLight),
-      css('.detail-meta-text').styles(color: AppColors.navy, fontSize: 15.px),
+      css('.detail-meta-text').styles(color: AppColors.navy, fontSize: 0.9375.rem),
       css('.detail-hero').styles(margin: .only(top: 18.px)),
       css('.detail-hero-image').styles(
         display: .block,
@@ -105,7 +105,7 @@ class ContentPage extends StatelessComponent {
         css('&').styles(
           margin: .only(top: 18.px),
           color: AppColors.mutedText,
-          fontSize: 15.px,
+          fontSize: 0.9375.rem,
           lineHeight: 1.55.em,
         ),
         css('p').styles(margin: .only(top: 10.px)),
@@ -127,7 +127,7 @@ class ContentPage extends StatelessComponent {
         radius: .all(.circular(Radii.pill)),
         color: Colors.white,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 15.px,
+        fontSize: 0.9375.rem,
         fontWeight: .w700,
         backgroundColor: AppColors.coral,
       ),
@@ -150,20 +150,20 @@ class ContentPage extends StatelessComponent {
         css('.link-card-title').styles(
           color: AppColors.navy,
           fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-          fontSize: 17.px,
+          fontSize: 1.0625.rem,
           fontWeight: .w600,
         ),
         css('.link-card-body').styles(
           margin: .only(top: 6.px),
           color: AppColors.mutedTextLight,
-          fontSize: 13.px,
+          fontSize: 0.8125.rem,
           lineHeight: 1.45.em,
         ),
         css('.link-card-cta').styles(
           margin: .only(top: 10.px),
           color: AppColors.coral,
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-          fontSize: 14.px,
+          fontSize: 0.875.rem,
           fontWeight: .w700,
         ),
       ]),

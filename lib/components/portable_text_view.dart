@@ -194,7 +194,7 @@ class PortableTextView extends StatelessComponent {
     css('.body-content', [
       css('&').styles(
         color: AppColors.mutedText,
-        fontSize: 15.px,
+        fontSize: 0.9375.rem,
         lineHeight: 1.6.em,
       ),
       css('& h2, & h3, & h4').styles(
@@ -238,7 +238,7 @@ class PortableTextView extends StatelessComponent {
       css('.service-section-title').styles(
         color: AppColors.navy,
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-        fontSize: 21.px,
+        fontSize: 1.3125.rem,
         fontWeight: .w600,
       ),
     ]),
@@ -257,7 +257,7 @@ class PortableTextView extends StatelessComponent {
       css('.process-step-title').styles(
         color: AppColors.navy,
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-        fontSize: 19.px,
+        fontSize: 1.1875.rem,
         fontWeight: .w600,
       ),
     ]),

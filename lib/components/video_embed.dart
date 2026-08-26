@@ -70,7 +70,7 @@ class VideoEmbed extends StatelessComponent {
       css('.video-embed-caption').styles(
         margin: .only(top: 8.px),
         color: AppColors.mutedTextLight,
-        fontSize: 13.px,
+        fontSize: 0.8125.rem,
       ),
     ]),
   ];

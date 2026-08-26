@@ -154,14 +154,14 @@ class ParentAssociation extends AsyncStatelessComponent {
       css('.pa-dues-label').styles(
         display: .block,
         color: AppColors.mutedTextLight,
-        fontSize: 12.px,
+        fontSize: 0.75.rem,
       ),
       css('.pa-dues-value').styles(
         display: .block,
         margin: .only(top: 2.px),
         color: AppColors.navy,
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-        fontSize: 20.px,
+        fontSize: 1.25.rem,
         fontWeight: .w600,
       ),
     ]),
@@ -184,7 +184,7 @@ class ParentAssociation extends AsyncStatelessComponent {
         bottom: .solid(color: AppColors.line, width: 1.px),
       ),
       color: AppColors.mutedText,
-      fontSize: 14.px,
+      fontSize: 0.875.rem,
     ),
     css('.pa-board-role').styles(
       color: AppColors.navy,
@@ -208,10 +208,10 @@ class ParentAssociation extends AsyncStatelessComponent {
       ),
       css('.pa-contact-name').styles(
         color: AppColors.navy,
-        fontSize: 14.px,
+        fontSize: 0.875.rem,
         fontWeight: .w700,
       ),
-      css('.pa-contact-email').styles(color: AppColors.coral, fontSize: 13.px),
+      css('.pa-contact-email').styles(color: AppColors.coral, fontSize: 0.8125.rem),
     ]),
 
     css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [

@@ -85,7 +85,7 @@ class Contact extends AsyncStatelessComponent {
       maxWidth: 620.px,
       margin: .only(top: 10.px),
       color: AppColors.mutedText,
-      fontSize: 16.px,
+      fontSize: 1.rem,
       lineHeight: 1.55.em,
     ),
     css('.contact-grid').styles(
@@ -107,13 +107,13 @@ class Contact extends AsyncStatelessComponent {
       margin: .only(bottom: 4.px),
       color: AppColors.navy,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 19.px,
+      fontSize: 1.1875.rem,
       fontWeight: .w600,
     ),
     css('.contact-form-legend').styles(
       margin: .only(bottom: 16.px),
       color: AppColors.mutedTextLight,
-      fontSize: 13.px,
+      fontSize: 0.8125.rem,
     ),
     css('.contact-form-grid').styles(
       display: .grid,
@@ -122,7 +122,7 @@ class Contact extends AsyncStatelessComponent {
     ),
     css('.contact-field').styles(display: .flex, flexDirection: .column, gap: .all(4.px)),
     css('.contact-field-full').styles(gridPlacement: GridPlacement(columnStart: LinePlacement.span(2))),
-    css('.contact-field-label').styles(color: AppColors.navy, fontSize: 13.px, fontWeight: .w600),
+    css('.contact-field-label').styles(color: AppColors.navy, fontSize: 0.8125.rem, fontWeight: .w600),
     css('.contact-field input, .contact-field textarea, .contact-field select', [
       css('&').styles(
         width: 100.percent,
@@ -131,7 +131,7 @@ class Contact extends AsyncStatelessComponent {
         radius: .all(.circular(Radii.sm)),
         color: AppColors.navy,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 14.px,
+        fontSize: 0.875.rem,
         backgroundColor: Colors.white,
         raw: {'box-sizing': 'border-box'},
       ),
@@ -153,7 +153,7 @@ class Contact extends AsyncStatelessComponent {
       radius: .all(.circular(Radii.pill)),
       color: Colors.white,
       fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-      fontSize: 15.px,
+      fontSize: 0.9375.rem,
       fontWeight: .w700,
       backgroundColor: AppColors.coral,
       raw: {'cursor': 'pointer'},
@@ -161,11 +161,11 @@ class Contact extends AsyncStatelessComponent {
     // Info column — plain gap-stacked rows, not a bordered/padded card.
     css('.contact-info-column').styles(display: .flex, flexDirection: .column, gap: .all(14.px), flex: Flex(grow: 1)),
     css('.contact-info-card').styles(display: .flex, flexDirection: .column, gap: .all(16.px)),
-    css('.contact-info-label').styles(color: AppColors.mutedTextLight, fontSize: 13.px),
+    css('.contact-info-label').styles(color: AppColors.mutedTextLight, fontSize: 0.8125.rem),
     css('.contact-info-value').styles(
       margin: .only(top: 4.px),
       color: AppColors.navy,
-      fontSize: 15.px,
+      fontSize: 0.9375.rem,
       fontWeight: .w700,
     ),
     // Map placeholder: sky-toned stripes for this spot specifically.

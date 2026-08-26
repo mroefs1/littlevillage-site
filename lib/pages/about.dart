@@ -148,7 +148,7 @@ class About extends AsyncStatelessComponent {
       maxWidth: 640.px,
       margin: .only(top: 10.px),
       color: AppColors.mutedText,
-      fontSize: 16.px,
+      fontSize: 1.rem,
       lineHeight: 1.55.em,
     ),
 
@@ -163,7 +163,7 @@ class About extends AsyncStatelessComponent {
       css('a').styles(
         color: AppColors.blue,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 14.px,
+        fontSize: 0.875.rem,
         fontWeight: .w600,
       ),
     ]),
@@ -189,10 +189,10 @@ class About extends AsyncStatelessComponent {
     css('.about-stat-value').styles(
       color: AppColors.navy,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 24.px,
+      fontSize: 1.5.rem,
       fontWeight: .w600,
     ),
-    css('.about-stat-label').styles(color: AppColors.mutedTextLight, fontSize: 12.px),
+    css('.about-stat-label').styles(color: AppColors.mutedTextLight, fontSize: 0.75.rem),
 
     // Mission
     css('.about-mission').styles(
@@ -221,7 +221,7 @@ class About extends AsyncStatelessComponent {
     css('.about-team').styles(margin: .only(top: 26.px)),
     css('.about-team h2').styles(
       margin: .only(bottom: 14.px),
-      fontSize: 22.px,
+      fontSize: 1.375.rem,
       fontWeight: .w600,
     ),
     css('.about-team-cards').styles(display: .flex, gap: .all(16.px)),
@@ -256,10 +256,10 @@ class About extends AsyncStatelessComponent {
     css('.about-team-name').styles(
       color: AppColors.navy,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 15.px,
+      fontSize: 0.9375.rem,
       fontWeight: .w600,
     ),
-    css('.about-team-title').styles(color: AppColors.mutedTextLight, fontSize: 12.px),
+    css('.about-team-title').styles(color: AppColors.mutedTextLight, fontSize: 0.75.rem),
 
     // Accreditation strip
     css('.about-accreditation').styles(
@@ -272,10 +272,10 @@ class About extends AsyncStatelessComponent {
       margin: .only(bottom: 8.px),
       color: AppColors.navy,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 16.px,
+      fontSize: 1.rem,
       fontWeight: .w600,
     ),
-    css('.about-accreditation-body').styles(color: AppColors.mutedTextMid, fontSize: 13.px, lineHeight: 1.5.em),
+    css('.about-accreditation-body').styles(color: AppColors.mutedTextMid, fontSize: 0.8125.rem, lineHeight: 1.5.em),
 
     css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
       css('.about-stat').styles(minWidth: 50.percent),

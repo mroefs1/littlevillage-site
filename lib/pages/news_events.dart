@@ -103,7 +103,7 @@ class NewsEvents extends StatelessComponent {
       maxWidth: 640.px,
       margin: .only(top: 10.px),
       color: AppColors.mutedText,
-      fontSize: 16.px,
+      fontSize: 1.rem,
       lineHeight: 1.55.em,
     ),
   ];

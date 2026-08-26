@@ -223,7 +223,7 @@ class App extends AsyncStatelessComponent {
         padding: .symmetric(vertical: 10.px, horizontal: 16.px),
         radius: .all(.circular(6.px)),
         color: Colors.white,
-        fontSize: 14.px,
+        fontSize: 0.875.rem,
         fontWeight: .w700,
         backgroundColor: AppColors.blue,
         raw: {'z-index': '100', 'transition': 'top 0.15s ease-in-out'},

@@ -87,7 +87,7 @@ class EventDetail extends StatelessComponent {
       margin: .only(top: 26.px, bottom: 14.px),
       color: AppColors.navy,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 19.px,
+      fontSize: 1.1875.rem,
       fontWeight: .w600,
     ),
     css('.evd-gallery-grid').styles(

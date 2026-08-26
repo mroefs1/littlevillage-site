@@ -74,12 +74,12 @@ class Footer extends StatelessComponent {
         css('&').styles(
           maxWidth: 240.px,
           color: AppColors.footerMuted,
-          fontSize: 12.px,
+          fontSize: 0.75.rem,
         ),
         css('.footer-school-name').styles(
           color: Colors.white,
           fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-          fontSize: 16.px,
+          fontSize: 1.rem,
           fontWeight: .w700,
         ),
         css('.footer-address').styles(
@@ -101,26 +101,28 @@ class Footer extends StatelessComponent {
           flexDirection: .column,
           gap: .all(2.px),
           color: AppColors.footerLink,
-          fontSize: 13.px,
+          fontSize: 0.8125.rem,
         ),
         // WCAG 2.2 SC 2.5.8 (Target Size, Minimum) asks for interactive
         // targets of at least 24x24 CSS px. These links rendered 17px tall,
         // which was the entirety of the site's own target-size finding -
         // 707 instances in an axe sweep, all of them this one rule repeated
-        // through the footer on all 32 pages. A line-height floor rather
-        // than padding keeps them at 24px even once the rem conversion
-        // changes the font size, and makes the whole row clickable rather
-        // than just the glyphs.
+        // through the footer on all 32 pages. A min-height floor with the
+        // text centred, rather than a fixed line-height, holds the 24px
+        // minimum at the default size while still growing with the visitor's
+        // own text size - a px line-height would have clipped descenders
+        // once the text scaled past it. It also makes the whole row
+        // clickable rather than just the glyphs.
         css('a').styles(
-          display: .block,
+          display: .flex,
           minHeight: 24.px,
-          lineHeight: 24.px,
+          alignItems: .center,
         ),
         css('.footer-column-title').styles(
           margin: .only(bottom: 10.px),
           color: AppColors.yellow,
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-          fontSize: 12.px,
+          fontSize: 0.75.rem,
           fontWeight: .w700,
           textTransform: .upperCase,
           letterSpacing: 0.1.em,

@@ -39,7 +39,7 @@ class MobileNav extends StatefulComponent {
           justifyContent: .center,
           alignItems: .center,
           color: AppColors.navy,
-          fontSize: 22.px,
+          fontSize: 1.375.rem,
           backgroundColor: Colors.transparent,
           raw: {'cursor': 'pointer'},
         ),

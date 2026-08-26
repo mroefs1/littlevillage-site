@@ -302,13 +302,13 @@ class Home extends StatelessComponent {
         margin: .only(bottom: 14.px),
         color: AppColors.coral,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 13.px,
+        fontSize: 0.8125.rem,
         fontWeight: .w800,
         textTransform: .upperCase,
         letterSpacing: 0.12.em,
       ),
       css('.hero-copy h1').styles(
-        fontSize: 44.px,
+        fontSize: 2.75.rem,
         fontWeight: .w600,
         letterSpacing: (-0.02).em,
         lineHeight: 1.1.em,
@@ -317,7 +317,7 @@ class Home extends StatelessComponent {
         maxWidth: 520.px,
         margin: .only(top: 14.px),
         color: AppColors.mutedText,
-        fontSize: 17.px,
+        fontSize: 1.0625.rem,
         lineHeight: 1.55.em,
       ),
       css('.hero-ctas').styles(
@@ -339,7 +339,7 @@ class Home extends StatelessComponent {
         shadow: BoxShadow(offsetX: 0.px, offsetY: 10.px, blur: 25.px, color: .rgba(239, 125, 104, 0.25)),
         color: Colors.white,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 16.px,
+        fontSize: 1.rem,
         fontWeight: .w700,
         backgroundColor: AppColors.coral,
       ),
@@ -349,7 +349,7 @@ class Home extends StatelessComponent {
         radius: .all(.circular(Radii.pill)),
         color: AppColors.navy,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 16.px,
+        fontSize: 1.rem,
         fontWeight: .w700,
         backgroundColor: Colors.white,
       ),
@@ -375,17 +375,17 @@ class Home extends StatelessComponent {
       css('.trust-value').styles(
         color: AppColors.navy,
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-        fontSize: 24.px,
+        fontSize: 1.5.rem,
         fontWeight: .w600,
       ),
-      css('.trust-label').styles(color: AppColors.mutedTextLight, fontSize: 12.px),
+      css('.trust-label').styles(color: AppColors.mutedTextLight, fontSize: 0.75.rem),
 
       // Age locator
       css('.age-locator').styles(
         padding: .only(top: 30.px, left: 40.px, right: 40.px, bottom: 8.px),
         backgroundColor: AppColors.cream,
       ),
-      css('.age-locator h2').styles(textAlign: .center, fontSize: 26.px),
+      css('.age-locator h2').styles(textAlign: .center, fontSize: 1.625.rem),
       css('.age-cards').styles(
         display: .flex,
         margin: .only(top: 20.px),
@@ -416,7 +416,7 @@ class Home extends StatelessComponent {
           margin: .only(top: 14.px),
           color: AppColors.mutedTextLight,
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-          fontSize: 12.px,
+          fontSize: 0.75.rem,
           fontWeight: .w800,
           textTransform: .upperCase,
           letterSpacing: 0.1.em,
@@ -425,20 +425,20 @@ class Home extends StatelessComponent {
           margin: .only(top: 8.px),
           color: AppColors.navy,
           fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-          fontSize: 20.px,
+          fontSize: 1.25.rem,
           fontWeight: .w600,
         ),
         css('.age-card-desc').styles(
           margin: .only(top: 6.px),
           color: AppColors.mutedTextMid,
-          fontSize: 13.px,
+          fontSize: 0.8125.rem,
           lineHeight: 1.45.em,
         ),
         css('.age-card-cta').styles(
           margin: .only(top: 12.px),
           color: AppColors.coral,
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-          fontSize: 14.px,
+          fontSize: 0.875.rem,
           fontWeight: .w700,
         ),
       ]),
@@ -452,13 +452,13 @@ class Home extends StatelessComponent {
       css('.enrollment-teaser-header').styles(display: .flex, justifyContent: .spaceBetween, alignItems: .center),
       css('.enrollment-teaser-header h2').styles(
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-        fontSize: 22.px,
+        fontSize: 1.375.rem,
         fontWeight: .w600,
       ),
       css('.enrollment-teaser-link').styles(
         color: AppColors.coral,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 15.px,
+        fontSize: 0.9375.rem,
         fontWeight: .w700,
       ),
       css('.enrollment-steps').styles(
@@ -480,7 +480,7 @@ class Home extends StatelessComponent {
         fontWeight: .w700,
         backgroundColor: AppColors.yellow,
       ),
-      css('.enrollment-step-label').styles(color: AppColors.navy, fontSize: 14.px, fontWeight: .w600),
+      css('.enrollment-step-label').styles(color: AppColors.navy, fontSize: 0.875.rem, fontWeight: .w600),
 
       // News & events
       css('.home-news-events').styles(
@@ -494,7 +494,7 @@ class Home extends StatelessComponent {
       css('.home-news-events h2').styles(
         margin: .only(bottom: 10.px),
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-        fontSize: 22.px,
+        fontSize: 1.375.rem,
         fontWeight: .w600,
       ),
       css('.home-news-row', [
@@ -527,14 +527,14 @@ class Home extends StatelessComponent {
       ),
       css('.home-news-title').styles(
         color: AppColors.navy,
-        fontSize: 16.px,
+        fontSize: 1.rem,
         fontWeight: .w600,
         lineHeight: 1.25.em,
       ),
       css('.home-news-date').styles(
         margin: .only(top: 5.px),
         color: AppColors.mutedTextLight,
-        fontSize: 12.px,
+        fontSize: 0.75.rem,
       ),
       css('.home-event-row', [
         css('&').styles(
@@ -561,18 +561,18 @@ class Home extends StatelessComponent {
         backgroundColor: AppColors.coral,
       ),
       css('.home-event-day').styles(
-        fontSize: 22.px,
+        fontSize: 1.375.rem,
         fontWeight: .w700,
         lineHeight: 1.em,
       ),
       css('.home-event-month').styles(
         margin: .only(top: 2.px),
-        fontSize: 11.px,
+        fontSize: 0.6875.rem,
         textTransform: .upperCase,
       ),
       css('.home-event-title').styles(
         color: AppColors.navy,
-        fontSize: 16.px,
+        fontSize: 1.rem,
         fontWeight: .w600,
         lineHeight: 1.25.em,
       ),
@@ -594,13 +594,13 @@ class Home extends StatelessComponent {
       css('.current-families-title').styles(
         color: AppColors.navy,
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-        fontSize: 18.px,
+        fontSize: 1.125.rem,
         fontWeight: .w600,
       ),
       css('.current-families-title-accent').styles(color: AppColors.blue),
       css('.current-families-portal').styles(
         color: AppColors.mutedTextLight,
-        fontSize: 13.px,
+        fontSize: 0.8125.rem,
       ),
       css('.current-families-body').styles(display: .flex),
       css('.current-families-feature', [
@@ -623,7 +623,7 @@ class Home extends StatelessComponent {
           justifyContent: .center,
           alignItems: .center,
           flex: Flex(grow: 0, shrink: 0),
-          fontSize: 22.px,
+          fontSize: 1.375.rem,
           raw: {
             'background-image':
                 'repeating-linear-gradient(135deg, ${AppColors.peach.value}, ${AppColors.peach.value} 6px, ${AppColors.peachDark.value} 6px, ${AppColors.peachDark.value} 12px)',
@@ -631,19 +631,19 @@ class Home extends StatelessComponent {
         ),
         css('.current-families-feature-title').styles(
           color: AppColors.navy,
-          fontSize: 16.px,
+          fontSize: 1.rem,
           fontWeight: .w600,
         ),
         css('.current-families-feature-desc').styles(
           margin: .only(top: 2.px),
           color: AppColors.mutedTextLight,
-          fontSize: 13.px,
+          fontSize: 0.8125.rem,
           lineHeight: 1.45.em,
         ),
         css('.current-families-feature-cta').styles(
           margin: .only(top: 6.px),
           color: AppColors.coral,
-          fontSize: 13.px,
+          fontSize: 0.8125.rem,
           fontWeight: .w700,
         ),
       ]),
@@ -664,7 +664,7 @@ class Home extends StatelessComponent {
         gap: .all(8.px),
         flex: Flex(grow: 1),
         color: AppColors.coral,
-        fontSize: 14.px,
+        fontSize: 0.875.rem,
         fontWeight: .w700,
       ),
 
@@ -682,20 +682,20 @@ class Home extends StatelessComponent {
       css('.donate-band-title').styles(
         color: AppColors.navyDark,
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-        fontSize: 22.px,
+        fontSize: 1.375.rem,
         fontWeight: .w600,
       ),
       css('.donate-band-subtitle').styles(
         margin: .only(top: 3.px),
         color: AppColors.navyDark,
-        fontSize: 13.px,
+        fontSize: 0.8125.rem,
       ),
       css('.donate-band-button').styles(
         padding: .symmetric(vertical: 13.px, horizontal: 26.px),
         radius: .all(.circular(Radii.pill)),
         color: Colors.white,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 16.px,
+        fontSize: 1.rem,
         fontWeight: .w700,
         whiteSpace: .noWrap,
         backgroundColor: AppColors.navyDark,
@@ -712,7 +712,7 @@ class Home extends StatelessComponent {
         // behind; it reappears automatically above this breakpoint since
         // nothing here overrides its default display outside the query.
         css('.hero-gallery-slot').styles(display: .none),
-        css('.hero-copy h1').styles(fontSize: 28.px),
+        css('.hero-copy h1').styles(fontSize: 1.75.rem),
         css('.hero-ctas').styles(flexWrap: .wrap),
         css('.trust-strip').styles(
           margin: .only(top: 8.px, left: 20.px, right: 20.px),

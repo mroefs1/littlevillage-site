@@ -26,7 +26,7 @@ class PillList extends StatelessComponent {
       radius: .all(.circular(Radii.pill)),
       color: AppColors.navy,
       fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-      fontSize: 14.px,
+      fontSize: 0.875.rem,
       fontWeight: .w600,
       backgroundColor: Colors.white,
     ),

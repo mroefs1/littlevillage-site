@@ -62,7 +62,7 @@ class TherapeuticServices extends AsyncStatelessComponent {
     css('.ts-cta-title').styles(
       color: Colors.white,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 22.px,
+      fontSize: 1.375.rem,
       fontWeight: .w600,
     ),
     css('.ts-cta-subtitle').styles(
@@ -75,7 +75,7 @@ class TherapeuticServices extends AsyncStatelessComponent {
       radius: .all(.circular(Radii.pill)),
       color: Colors.white,
       fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-      fontSize: 15.px,
+      fontSize: 0.9375.rem,
       fontWeight: .w700,
       backgroundColor: AppColors.coral,
       raw: {'flex-shrink': '0'},

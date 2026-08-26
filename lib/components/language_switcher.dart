@@ -87,14 +87,14 @@ class LanguageSwitcher extends StatefulComponent {
         alignItems: .center,
         gap: .all(6.px),
       ),
-      css('.language-switcher-icon').styles(fontSize: 14.px),
+      css('.language-switcher-icon').styles(fontSize: 0.875.rem),
       // `appearance: none` below strips the native dropdown arrow along with
       // the native chrome, so the control supplies its own. Decorative and
       // click-through — the select underneath still owns the interaction.
       css('.language-switcher-caret').styles(
         position: .absolute(right: 10.px, top: 50.percent),
         color: Colors.white,
-        fontSize: 10.px,
+        fontSize: 0.625.rem,
         raw: {'transform': 'translateY(-50%)', 'pointer-events': 'none'},
       ),
       css('.language-switcher-select', [
@@ -104,7 +104,7 @@ class LanguageSwitcher extends StatefulComponent {
           radius: .all(.circular(Radii.pill)),
           color: Colors.white,
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-          fontSize: 13.px,
+          fontSize: 0.8125.rem,
           fontWeight: .w600,
           backgroundColor: Colors.transparent,
           // Without `appearance: none` browsers paint the select with native

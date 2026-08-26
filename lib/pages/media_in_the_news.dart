@@ -124,7 +124,7 @@ class MediaInTheNews extends AsyncStatelessComponent {
       css('.press-item-meta').styles(
         color: AppColors.mutedTextLight,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 12.px,
+        fontSize: 0.75.rem,
         fontWeight: .w700,
         textTransform: .upperCase,
         letterSpacing: 0.04.em,
@@ -133,7 +133,7 @@ class MediaInTheNews extends AsyncStatelessComponent {
         margin: .only(top: 6.px),
         color: AppColors.navy,
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-        fontSize: 18.px,
+        fontSize: 1.125.rem,
         fontWeight: .w600,
         lineHeight: 1.3.em,
       ),
@@ -146,7 +146,7 @@ class MediaInTheNews extends AsyncStatelessComponent {
       css('.press-item-link').styles(
         color: AppColors.coral,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 14.px,
+        fontSize: 0.875.rem,
         fontWeight: .w700,
       ),
     ]),

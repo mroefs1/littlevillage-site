@@ -34,7 +34,7 @@ class PhotoPlaceholder extends StatelessComponent {
       color: AppColors.mutedTextMid,
       textAlign: .center,
       fontFamily: FontFamilies.uiMonospace,
-      fontSize: 12.px,
+      fontSize: 0.75.rem,
       fontWeight: .w600,
       raw: {
         'background-image':

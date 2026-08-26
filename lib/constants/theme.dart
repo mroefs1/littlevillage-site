@@ -95,7 +95,16 @@ class Breakpoints {
   // Re-probe this if nav items are added or removed again. Only
   // `mobile_nav.dart` uses this — the utility bar still collapses at
   // `tablet`.
-  static const nav = Unit.pixels(1140);
+  //
+  // Expressed in `em`, not px, and it is the one breakpoint that is. This
+  // one is a *text-fitting* threshold rather than a layout one: the row
+  // stops fitting because the labels no longer fit, so it has to move with
+  // the text. In a media query `em` resolves against the browser's default
+  // font size regardless of anything we set on `html`, which is exactly the
+  // behaviour wanted here — a visitor whose browser default is 20px gets
+  // the hamburger sooner, because their nav labels are correspondingly
+  // wider. 71.25em x 16px = 1140px, so nothing changes at the default size.
+  static const nav = Unit.em(71.25);
   static const tablet = Unit.pixels(1024);
   static const mobile = Unit.pixels(768);
   static const small = Unit.pixels(480);

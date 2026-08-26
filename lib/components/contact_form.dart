@@ -74,7 +74,7 @@ class ContactForm extends StatefulComponent {
     css('.contact-field-hint').styles(
       margin: .only(top: (-4).px),
       color: AppColors.mutedTextLight,
-      fontSize: 12.px,
+      fontSize: 0.75.rem,
     ),
     css('.contact-field select[aria-invalid="true"], .contact-field input[aria-invalid="true"]').styles(
       border: .all(color: _dangerColor, width: 1.5.px),
@@ -83,12 +83,12 @@ class ContactForm extends StatefulComponent {
       margin: .only(top: 4.px),
       gridPlacement: GridPlacement(columnStart: LinePlacement.span(2)),
       color: _dangerColor,
-      fontSize: 13.px,
+      fontSize: 0.8125.rem,
     ),
     css('.contact-form-success').styles(
       padding: .symmetric(vertical: 20.px),
       color: AppColors.navy,
-      fontSize: 15.px,
+      fontSize: 0.9375.rem,
       lineHeight: 1.5.em,
     ),
     // Missing before 11.10: contact.dart's mobile breakpoint collapses

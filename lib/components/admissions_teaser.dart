@@ -36,13 +36,13 @@ class AdmissionsTeaser extends StatelessComponent {
     css('.progd-how-to-start-title').styles(
       color: AppColors.navy,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 17.px,
+      fontSize: 1.0625.rem,
       fontWeight: .w600,
     ),
     css('.progd-how-to-start-desc').styles(
       margin: .only(top: 3.px),
       color: AppColors.mutedText,
-      fontSize: 13.px,
+      fontSize: 0.8125.rem,
     ),
     // Plain coral text link, not a pill button — matches the same
     // "in-card CTA" treatment used elsewhere (home's enrollment-teaser
@@ -51,7 +51,7 @@ class AdmissionsTeaser extends StatelessComponent {
     css('.progd-how-to-start-cta').styles(
       color: AppColors.coral,
       fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-      fontSize: 14.px,
+      fontSize: 0.875.rem,
       fontWeight: .w700,
       whiteSpace: .noWrap,
     ),

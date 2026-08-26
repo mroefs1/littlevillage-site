@@ -159,12 +159,12 @@ class Header extends StatelessComponent {
         justifyContent: .spaceBetween,
         alignItems: .center,
         color: Colors.white,
-        fontSize: 12.px,
+        fontSize: 0.75.rem,
         backgroundColor: AppColors.navyDark,
       ),
       css('.utility-contact').styles(
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 13.px,
+        fontSize: 0.8125.rem,
       ),
       // The full contact line is too long to wrap gracefully at mobile/
       // tablet widths — hidden there, keeping just the donate pill visible;
@@ -190,7 +190,7 @@ class Header extends StatelessComponent {
         ),
         css('.utility-social').styles(
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-          fontSize: 14.px,
+          fontSize: 0.875.rem,
           // Flex can shrink this below its intrinsic width on very narrow
           // phones, which wraps the icon run onto a second line and makes
           // the whole bar taller. It's five characters — never wrap it.
@@ -201,7 +201,7 @@ class Header extends StatelessComponent {
           radius: .all(.circular(Radii.pill)),
           color: Colors.white,
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-          fontSize: 14.px,
+          fontSize: 0.875.rem,
           fontWeight: .w700,
           // A pill that wraps stops reading as a pill. Its homepage
           // counterpart (`.donate-band-button`) already sets this; the
@@ -251,14 +251,14 @@ class Header extends StatelessComponent {
         css('.brand-name').styles(
           color: AppColors.navy,
           fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-          fontSize: 18.px,
+          fontSize: 1.125.rem,
           fontWeight: .w700,
           lineHeight: 1.em,
         ),
         css('.brand-subtitle').styles(
           margin: .only(top: 2.px),
           color: AppColors.mutedTextLight,
-          fontSize: 11.px,
+          fontSize: 0.6875.rem,
           fontWeight: .w400,
         ),
       ]),
@@ -275,7 +275,7 @@ class Header extends StatelessComponent {
         css('a').styles(
           color: AppColors.blue,
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-          fontSize: 15.px,
+          fontSize: 0.9375.rem,
           fontWeight: .w600,
         ),
         css('a:focus-visible').styles(
@@ -322,7 +322,7 @@ class Header extends StatelessComponent {
         css('.nav-dropdown').styles(position: .relative()),
         css('.nav-caret').styles(
           margin: .only(left: 3.px),
-          fontSize: 11.px,
+          fontSize: 0.6875.rem,
         ),
         css('.nav-dropdown-menu').styles(
           display: .none,
@@ -344,7 +344,7 @@ class Header extends StatelessComponent {
           padding: .symmetric(vertical: 8.px, horizontal: 12.px),
           radius: .all(.circular(Radii.sm)),
           color: AppColors.navy,
-          fontSize: 14.px,
+          fontSize: 0.875.rem,
         ),
         css('.nav-dropdown-link:hover').styles(
           color: AppColors.blue,

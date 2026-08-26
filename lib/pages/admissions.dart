@@ -177,7 +177,7 @@ class Admissions extends AsyncStatelessComponent {
       maxWidth: 620.px,
       margin: .only(top: 10.px),
       color: AppColors.mutedText,
-      fontSize: 16.px,
+      fontSize: 1.rem,
       lineHeight: 1.55.em,
     ),
 
@@ -193,7 +193,7 @@ class Admissions extends AsyncStatelessComponent {
       margin: .only(bottom: 18.px),
       color: AppColors.navy,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 20.px,
+      fontSize: 1.25.rem,
       fontWeight: .w600,
     ),
     css('.adm-eligibility-checks').styles(
@@ -205,19 +205,19 @@ class Admissions extends AsyncStatelessComponent {
     ),
     css('.adm-eligibility-check-label').styles(
       color: AppColors.navy,
-      fontSize: 15.px,
+      fontSize: 0.9375.rem,
       fontWeight: .w700,
     ),
     css('.adm-eligibility-check-desc').styles(
       margin: .only(top: 4.px),
       color: AppColors.mutedTextMid,
-      fontSize: 13.px,
+      fontSize: 0.8125.rem,
       lineHeight: 1.45.em,
     ),
     css('.adm-eligibility-note').styles(
       margin: .only(top: 18.px),
       color: AppColors.coral,
-      fontSize: 14.px,
+      fontSize: 0.875.rem,
       fontWeight: .w700,
     ),
     css('.adm-eligibility-note-cta').styles(
@@ -262,13 +262,13 @@ class Admissions extends AsyncStatelessComponent {
     css('.adm-journey-step-body').styles(flex: Flex(grow: 1)),
     css('.adm-journey-step-title').styles(
       color: AppColors.navy,
-      fontSize: 17.px,
+      fontSize: 1.0625.rem,
       fontWeight: .w600,
     ),
     css('.adm-journey-step-desc').styles(
       margin: .only(top: 6.px),
       color: AppColors.mutedTextMid,
-      fontSize: 13.px,
+      fontSize: 0.8125.rem,
       lineHeight: 1.5.em,
     ),
     css('.adm-journey-step-photo').styles(width: 100.percent),
@@ -293,19 +293,19 @@ class Admissions extends AsyncStatelessComponent {
     css('.adm-tuition-value').styles(
       color: AppColors.yellow,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 36.px,
+      fontSize: 2.25.rem,
       fontWeight: .w700,
       raw: {'flex': 'none'},
     ),
     css('.adm-tuition-title').styles(
       color: Colors.white,
-      fontSize: 18.px,
+      fontSize: 1.125.rem,
       fontWeight: .w700,
     ),
     css('.adm-tuition-desc').styles(
       margin: .only(top: 4.px),
       color: AppColors.footerMuted,
-      fontSize: 13.px,
+      fontSize: 0.8125.rem,
       lineHeight: 1.45.em,
     ),
 
@@ -327,13 +327,13 @@ class Admissions extends AsyncStatelessComponent {
     css('.adm-cta-title').styles(
       color: AppColors.navy,
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 26.px,
+      fontSize: 1.625.rem,
       fontWeight: .w600,
     ),
     css('.adm-cta-subtitle').styles(
       margin: .only(top: 6.px),
       color: AppColors.mutedText,
-      fontSize: 15.px,
+      fontSize: 0.9375.rem,
     ),
     css('.adm-cta-actions').styles(
       display: .flex,
@@ -348,7 +348,7 @@ class Admissions extends AsyncStatelessComponent {
       radius: .all(.circular(Radii.pill)),
       color: Colors.white,
       fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-      fontSize: 15.px,
+      fontSize: 0.9375.rem,
       fontWeight: .w700,
       backgroundColor: AppColors.coral,
     ),
@@ -358,7 +358,7 @@ class Admissions extends AsyncStatelessComponent {
       radius: .all(.circular(Radii.pill)),
       color: AppColors.navy,
       fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-      fontSize: 15.px,
+      fontSize: 0.9375.rem,
       fontWeight: .w700,
       backgroundColor: Colors.white,
     ),
@@ -368,7 +368,7 @@ class Admissions extends AsyncStatelessComponent {
       radius: .all(.circular(Radii.pill)),
       color: AppColors.navy,
       fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-      fontSize: 15.px,
+      fontSize: 0.9375.rem,
       fontWeight: .w700,
       backgroundColor: Colors.white,
     ),
@@ -384,7 +384,7 @@ class Admissions extends AsyncStatelessComponent {
       css('.adm-cta').styles(
         padding: .symmetric(vertical: 24.px, horizontal: 18.px),
       ),
-      css('.adm-cta-title').styles(fontSize: 22.px),
+      css('.adm-cta-title').styles(fontSize: 1.375.rem),
     ]),
   ];
 }

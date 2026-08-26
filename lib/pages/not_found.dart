@@ -54,13 +54,13 @@ class NotFound extends StatelessComponent {
       css('.not-found-code').styles(
         color: AppColors.navy,
         fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-        fontSize: 72.px,
+        fontSize: 4.5.rem,
         fontWeight: .w700,
         lineHeight: 1.em,
       ),
       css('h1').styles(
         margin: .only(top: 10.px),
-        fontSize: 32.px,
+        fontSize: 2.rem,
         fontWeight: .w600,
         lineHeight: 1.1.em,
       ),
@@ -68,7 +68,7 @@ class NotFound extends StatelessComponent {
         maxWidth: 480.px,
         margin: .only(top: 14.px),
         color: AppColors.mutedText,
-        fontSize: 16.px,
+        fontSize: 1.rem,
         lineHeight: 1.55.em,
       ),
       css('.not-found-home-btn').styles(
@@ -77,7 +77,7 @@ class NotFound extends StatelessComponent {
         radius: .all(.circular(Radii.pill)),
         color: Colors.white,
         fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-        fontSize: 16.px,
+        fontSize: 1.rem,
         fontWeight: .w700,
         backgroundColor: AppColors.coral,
       ),
@@ -92,7 +92,7 @@ class NotFound extends StatelessComponent {
         css('a').styles(
           color: AppColors.blue,
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
-          fontSize: 14.px,
+          fontSize: 0.875.rem,
           fontWeight: .w600,
         ),
         css('a:hover').styles(textDecoration: TextDecoration(line: .underline)),
