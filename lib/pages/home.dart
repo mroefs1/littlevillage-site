@@ -39,8 +39,10 @@ class Home extends StatelessComponent {
         path: '/',
       ),
       div(classes: 'home', [
-        _hero(),
-        _trustStrip(),
+        div(classes: 'hero-band', [
+          _hero(),
+          _trustStrip(),
+        ]),
         _ageLocator(programs),
         _enrollmentTeaser(),
         _newsEvents(),
@@ -277,6 +279,17 @@ class Home extends StatelessComponent {
         flexDirection: .column,
       ),
 
+      // Hero band — the hero and the trust strip are one tinted section in
+      // the reference, so they share a wrapper that carries the gradient
+      // full-bleed. The trust strip insets itself with margins, so the
+      // gradient shows through its gutters, as intended.
+      css('.hero-band').styles(
+        raw: {
+          'background-image':
+              'linear-gradient(160deg, ${AppColors.offWhite.value}, ${AppColors.cream.value})',
+        },
+      ),
+
       // Hero
       css('.hero').styles(
         display: .grid,
@@ -370,6 +383,7 @@ class Home extends StatelessComponent {
       // Age locator
       css('.age-locator').styles(
         padding: .only(top: 30.px, left: 40.px, right: 40.px, bottom: 8.px),
+        backgroundColor: AppColors.cream,
       ),
       css('.age-locator h2').styles(textAlign: .center, fontSize: 26.px),
       css('.age-cards').styles(
@@ -432,7 +446,7 @@ class Home extends StatelessComponent {
       // Enrollment teaser — plain section, not a bordered/shaded box, to
       // match the reference (which drops the card treatment here).
       css('.enrollment-teaser').styles(
-        padding: .symmetric(vertical: 20.px, horizontal: 22.px),
+        padding: .symmetric(vertical: 20.px),
         margin: .only(top: 26.px, left: 40.px, right: 40.px),
       ),
       css('.enrollment-teaser-header').styles(display: .flex, justifyContent: .spaceBetween, alignItems: .center),
@@ -473,6 +487,7 @@ class Home extends StatelessComponent {
         display: .flex,
         padding: .only(top: 30.px, left: 40.px, right: 40.px, bottom: 8.px),
         gap: .all(18.px),
+        backgroundColor: AppColors.offWhite,
       ),
       css('.home-news').styles(flex: Flex(grow: 1)),
       css('.home-events').styles(flex: Flex(grow: 1)),
@@ -709,7 +724,7 @@ class Home extends StatelessComponent {
         ),
         css('.age-cards').styles(flexDirection: .column),
         css('.enrollment-teaser').styles(
-          padding: .symmetric(vertical: 18.px, horizontal: 18.px),
+          padding: .symmetric(vertical: 18.px),
           margin: .only(top: 20.px, left: 20.px, right: 20.px),
         ),
         css('.enrollment-teaser-header').styles(flexDirection: .column, alignItems: .start, gap: .all(6.px)),
