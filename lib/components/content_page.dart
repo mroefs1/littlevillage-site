@@ -32,17 +32,26 @@ class ContentPage extends StatelessComponent {
   @override
   Component build(BuildContext context) {
     final inset = insetPercent > 0;
-    final insetStyles = inset
-        ? Styles(padding: Padding.symmetric(horizontal: Unit.percent(insetPercent)))
-        : null;
-    return section(classes: 'page', [
+    // The inset percentage rides on a custom property rather than being an
+    // inline `padding`, and the padding itself is applied by the
+    // `.page-inset` rule below. Inline padding beat every stylesheet rule,
+    // so a page could not narrow its own inset at a breakpoint without
+    // `!important` - which is what the Contact page needs at mobile, where
+    // 10% each side leaves less room than the Turnstile widget's fixed
+    // 300px minimum. The class is also a stable hook for that override.
+    // Declared once on the section, not on each inset child: the h1 and the
+    // body wrapper only *read* the variable, so a page can retune its inset
+    // at a breakpoint by overriding this one declaration and both move
+    // together, keeping the title/body alignment Step 14 established.
+    final insetStyles = inset ? Styles(raw: {'--page-inset': '$insetPercent%'}) : null;
+    return section(classes: 'page', styles: insetStyles, [
       div(classes: 'page-breadcrumb', [
         Link(to: '/', child: .text('Home')),
         .text(' › $breadcrumb'),
       ]),
-      h1(styles: insetStyles, [.text(title)]),
+      h1(classes: inset ? 'page-inset' : null, [.text(title)]),
       if (inset)
-        div(styles: insetStyles, children)
+        div(classes: 'page-inset', children)
       else
         ...children,
     ]);
@@ -55,6 +64,18 @@ class ContentPage extends StatelessComponent {
         display: .flex,
         padding: .only(top: 22.px, left: 40.px, right: 40.px, bottom: 60.px),
         flexDirection: .column,
+      ),
+      // Reads an override variable first, falling back to the page's own
+      // inset. `--page-inset` is set inline by the component, and an inline
+      // custom property beats any stylesheet rule - so a page that needs to
+      // retune its inset at a breakpoint sets `--page-inset-override`
+      // instead, which nothing declares inline and which therefore cascades
+      // normally. This keeps the escape hatch free of `!important`.
+      css('.page-inset').styles(
+        raw: {
+          'padding-left': 'var(--page-inset-override, var(--page-inset))',
+          'padding-right': 'var(--page-inset-override, var(--page-inset))',
+        },
       ),
       css('.page-breadcrumb').styles(
         color: AppColors.mutedTextLight,

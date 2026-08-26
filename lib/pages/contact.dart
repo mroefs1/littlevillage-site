@@ -184,7 +184,17 @@ class Contact extends AsyncStatelessComponent {
 
     css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
       css('.contact-grid').styles(flexDirection: .column),
-      css('.contact-form-card').styles(padding: .all(18.px)),
+      css('.contact-form-card').styles(padding: .all(14.px)),
+      // Cloudflare renders the Turnstile widget at a fixed 300px minimum.
+      // At 375px the page's 20px padding plus this page's 10% inset leaves
+      // only 268px, so once Turnstile sizes itself the form card overflows
+      // the viewport - a WCAG 1.4.10 (Reflow) failure. It is intermittent,
+      // because it only shows when Turnstile actually finishes sizing, which
+      // is why width sweeps have missed it until now. Dropping this page's
+      // inset at mobile gives back the 67px that makes 300px fit. Scoped by
+      // `:has()` so it applies to the Contact page only; the variable lives
+      // on `.page`, so the title and body still move together.
+      css('.page:has(.contact-form-card)').styles(raw: {'--page-inset-override': '0%'}),
       css('.contact-form-grid').styles(
         gridTemplate: GridTemplate(columns: GridTracks([GridTrack(TrackSize.fr(1))])),
       ),
