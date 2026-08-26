@@ -66,6 +66,7 @@ class About extends AsyncStatelessComponent {
       (label: 'Board Members', path: '/board'),
       (label: 'Compliance', path: '/compliance'),
       (label: 'Data Privacy and Security', path: '/data-privacy-and-security'),
+      (label: 'Accessibility', path: '/accessibility'),
     ];
     return div(classes: 'about-subnav', [
       for (final link in links) Link(to: link.path, child: .text(link.label)),

@@ -7,6 +7,7 @@ import 'components/accessibility_panel.dart';
 import 'components/header.dart';
 import 'constants/theme.dart';
 import 'pages/about.dart';
+import 'pages/accessibility.dart';
 import 'pages/admissions.dart';
 import 'pages/board.dart';
 import 'pages/careers.dart';
@@ -99,6 +100,11 @@ class App extends AsyncStatelessComponent {
               Route(path: '/staff', title: 'Admin Staff', builder: (context, state) => const Staff()),
               Route(path: '/board', title: 'Board Members', builder: (context, state) => const Board()),
               Route(path: '/support-us', title: 'Support Us', builder: (context, state) => const SupportUs()),
+              Route(
+                path: '/accessibility',
+                title: 'Accessibility',
+                builder: (context, state) => const Accessibility(),
+              ),
               Route(path: '/compliance', title: 'Compliance', builder: (context, state) => const Compliance()),
               Route(path: '/careers', title: 'Career Opportunities', builder: (context, state) => const Careers()),
               Route(

@@ -43,6 +43,7 @@ class Header extends StatelessComponent {
       {'label': 'Compliance', 'path': '/compliance'},
       {'label': 'Data Privacy and Security', 'path': '/data-privacy-and-security'},
       {'label': 'Career Opportunities', 'path': '/careers'},
+      {'label': 'Accessibility', 'path': '/accessibility'},
     ];
 
     // Nav data is handed to `MobileNav` (the @client hydration boundary for
@@ -68,6 +69,7 @@ class Header extends StatelessComponent {
           '/compliance',
           '/data-privacy-and-security',
           '/careers',
+          '/accessibility',
         ],
         'children': aboutLinks,
       },

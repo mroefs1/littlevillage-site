@@ -40,6 +40,7 @@ class Footer extends StatelessComponent {
           (label: 'Current families', path: '/current-families'),
           (label: 'Donate', path: '/support-us'),
           (label: 'Careers', path: '/careers'),
+          (label: 'Accessibility', path: '/accessibility'),
           (label: 'Parent portal', path: '#'),
         ]),
       ]),
