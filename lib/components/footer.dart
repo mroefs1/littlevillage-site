@@ -99,9 +99,22 @@ class Footer extends StatelessComponent {
         css('&').styles(
           display: .flex,
           flexDirection: .column,
-          gap: .all(5.px),
+          gap: .all(2.px),
           color: AppColors.footerLink,
           fontSize: 13.px,
+        ),
+        // WCAG 2.2 SC 2.5.8 (Target Size, Minimum) asks for interactive
+        // targets of at least 24x24 CSS px. These links rendered 17px tall,
+        // which was the entirety of the site's own target-size finding -
+        // 707 instances in an axe sweep, all of them this one rule repeated
+        // through the footer on all 32 pages. A line-height floor rather
+        // than padding keeps them at 24px even once the rem conversion
+        // changes the font size, and makes the whole row clickable rather
+        // than just the glyphs.
+        css('a').styles(
+          display: .block,
+          minHeight: 24.px,
+          lineHeight: 24.px,
         ),
         css('.footer-column-title').styles(
           margin: .only(bottom: 10.px),

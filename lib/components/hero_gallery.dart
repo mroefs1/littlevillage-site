@@ -76,6 +76,26 @@ class HeroGallery extends StatefulComponent {
     ]),
     css('.hero-gallery-arrow-prev').styles(position: .absolute(left: 10.px)),
     css('.hero-gallery-arrow-next').styles(position: .absolute(right: 10.px)),
+    // Bottom-left, clear of both side arrows. Same 36px circular treatment,
+    // which also clears the 24px target-size floor comfortably.
+    css('.hero-gallery-toggle', [
+      css('&').styles(
+        display: .flex,
+        position: .absolute(left: 10.px, bottom: 10.px),
+        width: 36.px,
+        height: 36.px,
+        border: .none,
+        radius: .all(.circular(18.px)),
+        shadow: BoxShadow(offsetX: 0.px, offsetY: 1.px, blur: 4.px, color: .rgba(0, 0, 0, 0.25)),
+        justifyContent: .center,
+        alignItems: .center,
+        color: AppColors.navy,
+        fontSize: 13.px,
+        backgroundColor: .rgba(255, 255, 255, 0.85),
+        raw: {'cursor': 'pointer'},
+      ),
+      css('&:hover').styles(backgroundColor: Colors.white),
+    ]),
   ];
 }
 
@@ -86,6 +106,18 @@ class _HeroGalleryState extends State<HeroGallery> {
   bool _hovering = false;
   bool _focused = false;
   bool _reducedMotion = false;
+  // WCAG 2.2.2 (Pause, Stop, Hide) is Level A: content that moves
+  // automatically, runs for more than five seconds and sits alongside other
+  // content needs an explicit mechanism to stop it. Hover and keyboard focus
+  // already paused this carousel, but neither is a discoverable control - a
+  // visitor who did neither had no way to stop it at all.
+  //
+  // This flag is the single source of truth for whether auto-advance is
+  // allowed, rather than checking `_reducedMotion` separately at the point of
+  // use. It starts false when the OS asks for reduced motion, and the toggle
+  // flips it in both directions - so the button is never dead, and someone
+  // with reduced motion set can still opt in deliberately.
+  bool _autoEnabled = true;
   int _index = 0;
 
   // Hover and focus are tracked separately (rather than one shared flag) —
@@ -102,6 +134,7 @@ class _HeroGalleryState extends State<HeroGallery> {
     if (kIsWeb) {
       _reducedMotion = web.window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     }
+    _autoEnabled = !_reducedMotion;
     _startAuto();
   }
 
@@ -114,7 +147,7 @@ class _HeroGalleryState extends State<HeroGallery> {
   }
 
   void _startAuto() {
-    if (_reducedMotion || _interacting || _count < 2) return;
+    if (!_autoEnabled || _interacting || _count < 2) return;
     _autoTimer ??= Timer.periodic(_autoScrollInterval, (_) => _advance(1, smooth: true));
   }
 
@@ -131,6 +164,35 @@ class _HeroGalleryState extends State<HeroGallery> {
   void _setFocused(bool value) {
     _focused = value;
     _syncAuto();
+  }
+
+  void _toggleAuto() {
+    setState(() => _autoEnabled = !_autoEnabled);
+    _resumeTimer?.cancel();
+    if (_autoEnabled) {
+      _resumeNow();
+    } else {
+      _stopAuto();
+    }
+  }
+
+  // Pressing Play is an instruction, so it starts the timer even though
+  // `_interacting` is true - which it always is at that moment, because
+  // clicking the button both focuses it and leaves the pointer inside the
+  // gallery's own hover region. Routing this through `_startAuto` instead
+  // makes the button look dead: the label flips to "Pause" but nothing moves
+  // until the pointer leaves, and under `prefers-reduced-motion` it never
+  // moves at all. `_hovering`/`_focused` stay accurate either way and take
+  // effect again at the next hover or focus transition.
+  bool _isToggleEvent(web.Event event) {
+    final target = event.target;
+    if (target == null) return false;
+    return (target as web.Element).closest('.hero-gallery-toggle') != null;
+  }
+
+  void _resumeNow() {
+    if (!_autoEnabled || _count < 2) return;
+    _autoTimer ??= Timer.periodic(_autoScrollInterval, (_) => _advance(1, smooth: true));
   }
 
   void _syncAuto() {
@@ -205,7 +267,13 @@ class _HeroGalleryState extends State<HeroGallery> {
       events: {
         'mouseenter': (_) => _setHovering(true),
         'mouseleave': (_) => _setHovering(false),
-        'focusin': (_) => _setFocused(true),
+        // The play/pause button is deliberately excluded from the
+        // focus-pause region. Clicking it leaves it focused, so counting that
+        // as "interacting" made pressing Play start the timer and then have
+        // the next hover transition immediately stop it again - the button
+        // appeared dead. Focusing the control that governs motion is not the
+        // same as reading the photos; the arrows still pause on focus.
+        'focusin': (event) => _setFocused(!_isToggleEvent(event)),
         'focusout': (_) => _setFocused(false),
       },
       [
@@ -235,6 +303,18 @@ class _HeroGalleryState extends State<HeroGallery> {
             attributes: const {'aria-label': 'Next photo'},
             [
               span(attributes: const {'aria-hidden': 'true'}, [.text('›')]),
+            ],
+          ),
+          // The label states what the button will do, and changes with
+          // state, so it is meaningful to a screen reader reached out of
+          // visual context.
+          button(
+            classes: 'hero-gallery-toggle',
+            type: .button,
+            onClick: _toggleAuto,
+            attributes: {'aria-label': _autoEnabled ? 'Pause photo slideshow' : 'Play photo slideshow'},
+            [
+              span(attributes: const {'aria-hidden': 'true'}, [.text(_autoEnabled ? '❚❚' : '▶')]),
             ],
           ),
         ],
