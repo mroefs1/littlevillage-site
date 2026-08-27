@@ -4,9 +4,11 @@ import 'package:jaspr_router/jaspr_router.dart';
 
 import '../constants/theme.dart';
 import '../sanity/models/program.dart';
+import '../sanity/models/site_settings.dart';
 import 'accessibility_panel.dart';
 import 'language_switcher.dart';
 import 'mobile_nav.dart';
+import 'social_icons.dart';
 
 // Same three age-band categories, in the same display order, as the
 // Programs hub (pages/programs.dart) — the Programs dropdown mirrors that
@@ -16,7 +18,12 @@ const _ageBandCategories = ['Early Intervention', 'Preschool', 'Elementary'];
 class Header extends StatelessComponent {
   final List<Program> programs;
 
-  const Header({required this.programs, super.key});
+  /// The school's social profiles, straight from `siteSettings` — an account
+  /// moving or being added shouldn't need a deploy, same reasoning as
+  /// `donateUrl` (Step 13.1).
+  final List<SocialLink> socialLinks;
+
+  const Header({required this.programs, this.socialLinks = const [], super.key});
 
   @override
   Component build(BuildContext context) {
@@ -124,7 +131,7 @@ class Header extends StatelessComponent {
           // reachable on mobile without disturbing that breakpoint.
           const LanguageSwitcher(),
           const AccessibilityPanel(),
-          span(classes: 'utility-social', [.text('f ▸ ◎')]),
+          if (socialLinks.isNotEmpty) SocialLinks(socialLinks, wrapperClass: 'utility-social'),
           Link(to: '/support-us', classes: 'donate-pill', child: .text('♥ Donate')),
         ]),
       ]),
@@ -185,12 +192,6 @@ class Header extends StatelessComponent {
       css.media(MediaQuery.screen(maxWidth: Breakpoints.mobile), [
         css('&').styles(padding: .symmetric(vertical: 7.px, horizontal: 20.px)),
         css('.utility-actions').styles(gap: .all(10.px)),
-        // These are placeholder glyphs, not links - there are no social
-        // accounts wired up behind them. With the language switcher and the
-        // display panel both in this bar there is no room for decoration at
-        // phone widths, and dropping them is the only change here that costs
-        // a visitor nothing.
-        css('.utility-social').styles(display: .none),
       ]),
       css('.utility-actions', [
         css('&').styles(
@@ -199,11 +200,14 @@ class Header extends StatelessComponent {
           gap: .all(12.px),
         ),
         css('.utility-social').styles(
+          display: .flex,
+          alignItems: .center,
+          gap: .all(4.px),
           fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
           fontSize: 0.875.rem,
           // Flex can shrink this below its intrinsic width on very narrow
           // phones, which wraps the icon run onto a second line and makes
-          // the whole bar taller. It's five characters — never wrap it.
+          // the whole bar taller. Never wrap it.
           whiteSpace: .noWrap,
         ),
         css('.donate-pill').styles(
@@ -228,6 +232,23 @@ class Header extends StatelessComponent {
           outline: Outline(color: Colors.white, width: OutlineWidth(2.px), style: .solid),
           raw: {'outline-offset': '2px'},
         ),
+        // Real links to real accounts now, so they stay visible much further
+        // down than the placeholder glyphs did (those were hidden below 768).
+        // Below `small` the language switcher, display panel and donate pill
+        // already claim the whole row - measured, the three icons need ~100px
+        // this bar doesn't have there, and because the row is right-justified
+        // the overflow runs off the *left* edge without registering as
+        // horizontal overflow (the Step 24 lesson). The footer's copy of the
+        // same links covers every width.
+        //
+        // Nested here, not alongside the other media queries above: at that
+        // depth the rule emits as `.utility-bar .utility-social`, which loses
+        // to the base `.utility-bar .utility-actions .utility-social` on
+        // specificity no matter what the media query says - exactly the
+        // mobile-nav dropdown bug from Step 21. Verified in the emitted CSS.
+        css.media(MediaQuery.screen(maxWidth: Breakpoints.small), [
+          css('.utility-social').styles(display: .none),
+        ]),
       ]),
     ]),
     css('header', [

@@ -71,7 +71,7 @@ class App extends AsyncStatelessComponent {
       // visitor who chose larger text never sees the page at the default
       // size first and then jump.
       const AccessibilityBoot(),
-      Header(programs: programs),
+      Header(programs: programs, socialLinks: siteSettings.socialLinks),
       main_(
         id: 'main-content',
         attributes: const {'tabindex': '-1'},
@@ -209,7 +209,7 @@ class App extends AsyncStatelessComponent {
           ),
         ],
       ),
-      const Footer(),
+      Footer(socialLinks: siteSettings.socialLinks),
     ]);
   }
 

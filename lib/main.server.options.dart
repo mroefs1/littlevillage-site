@@ -34,6 +34,8 @@ import 'package:littlevillage_site/components/portable_text_view.dart'
     as _portable_text_view;
 import 'package:littlevillage_site/components/program_layout.dart'
     as _program_layout;
+import 'package:littlevillage_site/components/social_icons.dart'
+    as _social_icons;
 import 'package:littlevillage_site/components/video_embed.dart' as _video_embed;
 import 'package:littlevillage_site/constants/theme.dart' as _theme;
 import 'package:littlevillage_site/pages/about.dart' as _about;
@@ -122,6 +124,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._portable_text_view.PortableTextView.styles,
     ..._program_layout.ProgramHero.styles,
     ..._program_layout.ProgramServices.styles,
+    ..._social_icons.SocialLinks.styles,
     ..._video_embed.VideoEmbed.styles,
     ..._about.About.styles,
     ..._admissions.Admissions.styles,

@@ -3,9 +3,16 @@ import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
 import '../constants/theme.dart';
+import '../sanity/models/site_settings.dart';
+import 'social_icons.dart';
 
 class Footer extends StatelessComponent {
-  const Footer({super.key});
+  /// Same `siteSettings` list the header's utility bar renders. Repeated here
+  /// deliberately: the bar has no room for them below 480px, and the footer is
+  /// where a visitor on a phone expects to find them anyway.
+  final List<SocialLink> socialLinks;
+
+  const Footer({this.socialLinks = const [], super.key});
 
   @override
   Component build(BuildContext context) {
@@ -23,6 +30,7 @@ class Footer extends StatelessComponent {
           br(),
           .text('A publicly funded, not-for-profit school.'),
         ]),
+        if (socialLinks.isNotEmpty) SocialLinks(socialLinks, wrapperClass: 'footer-social'),
       ]),
       div(classes: 'footer-columns', [
         _footerColumn('Programs', const [
@@ -86,6 +94,14 @@ class Footer extends StatelessComponent {
         css('.footer-address').styles(
           margin: .only(top: 6.px),
           lineHeight: 1.5.em,
+        ),
+        // Sits left-aligned with the address above it, pulled out by the
+        // link's own 28px box so the row of marks lines up with the text
+        // rather than the box's padding.
+        css('.footer-social').styles(
+          display: .flex,
+          margin: .only(top: 10.px, left: (-5).px),
+          gap: .all(2.px),
         ),
       ]),
       css('.footer-columns').styles(
