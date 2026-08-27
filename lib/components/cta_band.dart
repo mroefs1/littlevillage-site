@@ -7,6 +7,9 @@ import '../constants/theme.dart';
 // The "Ready to take the first step?" band closing out Admissions, the
 // Programs hub, and each program detail page — identical copy and CTAs
 // everywhere it appears in the design handoff, so it takes no parameters.
+// The handoff's "We respond to every family within one business day."
+// subtitle was dropped sitewide in Step 27, per management — the band is now
+// just the heading and the three CTAs.
 class CtaBand extends StatelessComponent {
   const CtaBand({super.key});
 
@@ -14,7 +17,6 @@ class CtaBand extends StatelessComponent {
   Component build(BuildContext context) {
     return div(classes: 'cta-band', [
       div(classes: 'cta-band-title', [.text('Ready to take the first step?')]),
-      div(classes: 'cta-band-subtitle', [.text('We respond to every family within one business day.')]),
       div(classes: 'cta-band-actions', [
         Link(to: '/contact', classes: 'cta-band-btn-primary', child: .text('Request Information →')),
         Link(to: '/contact', classes: 'cta-band-btn-secondary', child: .text('Schedule a Tour')),
@@ -41,11 +43,6 @@ class CtaBand extends StatelessComponent {
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
       fontSize: 1.625.rem,
       fontWeight: .w600,
-    ),
-    css('.cta-band-subtitle').styles(
-      margin: .only(top: 6.px),
-      color: AppColors.mutedText,
-      fontSize: 0.9375.rem,
     ),
     css('.cta-band-actions').styles(
       display: .flex,

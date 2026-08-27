@@ -114,7 +114,7 @@ class Admissions extends AsyncStatelessComponent {
     return div(classes: 'adm-tuition', [
       div(classes: 'adm-tuition-value', [.text('\$0')]),
       div([
-        div(classes: 'adm-tuition-title', [.text('There is no tuition, ever.')]),
+        div(classes: 'adm-tuition-title', [.text('Services provided at no direct cost to families')]),
         div(classes: 'adm-tuition-desc', [
           .text(
             'As a publicly funded program, all education, therapy, and transportation come at no cost to '
@@ -162,7 +162,6 @@ class Admissions extends AsyncStatelessComponent {
   static Component _ctaBand() {
     return div(classes: 'adm-cta', [
       div(classes: 'adm-cta-title', [.text('Ready to take the first step?')]),
-      div(classes: 'adm-cta-subtitle', [.text('We respond to every family within one business day.')]),
       div(classes: 'adm-cta-actions', [
         Link(to: '/contact', classes: 'adm-cta-btn-primary', child: .text('Request Information →')),
         Link(to: '/contact', classes: 'adm-cta-btn-secondary', child: .text('Schedule a Tour')),
@@ -329,11 +328,6 @@ class Admissions extends AsyncStatelessComponent {
       fontFamily: .list([headingFontFamily, FontFamilies.serif]),
       fontSize: 1.625.rem,
       fontWeight: .w600,
-    ),
-    css('.adm-cta-subtitle').styles(
-      margin: .only(top: 6.px),
-      color: AppColors.mutedText,
-      fontSize: 0.9375.rem,
     ),
     css('.adm-cta-actions').styles(
       display: .flex,
