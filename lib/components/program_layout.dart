@@ -82,10 +82,11 @@ class ProgramHero extends StatelessComponent {
 }
 
 // The "Services included" pill row. The list stays a Dart literal on each
-// page: it's a fixed, structural tag list (and is intended to link into the
-// Therapeutic Services page's sections later), not long-form Sanity copy.
+// page: it's a fixed, structural tag list, not long-form Sanity copy. Each
+// pill deep links into the matching section of the Therapeutic Services page
+// where one exists — see `constants/therapeutic_sections.dart`.
 class ProgramServices extends StatelessComponent {
-  final List<String> services;
+  final List<Pill> services;
 
   const ProgramServices(this.services, {super.key});
 

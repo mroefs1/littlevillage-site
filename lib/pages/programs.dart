@@ -82,12 +82,16 @@ class Programs extends StatelessComponent {
   static Component _therapiesStrip() {
     return div(classes: 'prog-therapies', [
       div(classes: 'prog-therapies-title', [.text('On-site therapy, woven into every program')]),
+      // Not linked, unlike the pills on the individual program pages — this
+      // strip is a summary, not a per-program service list. Vision & Hearing
+      // Services was dropped here in Step 25: the Therapeutic Services page
+      // has no such section, and it was the only entry naming a service the
+      // site doesn't describe anywhere.
       const PillList([
-        'Speech & Language',
-        'Occupational Therapy',
-        'Physical Therapy',
-        'Counseling & Social Work',
-        'Vision & Hearing Services',
+        Pill('Speech & Language'),
+        Pill('Occupational Therapy'),
+        Pill('Physical Therapy'),
+        Pill('Counseling & Social Work'),
       ]),
     ]);
   }

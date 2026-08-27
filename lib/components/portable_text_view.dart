@@ -2,6 +2,7 @@ import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 
 import '../constants/theme.dart';
+import '../constants/therapeutic_sections.dart';
 import '../sanity/models/portable_text.dart';
 import 'video_embed.dart';
 
@@ -92,6 +93,9 @@ class PortableTextView extends StatelessComponent {
     final body = (block['body'] as List<dynamic>? ?? const []).cast<Map<String, dynamic>>();
     return div(
       classes: 'service-section',
+      // Anchor target, so the program pages' "Services included" pills can
+      // deep link to a specific service — see `therapeutic_sections.dart`.
+      id: anchorForSectionTitle(title),
       styles: Styles(backgroundColor: _sectionColors[index % _sectionColors.length]),
       [
         div(classes: 'service-section-title', [.text(title)]),
@@ -234,6 +238,11 @@ class PortableTextView extends StatelessComponent {
         padding: .all(32.px),
         margin: .only(top: 20.px),
         radius: .all(.circular(Radii.xxl)),
+        // Breathing room above a card arrived at via its #anchor, so it
+        // doesn't sit flush against the top of the viewport. No
+        // `scroll-behavior: smooth` anywhere — the default jump needs no
+        // reduced-motion carve-out.
+        raw: {'scroll-margin-top': '1.5rem'},
       ),
       css('.service-section-title').styles(
         color: AppColors.navy,

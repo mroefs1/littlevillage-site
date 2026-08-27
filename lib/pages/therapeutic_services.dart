@@ -7,7 +7,9 @@ import '../components/portable_text_view.dart';
 import '../components/seo_meta.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
+import '../constants/therapeutic_sections.dart';
 import '../sanity/content_repository.dart';
+import '../sanity/models/portable_text.dart';
 
 class TherapeuticServices extends AsyncStatelessComponent {
   const TherapeuticServices({super.key});
@@ -16,6 +18,7 @@ class TherapeuticServices extends AsyncStatelessComponent {
   Future<Component> build(BuildContext context) async {
     final page = await contentRepository.getPage('therapeutic-services');
     final title = page?.title ?? 'Therapeutic Services';
+    if (page != null) _warnMissingSections(page.body);
 
     return .fragment([
       SeoMeta(
@@ -34,6 +37,29 @@ class TherapeuticServices extends AsyncStatelessComponent {
         ],
       ),
     ]);
+  }
+
+  // The program pages' "Services included" pills deep link into this page's
+  // section cards, whose ids come from the section titles. Renaming a section
+  // in Sanity therefore drops its anchor and those links quietly land at the
+  // top of the page instead. This is the only place that holds both halves —
+  // the anchor list and the real content — and it renders on every static
+  // build, so the mismatch shows up in the build log rather than in a
+  // visitor's browser.
+  static void _warnMissingSections(PortableText body) {
+    final titles = body.blocks
+        .where((block) => block['_type'] == 'serviceSection')
+        .map((block) => block['title'] as String? ?? '')
+        .toSet();
+    final missing = TherapeuticSections.all.where((known) => !titles.contains(known.title)).toList();
+    if (missing.isEmpty) return;
+    print(
+      'WARNING: /programs/therapeutic-services has no serviceSection titled '
+      '${missing.map((entry) => '"${entry.title}"').join(', ')} — deep links to '
+      '${missing.map((entry) => '#${entry.anchor}').join(', ')} will land at the top of '
+      'the page. Update lib/constants/therapeutic_sections.dart if the section '
+      'was renamed in Sanity.',
+    );
   }
 
   static Component _closingCta() {
