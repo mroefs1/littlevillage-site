@@ -27,11 +27,13 @@ const String pageBySlugQuery = '''
   "slug": slug.current,
   heroImage{
     "url": asset->url,
-    alt
+    alt,
+    hotspot
   },
   images[]{
     "url": asset->url,
-    alt
+    alt,
+    hotspot
   },
   body[]{
     ...,

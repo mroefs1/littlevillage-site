@@ -7,7 +7,34 @@ class PageImage {
   final String url;
   final String alt;
 
-  const PageImage({required this.url, required this.alt});
+  /// The editor's focal point, as fractions of the image's width and height
+  /// (Sanity's `hotspot`, which `page.heroImage`/`images[]` already enable
+  /// but which nothing read until now). Null unless an editor has actually
+  /// dragged the hotspot in the Studio.
+  ///
+  /// This matters because both slots crop to a fixed shape: the main image
+  /// is capped at a banner height, and gallery tiles are 4:3. Cropping from
+  /// the centre is the right default but the wrong answer often enough —
+  /// the Facilities photo loses the top of the school's own sign — and the
+  /// fix belongs with the image, not in the CSS, since it is a judgement
+  /// about that photo rather than about the layout.
+  final double? hotspotX;
+  final double? hotspotY;
+
+  const PageImage({
+    required this.url,
+    required this.alt,
+    this.hotspotX,
+    this.hotspotY,
+  });
+
+  /// The `object-position` value that keeps the focal point in frame, or
+  /// null to leave the browser's centred default alone.
+  String? get objectPosition {
+    if (hotspotX == null || hotspotY == null) return null;
+    String pct(double v) => (v.clamp(0, 1) * 100).toStringAsFixed(1);
+    return '${pct(hotspotX!)}% ${pct(hotspotY!)}%';
+  }
 
   /// `alt` is required by the schema, but defaults to an empty string here
   /// rather than throwing: a document published before the field existed
@@ -16,9 +43,12 @@ class PageImage {
   /// renders as a decorative image, which is the safer of the two wrong
   /// answers — a screen reader skips it instead of announcing a filename.
   factory PageImage.fromJson(Map<String, dynamic> json) {
+    final hotspot = json['hotspot'] as Map<String, dynamic>?;
     return PageImage(
       url: json['url'] as String,
       alt: json['alt'] as String? ?? '',
+      hotspotX: (hotspot?['x'] as num?)?.toDouble(),
+      hotspotY: (hotspot?['y'] as num?)?.toDouble(),
     );
   }
 
