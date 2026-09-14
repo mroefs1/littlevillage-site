@@ -31,6 +31,8 @@ class TherapeuticServices extends AsyncStatelessComponent {
       ContentPage(
         breadcrumb: 'Programs › Therapeutic Services',
         title: title,
+        heroImage: page?.heroImage,
+        gallery: page?.images ?? const [],
         children: [
           if (page != null) PortableTextView(page.body),
           _closingCta(),

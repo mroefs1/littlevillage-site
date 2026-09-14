@@ -10,6 +10,7 @@ import '../components/seo_meta.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/content_repository.dart';
+import '../sanity/image_url.dart';
 import '../sanity/models/page_content.dart';
 import '../sanity/models/person.dart';
 
@@ -106,8 +107,18 @@ class About extends AsyncStatelessComponent {
           ]),
       ]),
       div(classes: 'about-mission-photo', [
-        if (page?.heroImageUrl != null)
-          img(src: page!.heroImageUrl!, alt: 'Campus photo', classes: 'about-mission-img')
+        // Not `ContentPage`'s shared main-image slot: here the photo is one
+        // column of the two-column mission block, not a full-width image
+        // under the title. It reads the same `heroImage` field, so adding a
+        // photo to the About page document in Sanity replaces the
+        // placeholder with no code change.
+        if (page?.heroImage case final hero?)
+          img(
+            src: sanityImageUrl(hero.url, width: 1200),
+            alt: hero.alt,
+            classes: 'about-mission-img',
+            attributes: {'loading': 'lazy', 'decoding': 'async'},
+          )
         else
           const PhotoPlaceholder('photo — campus exterior or classroom wide shot'),
       ]),

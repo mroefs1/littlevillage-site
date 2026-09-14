@@ -19,6 +19,10 @@ class Admissions extends AsyncStatelessComponent {
     return ContentPage(
       breadcrumb: 'Admissions',
       title: "We'll walk you through it, step by step.",
+      // No `gallery:` here on purpose — this page's `images` are consumed
+      // positionally by the enrollment-journey steps below, one per step,
+      // so passing them through as well would render every photo twice.
+      heroImage: page?.heroImage,
       children: [
         p(classes: 'adm-subtitle', [
           .text(

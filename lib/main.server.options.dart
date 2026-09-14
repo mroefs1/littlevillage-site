@@ -27,6 +27,8 @@ import 'package:littlevillage_site/components/language_switcher.dart'
 import 'package:littlevillage_site/components/mobile_nav.dart' as _mobile_nav;
 import 'package:littlevillage_site/components/news_events_filter.dart'
     as _news_events_filter;
+import 'package:littlevillage_site/components/page_gallery.dart'
+    as _page_gallery;
 import 'package:littlevillage_site/components/photo_placeholder.dart'
     as _photo_placeholder;
 import 'package:littlevillage_site/components/pill_list.dart' as _pill_list;
@@ -119,6 +121,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._language_switcher.LanguageSwitcher.styles,
     ..._mobile_nav.MobileNav.styles,
     ..._news_events_filter.NewsEventsFilter.styles,
+    ..._page_gallery.PageGallery.styles,
     ..._photo_placeholder.PhotoPlaceholder.styles,
     ..._pill_list.PillList.styles,
     ..._portable_text_view.PortableTextView.styles,

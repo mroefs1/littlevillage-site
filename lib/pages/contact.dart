@@ -8,6 +8,8 @@ import '../components/seo_meta.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/content_repository.dart';
+import '../sanity/image_url.dart';
+import '../sanity/models/page_content.dart';
 import '../sanity/models/site_settings.dart';
 
 // Full redesign per the design handoff (contact.html): a request-info form
@@ -21,6 +23,10 @@ class Contact extends AsyncStatelessComponent {
   @override
   Future<Component> build(BuildContext context) async {
     final siteSettings = await contentRepository.getSiteSettings();
+    // The page copy is static (see above); the document exists only to
+    // hold the location map, so an editor can add or swap it without a
+    // deploy.
+    final page = await contentRepository.getPage('contact');
 
     return .fragment([
       const SeoMeta(
@@ -42,7 +48,7 @@ class Contact extends AsyncStatelessComponent {
           ]),
           div(classes: 'contact-grid', [
             _form(),
-            _infoColumn(siteSettings),
+            _infoColumn(siteSettings, page?.heroImage),
           ]),
         ],
       ),
@@ -60,7 +66,7 @@ class Contact extends AsyncStatelessComponent {
     ]);
   }
 
-  static Component _infoColumn(SiteSettings siteSettings) {
+  static Component _infoColumn(SiteSettings siteSettings, PageImage? map) {
     return div(classes: 'contact-info-column', [
       div(classes: 'contact-info-card', [
         _infoRow('📞 Phone', siteSettings.phone ?? '516-520-6000'),
@@ -68,7 +74,15 @@ class Contact extends AsyncStatelessComponent {
         _infoRow('📍 Address', 'Seaford, NY'),
         _infoRow('🕐 Office hours', 'Mon–Fri, 8:30 AM – 4:00 PM'),
       ]),
-      PhotoPlaceholder('map placeholder', height: 140.px),
+      if (map case final map?)
+        img(
+          src: sanityImageUrl(map.url, width: 900),
+          alt: map.alt,
+          classes: 'contact-map',
+          attributes: {'loading': 'lazy', 'decoding': 'async'},
+        )
+      else
+        PhotoPlaceholder('map placeholder', height: 140.px),
     ]);
   }
 
@@ -167,6 +181,16 @@ class Contact extends AsyncStatelessComponent {
       color: AppColors.navy,
       fontSize: 0.9375.rem,
       fontWeight: .w700,
+    ),
+    // The real map, when one is set on the Contact page document. Height
+    // is left to the image rather than fixed-and-cropped the way a photo
+    // would be: cropping a map cuts off the streets and labels that are
+    // the whole point of it.
+    css('.contact-map').styles(
+      display: .block,
+      width: 100.percent,
+      height: .auto,
+      radius: .all(.circular(Radii.lg)),
     ),
     // Map placeholder: sky-toned stripes for this spot specifically.
     // `photo_placeholder.dart`'s shared default (peach stripes) is for

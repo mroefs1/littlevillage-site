@@ -25,6 +25,8 @@ class DataPrivacyAndSecurity extends AsyncStatelessComponent {
       ContentPage(
         breadcrumb: 'About Us › Data Privacy and Security',
         title: title,
+        heroImage: page?.heroImage,
+        gallery: page?.images ?? const [],
         // This page's body runs unusually long and includes a full-width
         // video embed, so it gets a wider inset than the sitewide default —
         // the video shrinks to match since `.video-embed-frame` is 100% of

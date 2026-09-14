@@ -25,6 +25,8 @@ class Facilities extends AsyncStatelessComponent {
       ContentPage(
         breadcrumb: 'School Facilities',
         title: title,
+        heroImage: page?.heroImage,
+        gallery: page?.images ?? const [],
         children: [
           if (page != null) PortableTextView(page.body),
         ],

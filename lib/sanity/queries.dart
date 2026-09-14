@@ -25,7 +25,10 @@ const String pageBySlugQuery = '''
 *[_type == "page" && slug.current == \$slug][0]{
   title,
   "slug": slug.current,
-  "heroImageUrl": heroImage.asset->url,
+  heroImage{
+    "url": asset->url,
+    alt
+  },
   images[]{
     "url": asset->url,
     alt

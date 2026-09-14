@@ -3,6 +3,8 @@ import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
 import '../constants/theme.dart';
+import '../sanity/models/page_content.dart';
+import 'page_gallery.dart';
 
 // Shared layout for simple informational pages (About, Mission, History,
 // Founders, Facilities, Contact): a breadcrumb + H1, followed by
@@ -12,6 +14,12 @@ class ContentPage extends StatelessComponent {
   final String breadcrumb;
   final String title;
   final List<Component> children;
+  // A `page` document's images, passed straight through from Sanity. Both
+  // render nothing at all when absent — no wrapper, no gap, no placeholder
+  // — so every page can pass them unconditionally and a photo added in
+  // Sanity later appears without a code change.
+  final PageImage? heroImage;
+  final List<PageImage> gallery;
   // Horizontal inset applied to both the H1 and `children`, so the title's
   // left edge lines up with the body content instead of the breadcrumb's
   // (the breadcrumb always stays at `.page`'s own left edge regardless).
@@ -25,6 +33,8 @@ class ContentPage extends StatelessComponent {
     required this.breadcrumb,
     required this.title,
     this.children = const [],
+    this.heroImage,
+    this.gallery = const [],
     this.insetPercent = 10,
     super.key,
   });
@@ -44,6 +54,15 @@ class ContentPage extends StatelessComponent {
     // at a breakpoint by overriding this one declaration and both move
     // together, keeping the title/body alignment Step 14 established.
     final insetStyles = inset ? Styles(raw: {'--page-inset': '$insetPercent%'}) : null;
+    // The main image sits directly under the title and the photo grid
+    // closes the page out, both sharing whatever inset the body has so
+    // they line up with the text. With no images this list is `children`
+    // unchanged, so a page that passes none emits byte-identical markup.
+    final body = <Component>[
+      if (heroImage case final hero?) PageHeroImage(hero),
+      ...children,
+      if (gallery.isNotEmpty) PageGallery(gallery),
+    ];
     return section(classes: 'page', styles: insetStyles, [
       div(classes: 'page-breadcrumb', [
         Link(to: '/', child: .text('Home')),
@@ -51,9 +70,9 @@ class ContentPage extends StatelessComponent {
       ]),
       h1(classes: inset ? 'page-inset' : null, [.text(title)]),
       if (inset)
-        div(classes: 'page-inset', children)
+        div(classes: 'page-inset', body)
       else
-        ...children,
+        ...body,
     ]);
   }
 

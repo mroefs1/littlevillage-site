@@ -25,6 +25,8 @@ class Founders extends AsyncStatelessComponent {
       ContentPage(
         breadcrumb: 'About Us › Founders',
         title: title,
+        heroImage: page?.heroImage,
+        gallery: page?.images ?? const [],
         children: [
           if (page != null) PortableTextView(page.body),
         ],

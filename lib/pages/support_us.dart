@@ -7,6 +7,8 @@ import '../components/seo_meta.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/content_repository.dart';
+import '../sanity/image_url.dart';
+import '../sanity/models/page_content.dart';
 
 class SupportUs extends AsyncStatelessComponent {
   const SupportUs({super.key});
@@ -14,6 +16,9 @@ class SupportUs extends AsyncStatelessComponent {
   @override
   Future<Component> build(BuildContext context) async {
     final siteSettings = await contentRepository.getSiteSettings();
+    // As on Contact, the copy is static and the document exists only to
+    // hold this page's one photo (the brick campaign).
+    final page = await contentRepository.getPage('support-us');
 
     return .fragment([
       const SeoMeta(
@@ -33,7 +38,7 @@ class SupportUs extends AsyncStatelessComponent {
             ),
           ]),
           _giving(siteSettings.donateUrl),
-          _brick(),
+          _brick(page?.heroImage),
           _moreWays(siteSettings.donateUrl),
           _contact(),
         ],
@@ -72,7 +77,7 @@ class SupportUs extends AsyncStatelessComponent {
     ]);
   }
 
-  static Component _brick() {
+  static Component _brick(PageImage? photo) {
     return div(classes: 'su-brick', [
       div(classes: 'su-brick-body', [
         div(classes: 'su-brick-title', [.text('Help build the pathway to the future')]),
@@ -87,7 +92,15 @@ class SupportUs extends AsyncStatelessComponent {
         // deliberately left as an inert `span`, not a link, until one does.
         span(classes: 'su-brick-cta', [.text('Purchase a brick →')]),
       ]),
-      PhotoPlaceholder('brick photo placeholder', height: 120.px),
+      if (photo case final photo?)
+        img(
+          src: sanityImageUrl(photo.url, width: 900),
+          alt: photo.alt,
+          classes: 'su-brick-photo',
+          attributes: {'loading': 'lazy', 'decoding': 'async'},
+        )
+      else
+        PhotoPlaceholder('brick photo placeholder', height: 120.px),
     ]);
   }
 
@@ -226,6 +239,15 @@ class SupportUs extends AsyncStatelessComponent {
       gap: .all(32.px),
       backgroundColor: AppColors.sky,
     ),
+    // Sits in the grid's `auto` track, so it needs an explicit width —
+    // otherwise a full-size upload would set the track width itself and
+    // squeeze the copy column to nothing.
+    css('.su-brick-photo').styles(
+      display: .block,
+      width: 320.px,
+      radius: .all(.circular(Radii.lg)),
+      raw: {'aspect-ratio': '4 / 3', 'object-fit': 'cover'},
+    ),
     css('.su-brick-body').styles(
       display: .flex,
       flexDirection: .column,
@@ -359,6 +381,9 @@ class SupportUs extends AsyncStatelessComponent {
         padding: .symmetric(vertical: 28.px, horizontal: 22.px),
         gridTemplate: GridTemplate(columns: GridTracks([GridTrack(TrackSize.fr(1))])),
       ),
+      // Single column at mobile, so the fixed desktop width would overflow
+      // a 375px viewport.
+      css('.su-brick-photo').styles(width: 100.percent),
       css('.su-more-grid').styles(
         gridTemplate: GridTemplate(columns: GridTracks([GridTrack(TrackSize.fr(1))])),
       ),

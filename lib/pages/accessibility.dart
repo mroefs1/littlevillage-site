@@ -29,6 +29,8 @@ class Accessibility extends AsyncStatelessComponent {
       ContentPage(
         breadcrumb: 'About Us › Accessibility',
         title: title,
+        heroImage: page?.heroImage,
+        gallery: page?.images ?? const [],
         children: [
           if (page != null) PortableTextView(page.body),
         ],

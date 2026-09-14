@@ -32,6 +32,8 @@ class SummerRecreation extends AsyncStatelessComponent {
       ContentPage(
         breadcrumb: 'Programs › $title',
         title: title,
+        heroImage: page?.heroImage,
+        gallery: page?.images ?? const [],
         children: [
           if (page != null) PortableTextView(page.body),
           const CtaBand(),
