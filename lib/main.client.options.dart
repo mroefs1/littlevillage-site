@@ -20,6 +20,8 @@ import 'package:littlevillage_site/components/mobile_nav.dart'
     deferred as _mobile_nav;
 import 'package:littlevillage_site/components/news_events_filter.dart'
     deferred as _news_events_filter;
+import 'package:littlevillage_site/components/splash_screen.dart'
+    deferred as _splash_screen;
 
 /// Default [ClientOptions] for use with your Jaspr project.
 ///
@@ -87,6 +89,20 @@ ClientOptions get defaultClientOptions => ClientOptions(
             .toList(),
       ),
       loader: _news_events_filter.loadLibrary,
+    ),
+    'splash_screen': ClientLoader(
+      (p) => _splash_screen.SplashScreen(
+        imageUrl: p['imageUrl'] as String,
+        imageAlt: p['imageAlt'] as String,
+        headline: p['headline'] as String,
+        dateLine: p['dateLine'] as String,
+        promoKey: p['promoKey'] as String,
+        eventLocation: p['eventLocation'] as String?,
+        ctaLabel: p['ctaLabel'] as String?,
+        ctaHref: p['ctaHref'] as String?,
+        detailHref: p['detailHref'] as String?,
+      ),
+      loader: _splash_screen.loadLibrary,
     ),
   },
 );

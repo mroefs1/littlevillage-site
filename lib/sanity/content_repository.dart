@@ -11,6 +11,7 @@ import 'models/parent_association.dart';
 import 'models/person.dart';
 import 'models/program.dart';
 import 'models/site_settings.dart';
+import 'models/splash_promo.dart';
 import 'queries.dart';
 
 /// Interface between page components and Sanity. Pages depend only on this,
@@ -34,6 +35,7 @@ abstract class ContentRepository {
   Future<List<VideoItem>> getVideos();
   Future<ParentAssociationInfo?> getParentAssociationInfo();
   Future<List<PaEventItem>> getPaEvents();
+  Future<SplashPromo?> getSplashPromo();
 }
 
 class SanityContentRepository implements ContentRepository {
@@ -160,6 +162,13 @@ class SanityContentRepository implements ContentRepository {
     return (result as List<dynamic>)
         .map((item) => PaEventItem.fromJson(item as Map<String, dynamic>))
         .toList();
+  }
+
+  @override
+  Future<SplashPromo?> getSplashPromo() async {
+    final result = await _client.fetch(splashPromoQuery);
+    if (result == null) return null;
+    return SplashPromo.fromJson(result as Map<String, dynamic>);
   }
 }
 

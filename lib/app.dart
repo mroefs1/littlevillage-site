@@ -5,6 +5,7 @@ import 'package:jaspr_router/jaspr_router.dart';
 import 'components/footer.dart';
 import 'components/accessibility_panel.dart';
 import 'components/header.dart';
+import 'components/splash_screen.dart';
 import 'constants/theme.dart';
 import 'pages/about.dart';
 import 'pages/accessibility.dart';
@@ -41,6 +42,7 @@ import 'pages/summer_recreation.dart';
 import 'pages/support_us.dart';
 import 'pages/therapeutic_services.dart';
 import 'sanity/content_repository.dart';
+import 'util/date_format.dart';
 
 // The root layout shell of the site: header, routed page content, footer.
 //
@@ -65,12 +67,30 @@ class App extends AsyncStatelessComponent {
     final programs = await contentRepository.getPrograms();
     final siteSettings = await contentRepository.getSiteSettings();
 
+    // The first-visit splash promo. Fetched here rather than per-page because
+    // it appears on every route; `shouldRender` keeps an off, expired or
+    // half-configured promo out of the build entirely, so the common case
+    // emits no markup, no boot script and no island at all.
+    final splashPromo = await contentRepository.getSplashPromo();
+    final splash = splashPromo != null && splashPromo.shouldRender(DateTime.now().toUtc())
+        ? splashPromo
+        : null;
+
     return div(classes: 'app-shell', [
       a(href: '#main-content', classes: 'skip-link', [.text('Skip to main content')]),
       // Applies saved display preferences before first paint, so a
       // visitor who chose larger text never sees the page at the default
       // size first and then jump.
       const AccessibilityBoot(),
+      // Decides before first paint whether the splash shows, so a visitor who
+      // already dismissed it never sees it flash.
+      if (splash != null)
+        SplashBoot(
+          promoKey: splash.promoKey,
+          startMs: splash.startDate?.millisecondsSinceEpoch ?? 0,
+          endMs: splash.expiration!.millisecondsSinceEpoch,
+          eventPath: splash.eventPath,
+        ),
       Header(programs: programs, socialLinks: siteSettings.socialLinks),
       main_(
         id: 'main-content',
@@ -210,6 +230,20 @@ class App extends AsyncStatelessComponent {
         ],
       ),
       Footer(socialLinks: siteSettings.socialLinks),
+      // Last in the DOM, so a dialog that traps Tab does not leave the rest of
+      // the page ahead of it in the tab order.
+      if (splash != null)
+        SplashScreen(
+          imageUrl: splash.imageUrl!,
+          imageAlt: splash.imageAlt,
+          headline: splash.headline,
+          dateLine: splash.eventDate == null ? '' : formatDate(splash.eventDate!),
+          promoKey: splash.promoKey,
+          eventLocation: splash.eventLocation,
+          ctaLabel: splash.ctaLabel,
+          ctaHref: splash.ticketLink,
+          detailHref: splash.eventPath,
+        ),
     ]);
   }
 

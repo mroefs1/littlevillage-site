@@ -210,3 +210,28 @@ const String paEventListQuery = '''
   google_meet
 }
 ''';
+
+// The `splashPromo` singleton, with its promoted event dereferenced inline so
+// the splash is one query rather than a second lookup against the event list.
+// Image aliases match `eventListQuery`'s, so both read the same on the Dart
+// side. No `dateTime()` cast on `event_date` — see the note above `paEventListQuery`.
+const String splashPromoQuery = '''
+*[_type == "splashPromo"][0]{
+  enabled,
+  imageSource,
+  imageAlt,
+  headline,
+  ctaLabel,
+  startDate,
+  expiration,
+  "event": event->{
+    title,
+    "slug": slug.current,
+    event_date,
+    location,
+    ticket_link,
+    "cardImageUrl": card_image.asset->url,
+    "flyerUrl": event_flyer.asset->url
+  }
+}
+''';

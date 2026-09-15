@@ -38,6 +38,8 @@ import 'package:littlevillage_site/components/program_layout.dart'
     as _program_layout;
 import 'package:littlevillage_site/components/social_icons.dart'
     as _social_icons;
+import 'package:littlevillage_site/components/splash_screen.dart'
+    as _splash_screen;
 import 'package:littlevillage_site/components/video_embed.dart' as _video_embed;
 import 'package:littlevillage_site/constants/theme.dart' as _theme;
 import 'package:littlevillage_site/pages/about.dart' as _about;
@@ -104,6 +106,10 @@ ServerOptions get defaultServerOptions => ServerOptions(
           'news_events_filter',
           params: __news_events_filterNewsEventsFilter,
         ),
+    _splash_screen.SplashScreen: ClientTarget<_splash_screen.SplashScreen>(
+      'splash_screen',
+      params: __splash_screenSplashScreen,
+    ),
   },
   styles: () => [
     ..._theme.globalStyles,
@@ -128,6 +134,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._program_layout.ProgramHero.styles,
     ..._program_layout.ProgramServices.styles,
     ..._social_icons.SocialLinks.styles,
+    ..._splash_screen.SplashScreen.styles,
     ..._video_embed.VideoEmbed.styles,
     ..._about.About.styles,
     ..._admissions.Admissions.styles,
@@ -158,3 +165,16 @@ Map<String, Object?> __mobile_navMobileNav(_mobile_nav.MobileNav c) => {
 Map<String, Object?> __news_events_filterNewsEventsFilter(
   _news_events_filter.NewsEventsFilter c,
 ) => {'newsItems': c.newsItems, 'eventItems': c.eventItems};
+Map<String, Object?> __splash_screenSplashScreen(
+  _splash_screen.SplashScreen c,
+) => {
+  'imageUrl': c.imageUrl,
+  'imageAlt': c.imageAlt,
+  'headline': c.headline,
+  'dateLine': c.dateLine,
+  'promoKey': c.promoKey,
+  'eventLocation': c.eventLocation,
+  'ctaLabel': c.ctaLabel,
+  'ctaHref': c.ctaHref,
+  'detailHref': c.detailHref,
+};
