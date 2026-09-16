@@ -13,6 +13,7 @@ const String siteSettingsQuery = '''
   socialLinks[]{platform, url},
   phone,
   email,
+  mapEmbedUrl,
   gallery[]{
     "url": asset->url,
     alt

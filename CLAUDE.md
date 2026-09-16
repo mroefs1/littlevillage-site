@@ -2,7 +2,7 @@
 
 Replacement website for littlevillage.org (The Hagedorn Little Village School), moving off WordPress. Static marketing/content site: programs, staff, news, events, contact.
 
-**Status:** Steps 1-30 are complete and pushed to the Cloudflare Pages preview. Only Step 9d (custom domain cutover, deferred to launch week) remains. Full history of that work - every batch, correction, and verification note - is archived in `docs/archive/completed-batches.md`. This file covers active work, standing conventions, and known open items only.
+**Status:** Steps 1-31 are complete and pushed to the Cloudflare Pages preview. Only Step 9d (custom domain cutover, deferred to launch week) remains. Full history of that work - every batch, correction, and verification note - is archived in `docs/archive/completed-batches.md`. This file covers active work, standing conventions, and known open items only.
 
 **Launch target: mid-September 2026, at an in-person event.** Until then, all work targets the `littlevillage-site.pages.dev` preview only. Custom domain cutover and DNS changes are explicitly out of scope until launch week - do not touch DNS or add the custom domain to the Cloudflare Pages project before then, even if asked to "finish" the deploy pipeline.
 
@@ -24,7 +24,7 @@ Replacement website for littlevillage.org (The Hagedorn Little Village School), 
 - **Work in batches, one screen/task at a time.** Finish, verify, and commit one batch before starting the next.
 - **Nav is a hardcoded array in `header.dart`.** `SiteSettings.navigation` is queried but intentionally unused - follow the existing pattern, don't switch to Sanity-driven nav without discussing it first.
 
-## Standing conventions (carried forward from Steps 1-30)
+## Standing conventions (carried forward from Steps 1-31)
 
 These were established and paid for across the completed batches. Follow them; changing one is a discussion, not a judgement call.
 
@@ -52,8 +52,9 @@ The recurring failure mode on this project is work that looks correct and silent
 2. **Computed-style checks cannot catch styling that isn't taking effect.** The language switcher's contrast math passed while the control rendered as a plain white native `<select>`, because browsers ignore `color`/`background` on a select without `appearance: none`. **Look at a screenshot**, don't just measure.
 3. **`document.scrollWidth` is `undefined`** - it belongs to `documentElement`, so assertions written against it pass vacuously. And even correctly written, it cannot detect the utility bar overflowing: that row is right-justified, so overflow runs off the **left** edge. Compare the leftmost child's `x` against the bar's own content-left instead.
 4. **Open image files before writing alt text.** Four bad drafts caught this way - two in Step 21, plus three filename-as-alt values in Step 28, one of which described the wrong subject entirely.
-5. **A verification method can be broken in the same silent way as the code.** Step 29 shipped `document.scrollWidth` assertions that were reading `undefined`; Step 30's first hero-contrast measurement reported FAIL because it sampled anti-aliased glyph edges as though they were background. Sanity-check that a check can actually fail before believing it passes. And a screenshot read by eye is not a measurement - Step 30 nearly "fixed" card heights that measured identical.
-6. **Verify behaviour with real interaction, scoped correctly.** An unscoped `document.querySelector('.nav-dropdown-menu')` grabs the first of four dropdowns and falsely reports the one you're testing as broken.
+5. **`waitUntil: 'networkidle'` never settles on a page with a live embed.** The Contact page's Google Map keeps polling, so a check written that way times out rather than failing. Use `load`.
+6. **A verification method can be broken in the same silent way as the code.** Step 29 shipped `document.scrollWidth` assertions that were reading `undefined`; Step 30's first hero-contrast measurement reported FAIL because it sampled anti-aliased glyph edges as though they were background. Sanity-check that a check can actually fail before believing it passes. And a screenshot read by eye is not a measurement - Step 30 nearly "fixed" card heights that measured identical.
+7. **Verify behaviour with real interaction, scoped correctly.** An unscoped `document.querySelector('.nav-dropdown-menu')` grabs the first of four dropdowns and falsely reports the one you're testing as broken.
 
 ## Known area of concern: Dart SDK pinning in `build.sh`
 
@@ -64,6 +65,7 @@ The recurring failure mode on this project is work that looks correct and silent
 None of these are blockers; each was raised and left as a decision or a small follow-up. Sourced from the batches archived in `docs/archive/completed-batches.md`.
 
 **Needs a decision from Mike:**
+- **Google's business listing for the school reads "The Hagedorn Village School"**, missing "Little" - visible on the Contact page map pin and in Google search. Fixed through Google Business Profile, not in this repo.
 - **"Tuition-free" still appears in three places** after Step 27 softened the cost claim elsewhere: `constants/seo.dart`'s `defaultMetaDescription` (the fallback on every page that doesn't set its own), the Programs hub SEO description, and the Support Us intro. Same claim in the old framing.
 - **Movement Therapy and Nursing Services have no inbound pill** from any program page. Adding one changes page content, so it needs a call.
 - **A typo in the Golden Rule event's Sanity `description`:** `jennifer.kirnicic@littlevillage.org` vs the graphic's `Jennifer.kirincic@`. Rendered on `/events/2027-golden-rule-award-dinner`. One-line fix once confirmed which is right.

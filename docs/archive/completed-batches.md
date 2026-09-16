@@ -627,3 +627,29 @@ Requested 2026-09-16. Management's third homepage direction. Reference: `home_re
 
 1. **A screenshot read by eye is not a measurement.** I was convinced the cards had uneven heights and nearly "fixed" it; measuring gave 345/345/345 and 373/373/373. What looked short was a one-line-shorter blurb inside a correctly stretched card.
 2. **The first contrast measurement of the hero reported FAIL, and was wrong.** Sampling "background" pixels inside the text's bounding box captures anti-aliased glyph edges, which are mid-grey. The measurement only became true after hiding the copy and sampling the scrimmed photo underneath. A verification method can be broken in the same silent way as the code it checks - the same shape as Step 29's vacuous `document.scrollWidth` assertions.
+
+## Complete: Step 31 - Contact Page Location Map
+
+Requested 2026-09-16. The Contact page's location slot held a static screenshot of Google Maps (a 576x661 PNG uploaded as the page's `heroImage`). Replaced with a live, interactive embed.
+
+**No JavaScript, and no new exception needed.** A Google Maps embed is a plain `<iframe>` - the same shape as the Google Calendar embed already on Current Families and the YouTube embed on Data Privacy. The four sanctioned hand-written-JS exceptions are unchanged.
+
+**Chose the keyless embed, per Mike.** Four options were put up: a linked static image, the keyless Google embed, the official Maps Embed API, and OpenStreetMap. The keyless embed needs no Google Cloud project, no API key and no billing, and could ship the same day.
+
+**Built from the address rather than a copied `pb=` blob.** The Share > Embed dialog produces an opaque `?pb=...` string, but `https://maps.google.com/maps?q=<query>&output=embed` is keyless too and is legible - an editor can read it and see what it points at. **Verified before seeding, not assumed:** loading that URL directly returns HTTP 200 but renders "The Google Maps Embed API must be used in an iframe", so it was tested again inside a real iframe, where it renders a live map with a marker. Including the school's name in the query (not just the street address) labels the pin, which is why the seeded URL does.
+
+**Schema (`fa3dc32`):** `siteSettings.mapEmbedUrl`, optional. Kept on `siteSettings` rather than the `contact` page document because `page` is shared by 14 documents and the field is meaningless on the other 13 - and because this is school contact information, which is what `phone`/`email` already are there. Validated against the two keyless Google embed hosts, because the Share dialog offers "Send a link" and "Embed a map" side by side and only the second renders in an iframe; a share link pasted here would fail silently with no indication why.
+
+**The slot degrades in three steps** - live map, then the map image, then the striped placeholder - so clearing the field in Sanity falls back to something real rather than to a placeholder.
+
+**Privacy, measured rather than assumed.** The concern raised up front was that there is no `nocookie` variant for Maps the way there is for YouTube. Measured on the real page: **no cookies are set at all**, which is better than warned. It does contact six Google hosts (`maps.google.com`, `maps.gstatic.com`, `maps.googleapis.com`, `places.googleapis.com`, `www.google.com`, `www.gstatic.com`), which is a tracking surface regardless of cookies. `loading="lazy"` defers all of it until the visitor scrolls near the map - on mobile that column sits below the form, so for anyone who only fills the form in, none of it loads.
+
+**Found and fixed while writing the accessibility note: the Contact page never stated the street address in text.** The info row said only "Seaford, NY", so with the map now an iframe, the address existed nowhere a screen reader could read it and nowhere it survived with images off. The row now carries the full address. Pre-existing, unrelated to the embed, and only surfaced because the accessibility statement's new paragraph needed to be true.
+
+**Accessibility statement updated** (Sanity, published): the known-limitations list names each embed individually - YouTube's player, Google Calendar - so Google Maps was added in the same form, with the same practical way around it, and the review date moved to September 2026.
+
+**Verified.** `dart analyze` clean, build succeeds, the iframe and its title reach the built HTML. Headless Chromium at 1440 and 375: the map renders live at 413x320 and 300x320, **axe-core 0 violations at both**, zero horizontal overflow, no console errors from our own code (two come from Google's embedded page, same class as the YouTube "compute-pressure" warning in Step 12). **Not a keyboard trap** - focus enters the map, passes through eight of Google's own controls, and escapes to the next element on the page, satisfying WCAG 2.1.2.
+
+**One lesson:** `waitUntil: 'networkidle'` never settles on a page carrying a live map - the embed keeps polling - so the check timed out rather than failing. Any future verification script touching this page has to use `load`.
+
+**Flagged, not fixed: Google's business listing for the school reads "The Hagedorn Village School"**, missing "Little". That is Google's own data, visible on the pin, and affects how families find the school in search. It needs correcting through Google Business Profile, not in this codebase.

@@ -66,15 +66,41 @@ class Contact extends AsyncStatelessComponent {
     ]);
   }
 
+  // The location slot degrades in three steps: the live map when an embed
+  // URL is set, the map image when only that is set, and the striped
+  // placeholder when neither is. Keeping the image as a middle rung means
+  // clearing `mapEmbedUrl` in Sanity falls back to something real rather
+  // than to a placeholder.
   static Component _infoColumn(SiteSettings siteSettings, PageImage? map) {
     return div(classes: 'contact-info-column', [
       div(classes: 'contact-info-card', [
         _infoRow('📞 Phone', siteSettings.phone ?? '516-520-6000'),
         _infoRow('✉ Email', siteSettings.email ?? 'information@littlevillage.org'),
-        _infoRow('📍 Address', 'Seaford, NY'),
+        // The full street address, not just the town: with the map now an
+        // iframe, this line is the only form of the address a screen reader
+        // can read, and the only one that survives with images off.
+        _infoRow('📍 Address', '750 Hicksville Road, Seaford, NY 11783'),
         _infoRow('🕐 Office hours', 'Mon–Fri, 8:30 AM – 4:00 PM'),
       ]),
-      if (map case final map?)
+      if (siteSettings.mapEmbedUrl case final embedUrl?)
+        iframe(
+          src: embedUrl,
+          // Defers the frame — and every request and cookie Google makes
+          // with it — until the visitor scrolls near it. On mobile this
+          // column sits below the form, so for anyone who only fills the
+          // form in, the map never loads at all.
+          loading: MediaLoading.lazy,
+          classes: 'contact-map-embed',
+          attributes: const {
+            // Names the place, not the widget: a screen reader announcing
+            // "map" alone tells a visitor nothing about which map.
+            'title': 'Map showing the location of The Hagedorn Little Village School, '
+                '750 Hicksville Road, Seaford, NY',
+            'referrerpolicy': 'no-referrer-when-downgrade',
+          },
+          const [],
+        )
+      else if (map case final map?)
         img(
           src: sanityImageUrl(map.url, width: 900),
           alt: map.alt,
@@ -190,6 +216,17 @@ class Contact extends AsyncStatelessComponent {
       display: .block,
       width: 100.percent,
       height: .auto,
+      radius: .all(.circular(Radii.lg)),
+    ),
+    // The live map embed. Unlike the image above this one *must* be given a
+    // height — an iframe has no intrinsic size — so it gets a fixed one
+    // rather than an aspect ratio, which would make it shallow and useless
+    // in this narrow sidebar column at desktop widths.
+    css('.contact-map-embed').styles(
+      display: .block,
+      width: 100.percent,
+      height: 320.px,
+      border: .unset,
       radius: .all(.circular(Radii.lg)),
     ),
     // Map placeholder: sky-toned stripes for this spot specifically.

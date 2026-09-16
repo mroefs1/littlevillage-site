@@ -62,6 +62,10 @@ class SiteSettings {
   final List<GalleryImage> gallery;
   final String? donateUrl;
 
+  /// Google Maps embed URL for the Contact page's location map. Null until
+  /// an editor sets it, in which case Contact falls back to the map image.
+  final String? mapEmbedUrl;
+
   const SiteSettings({
     this.navigation = const [],
     this.footerLinks = const [],
@@ -70,6 +74,7 @@ class SiteSettings {
     this.email,
     this.gallery = const [],
     this.donateUrl,
+    this.mapEmbedUrl,
   });
 
   factory SiteSettings.fromJson(Map<String, dynamic> json) {
@@ -89,6 +94,7 @@ class SiteSettings {
           .map((item) => GalleryImage.fromJson(item as Map<String, dynamic>))
           .toList(),
       donateUrl: json['donateUrl'] as String?,
+      mapEmbedUrl: json['mapEmbedUrl'] as String?,
     );
   }
 }
