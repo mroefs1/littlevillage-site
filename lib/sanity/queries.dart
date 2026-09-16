@@ -13,7 +13,7 @@ const String siteSettingsQuery = '''
   socialLinks[]{platform, url},
   phone,
   email,
-  heroGallery[]{
+  gallery[]{
     "url": asset->url,
     alt
   },
@@ -111,6 +111,7 @@ const String programListQuery = '''
   "slug": slug.current,
   category,
   ageRange,
+  cardBlurb,
   description,
   "imageUrl": image.asset->url,
   "relatedProgramSlugs": relatedPrograms[]->slug.current
@@ -124,6 +125,7 @@ const String programBySlugQuery = '''
   "slug": slug.current,
   category,
   ageRange,
+  cardBlurb,
   description,
   "imageUrl": image.asset->url,
   "relatedProgramSlugs": relatedPrograms[]->slug.current
@@ -172,6 +174,32 @@ const String videoListQuery = '''
   title,
   youtubeUrl,
   description
+}
+''';
+
+const String homepageQuery = '''
+*[_type == "homepage"][0]{
+  heroImage{
+    "url": asset->url,
+    alt,
+    hotspot
+  },
+  heroHeadline,
+  heroSubhead,
+  heroPrimaryCtaLabel,
+  heroSecondaryCtaLabel,
+  programsIntro,
+  serviceCards[]{
+    title,
+    eyebrow,
+    blurb,
+    path,
+    image{
+      "url": asset->url,
+      alt,
+      hotspot
+    }
+  }
 }
 ''';
 

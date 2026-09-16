@@ -36,6 +36,10 @@ class Header extends StatelessComponent {
       // Not an age-band `program` document — a standalone content page, so
       // it's appended here rather than driven by the category loop above.
       {'label': 'Therapeutic Services', 'path': '/programs/therapeutic-services'},
+      // Sits next to Therapeutic Services rather than at the end: the two are
+      // siblings (in-school therapy vs. the on-site-or-home-based services),
+      // and the homepage's Services & Support row pairs them the same way.
+      {'label': 'Related Services', 'path': '/programs/related-services'},
       {'label': 'Family Services', 'path': '/programs/family-services'},
       {'label': 'CPSE Evaluations', 'path': '/programs/cpse-evaluations'},
       {'label': 'Summer CARP', 'path': '/programs/summer-carp'},

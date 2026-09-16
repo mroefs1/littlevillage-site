@@ -3,6 +3,7 @@ import 'models/careers.dart';
 import 'models/document.dart';
 import 'models/event_item.dart';
 import 'models/media.dart';
+import 'models/homepage_content.dart';
 import 'models/news_post.dart';
 import 'models/newsletter.dart';
 import 'models/pa_event_item.dart';
@@ -36,6 +37,11 @@ abstract class ContentRepository {
   Future<ParentAssociationInfo?> getParentAssociationInfo();
   Future<List<PaEventItem>> getPaEvents();
   Future<SplashPromo?> getSplashPromo();
+
+  /// Never returns null: a missing or unpublished `homepage` singleton
+  /// yields an empty [Homepage], so the homepage falls back to its built-in
+  /// copy rather than failing the static build.
+  Future<Homepage> getHomepage();
 }
 
 class SanityContentRepository implements ContentRepository {
@@ -169,6 +175,12 @@ class SanityContentRepository implements ContentRepository {
     final result = await _client.fetch(splashPromoQuery);
     if (result == null) return null;
     return SplashPromo.fromJson(result as Map<String, dynamic>);
+  }
+
+  @override
+  Future<Homepage> getHomepage() async {
+    final result = await _client.fetch(homepageQuery);
+    return Homepage.fromJson(result as Map<String, dynamic>?);
   }
 }
 

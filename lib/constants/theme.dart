@@ -34,6 +34,24 @@ class AppColors {
   static const green = Color('#4e8b75');
   static const mint = Color('#e7f3ed');
   static const mintDark = Color('#d9ecdf');
+  // Three additional card tints introduced in Step 30, so the homepage's two
+  // adjacent card rows (Educational Programs, Services & Support) read as
+  // distinct sections. Step 15 declined to add new pastels for its service
+  // cards; the difference here is that the whole point of this section is
+  // separating two rows that sit directly above one another, which reusing
+  // the existing five tints would muddy.
+  //
+  // Contrast-checked against all four roles that sit on these cards (navy
+  // title, mutedTextMid body, mutedTextLight eyebrow, coral link). The
+  // handoff's literal lavender (#f4ecf7) failed two of them — 4.45:1 for the
+  // eyebrow and 4.44:1 for the card link, against a 4.5:1 floor — so it was
+  // lightened to this value (4.59:1 / 4.58:1, hue essentially unchanged at
+  // 283.6°→282°). Same treatment as the coral/mutedTextLight fixes in 11.10,
+  // applied to the background rather than the foreground. The other two
+  // cleared as given.
+  static const lavender = Color('#f6f0f9');
+  static const paleYellow = Color('#fdf3d9');
+  static const paleBlue = Color('#eef2fb');
   static const yellow = Color('#f5c75f');
   static const line = Color('#dce7eb');
   static const lineDark = Color('#cbdbe2');

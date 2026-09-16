@@ -38,14 +38,18 @@ class SocialLink {
   }
 }
 
-class HeroGalleryImage {
+/// One photo in `siteSettings.gallery`. Renamed from `HeroGalleryImage` in
+/// Step 30, when the homepage hero became a single still photo and the
+/// carousel came off that page — the photos are kept as a general pool for
+/// reuse when the carousel is mounted elsewhere.
+class GalleryImage {
   final String url;
   final String alt;
 
-  const HeroGalleryImage({required this.url, required this.alt});
+  const GalleryImage({required this.url, required this.alt});
 
-  factory HeroGalleryImage.fromJson(Map<String, dynamic> json) {
-    return HeroGalleryImage(url: json['url'] as String, alt: json['alt'] as String);
+  factory GalleryImage.fromJson(Map<String, dynamic> json) {
+    return GalleryImage(url: json['url'] as String, alt: json['alt'] as String);
   }
 }
 
@@ -55,7 +59,7 @@ class SiteSettings {
   final List<SocialLink> socialLinks;
   final String? phone;
   final String? email;
-  final List<HeroGalleryImage> heroGallery;
+  final List<GalleryImage> gallery;
   final String? donateUrl;
 
   const SiteSettings({
@@ -64,7 +68,7 @@ class SiteSettings {
     this.socialLinks = const [],
     this.phone,
     this.email,
-    this.heroGallery = const [],
+    this.gallery = const [],
     this.donateUrl,
   });
 
@@ -81,8 +85,8 @@ class SiteSettings {
           .toList(),
       phone: json['phone'] as String?,
       email: json['email'] as String?,
-      heroGallery: (json['heroGallery'] as List<dynamic>? ?? const [])
-          .map((item) => HeroGalleryImage.fromJson(item as Map<String, dynamic>))
+      gallery: (json['gallery'] as List<dynamic>? ?? const [])
+          .map((item) => GalleryImage.fromJson(item as Map<String, dynamic>))
           .toList(),
       donateUrl: json['donateUrl'] as String?,
     );

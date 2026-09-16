@@ -20,8 +20,6 @@ import 'package:littlevillage_site/components/faq_accordion.dart'
     as _faq_accordion;
 import 'package:littlevillage_site/components/footer.dart' as _footer;
 import 'package:littlevillage_site/components/header.dart' as _header;
-import 'package:littlevillage_site/components/hero_gallery.dart'
-    as _hero_gallery;
 import 'package:littlevillage_site/components/language_switcher.dart'
     as _language_switcher;
 import 'package:littlevillage_site/components/mobile_nav.dart' as _mobile_nav;
@@ -36,6 +34,7 @@ import 'package:littlevillage_site/components/portable_text_view.dart'
     as _portable_text_view;
 import 'package:littlevillage_site/components/program_layout.dart'
     as _program_layout;
+import 'package:littlevillage_site/components/quick_links.dart' as _quick_links;
 import 'package:littlevillage_site/components/social_icons.dart'
     as _social_icons;
 import 'package:littlevillage_site/components/splash_screen.dart'
@@ -91,10 +90,6 @@ ServerOptions get defaultServerOptions => ServerOptions(
       'faq_accordion',
       params: __faq_accordionFaqAccordion,
     ),
-    _hero_gallery.HeroGallery: ClientTarget<_hero_gallery.HeroGallery>(
-      'hero_gallery',
-      params: __hero_galleryHeroGallery,
-    ),
     _language_switcher.LanguageSwitcher:
         ClientTarget<_language_switcher.LanguageSwitcher>('language_switcher'),
     _mobile_nav.MobileNav: ClientTarget<_mobile_nav.MobileNav>(
@@ -123,7 +118,6 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._faq_accordion.FaqAccordion.styles,
     ..._footer.Footer.styles,
     ..._header.Header.styles,
-    ..._hero_gallery.HeroGallery.styles,
     ..._language_switcher.LanguageSwitcher.styles,
     ..._mobile_nav.MobileNav.styles,
     ..._news_events_filter.NewsEventsFilter.styles,
@@ -133,6 +127,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._portable_text_view.PortableTextView.styles,
     ..._program_layout.ProgramHero.styles,
     ..._program_layout.ProgramServices.styles,
+    ..._quick_links.QuickLinks.styles,
     ..._social_icons.SocialLinks.styles,
     ..._splash_screen.SplashScreen.styles,
     ..._video_embed.VideoEmbed.styles,
@@ -155,9 +150,6 @@ ServerOptions get defaultServerOptions => ServerOptions(
 Map<String, Object?> __faq_accordionFaqAccordion(
   _faq_accordion.FaqAccordion c,
 ) => {'items': c.items, 'initialOpenIndex': c.initialOpenIndex};
-Map<String, Object?> __hero_galleryHeroGallery(_hero_gallery.HeroGallery c) => {
-  'images': c.images,
-};
 Map<String, Object?> __mobile_navMobileNav(_mobile_nav.MobileNav c) => {
   'activePath': c.activePath,
   'items': c.items,

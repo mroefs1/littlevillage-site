@@ -37,6 +37,7 @@ import 'pages/parent_association.dart';
 import 'pages/preschool.dart';
 import 'pages/program_detail.dart';
 import 'pages/programs.dart';
+import 'pages/related_services.dart';
 import 'pages/staff.dart';
 import 'pages/summer_recreation.dart';
 import 'pages/support_us.dart';
@@ -66,6 +67,7 @@ class App extends AsyncStatelessComponent {
     final newsletters = await contentRepository.getNewsletters();
     final programs = await contentRepository.getPrograms();
     final siteSettings = await contentRepository.getSiteSettings();
+    final homepage = await contentRepository.getHomepage();
 
     // The first-visit splash promo. Fetched here rather than per-page because
     // it appears on every route; `shouldRender` keeps an off, expired or
@@ -107,9 +109,12 @@ class App extends AsyncStatelessComponent {
                 path: '/',
                 title: 'Home',
                 builder: (context, state) => Home(
-                  newsPosts: newsPosts.take(2).toList(),
-                  events: events.take(2).toList(),
-                  heroGallery: siteSettings.heroGallery,
+                  // Three of each: the redesigned two-column band shows three
+                  // rows per side. Fewer is handled — the events column can
+                  // legitimately hold as few as one.
+                  newsPosts: newsPosts.take(3).toList(),
+                  events: events.take(3).toList(),
+                  homepage: homepage,
                   programs: programs,
                 ),
               ),
@@ -157,6 +162,11 @@ class App extends AsyncStatelessComponent {
                 path: '/programs/therapeutic-services',
                 title: 'Therapeutic Services',
                 builder: (context, state) => const TherapeuticServices(),
+              ),
+              Route(
+                path: '/programs/related-services',
+                title: 'Related Services',
+                builder: (context, state) => const RelatedServices(),
               ),
               Route(
                 path: '/programs/family-services',

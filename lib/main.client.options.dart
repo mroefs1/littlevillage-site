@@ -12,8 +12,6 @@ import 'package:littlevillage_site/components/contact_form.dart'
     deferred as _contact_form;
 import 'package:littlevillage_site/components/faq_accordion.dart'
     deferred as _faq_accordion;
-import 'package:littlevillage_site/components/hero_gallery.dart'
-    deferred as _hero_gallery;
 import 'package:littlevillage_site/components/language_switcher.dart'
     deferred as _language_switcher;
 import 'package:littlevillage_site/components/mobile_nav.dart'
@@ -57,14 +55,6 @@ ClientOptions get defaultClientOptions => ClientOptions(
         initialOpenIndex: p['initialOpenIndex'] as int?,
       ),
       loader: _faq_accordion.loadLibrary,
-    ),
-    'hero_gallery': ClientLoader(
-      (p) => _hero_gallery.HeroGallery(
-        images: (p['images'] as List<Object?>)
-            .map((i) => (i as Map<String, Object?>).cast<String, String>())
-            .toList(),
-      ),
-      loader: _hero_gallery.loadLibrary,
     ),
     'language_switcher': ClientLoader(
       (p) => _language_switcher.LanguageSwitcher(),
