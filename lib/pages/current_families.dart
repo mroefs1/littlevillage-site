@@ -3,6 +3,7 @@ import 'package:jaspr/server.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
 import '../components/content_page.dart';
+import '../components/icons.dart';
 import '../components/seo_meta.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
@@ -62,7 +63,7 @@ class CurrentFamilies extends AsyncStatelessComponent {
               to: '/parent-association',
               classes: 'cf-feature-card',
               children: [
-                div(classes: 'cf-feature-icon', [.text('🤝')]),
+                div(classes: 'cf-feature-icon', [appIcon(AppIcons.groups)]),
                 div(classes: 'cf-feature-title', [.text('Parent Association')]),
                 div(classes: 'cf-feature-desc', [
                   .text('Board members, dues, and upcoming PA events and meetings.'),
@@ -71,7 +72,7 @@ class CurrentFamilies extends AsyncStatelessComponent {
               ],
             ),
             a(href: '/current-families#documents', classes: 'cf-feature-card', [
-              div(classes: 'cf-feature-icon', [.text('📄')]),
+              div(classes: 'cf-feature-icon', [appIcon(AppIcons.document)]),
               div(classes: 'cf-feature-title', [.text('Important Documents')]),
               div(classes: 'cf-feature-desc', [
                 .text('Handbooks, one-page calendars, and district paperwork.'),
@@ -109,7 +110,7 @@ class CurrentFamilies extends AsyncStatelessComponent {
 
   static Component _documentCard(ParentDocument document) {
     final content = [
-      span([.text('📄')]),
+      appIcon(AppIcons.document, classes: 'cf-document-icon'),
       span(classes: 'cf-document-title', [.text(document.title)]),
     ];
     if (document.fileUrl != null) {
@@ -165,7 +166,9 @@ class CurrentFamilies extends AsyncStatelessComponent {
     ]),
     // First card (Parent Association) gets a peach icon tile, second
     // (Documents) mint — same per-icon differentiation as the homepage's
-    // Current Families band in 11.3.
+    // Current Families band in 11.3, and the same flat tint: the diagonal
+    // hatch these carried is `PhotoPlaceholder`'s device for a missing
+    // photo, so it read as unfinished.
     css('.cf-feature-icon').styles(
       display: .flex,
       width: 56.px,
@@ -173,17 +176,18 @@ class CurrentFamilies extends AsyncStatelessComponent {
       radius: .all(.circular(Radii.sm)),
       justifyContent: .center,
       alignItems: .center,
-      fontSize: 1.375.rem,
-      raw: {
-        'background-image':
-            'repeating-linear-gradient(135deg, ${AppColors.peach.value}, ${AppColors.peach.value} 8px, ${AppColors.peachDark.value} 8px, ${AppColors.peachDark.value} 16px)',
-      },
+      backgroundColor: AppColors.peach,
+    ),
+    // These tiles held emoji, which size themselves off `font-size`; an SVG
+    // has no intrinsic size, so it needs explicit dimensions — the same
+    // correction the homepage band already carries.
+    css('.cf-feature-icon svg').styles(
+      width: 26.px,
+      height: 26.px,
+      color: AppColors.navy,
     ),
     css('.cf-feature-card:nth-child(2) .cf-feature-icon').styles(
-      raw: {
-        'background-image':
-            'repeating-linear-gradient(135deg, ${AppColors.mint.value}, ${AppColors.mint.value} 8px, ${AppColors.mintDark.value} 8px, ${AppColors.mintDark.value} 16px)',
-      },
+      backgroundColor: AppColors.mint,
     ),
 
     css('.cf-section').styles(
@@ -216,6 +220,15 @@ class CurrentFamilies extends AsyncStatelessComponent {
         alignItems: .center,
         gap: .all(10.px),
         backgroundColor: Colors.white,
+      ),
+      // Replaces a 📄 emoji. Sized and coloured explicitly for the same
+      // reason as the feature tiles; `flex: 0 0` keeps it from being
+      // squeezed by a long document title.
+      css('.cf-document-icon').styles(
+        width: 18.px,
+        height: 18.px,
+        flex: Flex(grow: 0, shrink: 0),
+        color: AppColors.mutedTextLight,
       ),
       css('.cf-document-title').styles(
         color: AppColors.navy,

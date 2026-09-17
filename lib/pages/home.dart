@@ -685,6 +685,12 @@ class Home extends StatelessComponent {
           gap: .all(14.px),
           flex: Flex(grow: 1.2),
         ),
+        // Flat tint, not the diagonal hatch this used to carry: the hatch is
+        // the same device `PhotoPlaceholder` uses for a genuinely missing
+        // photo, so a finished icon sitting on it still read as "artwork
+        // pending". The peach/mint pair stays — it is what distinguishes the
+        // two features from each other. Navy measures 11.7:1 on flat peach
+        // and 11.5:1 on flat mint, both better than on the hatch.
         css('.current-families-icon').styles(
           display: .flex,
           width: 60.px,
@@ -694,11 +700,7 @@ class Home extends StatelessComponent {
           justifyContent: .center,
           alignItems: .center,
           flex: Flex(grow: 0, shrink: 0),
-          fontSize: 1.375.rem,
-          raw: {
-            'background-image':
-                'repeating-linear-gradient(135deg, ${AppColors.peach.value}, ${AppColors.peach.value} 6px, ${AppColors.peachDark.value} 6px, ${AppColors.peachDark.value} 12px)',
-          },
+          backgroundColor: AppColors.peach,
         ),
         // The tile held a 1.375rem emoji, which sized itself; an SVG has no
         // intrinsic size, so it gets one here. Navy clears 11:1 on both the
@@ -730,10 +732,7 @@ class Home extends StatelessComponent {
       // of peach — matches the reference's per-icon color differentiation
       // without needing a modifier class on the component.
       css('.current-families-feature:nth-child(2) .current-families-icon').styles(
-        raw: {
-          'background-image':
-              'repeating-linear-gradient(135deg, ${AppColors.mint.value}, ${AppColors.mint.value} 6px, ${AppColors.mintDark.value} 6px, ${AppColors.mintDark.value} 12px)',
-        },
+        backgroundColor: AppColors.mint,
       ),
       css('.current-families-links').styles(
         display: .flex,
