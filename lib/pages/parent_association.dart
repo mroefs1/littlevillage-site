@@ -2,7 +2,6 @@ import 'package:jaspr/dom.dart';
 import 'package:jaspr/server.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
-import '../components/collection_card.dart';
 import '../components/content_page.dart';
 import '../components/portable_text_view.dart';
 import '../components/seo_meta.dart';
@@ -67,23 +66,48 @@ class ParentAssociation extends AsyncStatelessComponent {
           .text(' for other key dates.'),
         ])
       else
-        div(classes: 'card-grid', [for (final event in events) _paEventCard(event)]),
+        div(classes: 'pa-event-list', [for (final event in events) _paEventCard(event)]),
     ]);
   }
 
+  // A PA event has no detail page to link to, so its card has to carry
+  // everything itself. This used to reuse `CollectionCard`, which is built
+  // for grids of items that *do* have a detail page: it caps the card at
+  // 320px and pairs a 140-character teaser with a "learn more" link. Here
+  // that truncated the one real event mid-sentence — losing both the note
+  // that it runs on Google Meet and the PA Board's email — with nowhere to
+  // go to read the rest, and never rendered `google_meet` at all.
   static Component _paEventCard(PaEventItem event) {
-    return CollectionCard(
-      title: event.title,
-      eyebrow: '${formatDate(event.eventDate)} · ${event.location}',
-      excerpt: _excerpt(event.description),
-    );
-  }
-
-  static String? _excerpt(String text) {
-    final trimmed = text.trim();
-    if (trimmed.isEmpty) return null;
-    if (trimmed.length <= 140) return trimmed;
-    return '${trimmed.substring(0, 140).trimRight()}…';
+    // `description` is a plain `text` field, so paragraph breaks are bare
+    // newlines with no markup. Splitting into real <p>s beats a
+    // `white-space: pre-line` rule, which would also honour the incidental
+    // newlines Jaspr's pretty-printed output puts around the text node —
+    // that rendered as a blank first line.
+    final paragraphs = [
+      for (final line in event.description.split('\n'))
+        if (line.trim().isNotEmpty) line.trim(),
+    ];
+    final meetingLink = event.meetingLink?.trim();
+    return article(classes: 'pa-event-card', [
+      div(classes: 'pa-event-eyebrow', [
+        .text('${formatDate(event.eventDate)} · ${event.location}'),
+      ]),
+      // h3, not h2: `.pa-section`'s own heading is the h2 above this list.
+      h3(classes: 'pa-event-title', [.text(event.title.trim())]),
+      if (paragraphs.isNotEmpty)
+        div(classes: 'pa-event-description', [
+          for (final paragraph in paragraphs) p([.text(paragraph)]),
+        ]),
+      // Pass-through: no wrapper and no gap when `google_meet` is absent,
+      // so an in-person-only event renders nothing here.
+      if (meetingLink != null && meetingLink.isNotEmpty)
+        a(
+          href: meetingLink,
+          target: Target.blank,
+          classes: 'pa-event-meet',
+          [.text('Join on Google Meet →')],
+        ),
+    ]);
   }
 
   static Component _duesLine(ParentAssociationInfo info) {
@@ -172,6 +196,63 @@ class ParentAssociation extends AsyncStatelessComponent {
       margin: .only(bottom: 10.px),
       fontWeight: .w600,
     ),
+
+    // Stacked full-width cards rather than a `.card-grid` of 320px tiles:
+    // each card now holds a full description, which a narrow tile cannot
+    // carry without the truncation this replaced. `.detail-container` caps
+    // the column at 760px, so the line length stays readable.
+    css('.pa-event-list').styles(
+      display: .grid,
+      margin: .only(top: 18.px),
+      gap: .all(16.px),
+    ),
+    css('.pa-event-card', [
+      css('&').styles(
+        padding: .all(20.px),
+        border: .all(color: AppColors.line, width: 1.px),
+        radius: .all(.circular(Radii.lg)),
+        backgroundColor: Colors.white,
+      ),
+      css('.pa-event-eyebrow').styles(
+        color: AppColors.mutedTextLight,
+        fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+        fontSize: 0.75.rem,
+        fontWeight: .w700,
+        textTransform: .upperCase,
+        letterSpacing: 0.06.em,
+      ),
+      css('.pa-event-title').styles(
+        margin: .only(top: 6.px, bottom: .zero),
+        color: AppColors.navy,
+        fontFamily: .list([headingFontFamily, FontFamilies.serif]),
+        fontSize: 1.125.rem,
+        fontWeight: .w600,
+      ),
+      // Same paragraph rhythm as `.detail-body` on the news/event detail
+      // pages, so a multi-paragraph notice reads identically in both places.
+      css('.pa-event-description', [
+        css('&').styles(
+          margin: .only(top: 10.px),
+          color: AppColors.mutedText,
+          fontSize: 0.9375.rem,
+          lineHeight: 1.55.em,
+        ),
+        css('p').styles(margin: .only(top: 10.px, bottom: .zero)),
+        css('p:first-child').styles(margin: .zero),
+      ]),
+      css('.pa-event-meet').styles(
+        display: .inlineBlock,
+        padding: .symmetric(vertical: 10.px, horizontal: 20.px),
+        margin: .only(top: 14.px),
+        radius: .all(.circular(Radii.pill)),
+        color: Colors.white,
+        fontFamily: .list([bodyFontFamily, FontFamilies.sansSerif]),
+        fontSize: 0.875.rem,
+        fontWeight: .w700,
+        textDecoration: TextDecoration.none,
+        backgroundColor: AppColors.coral,
+      ),
+    ]),
 
     css('.pa-board-list').styles(
       padding: .zero,
