@@ -105,9 +105,23 @@ class Admissions extends AsyncStatelessComponent {
             ]),
             div(classes: 'adm-journey-step-photo', [
               if (i < images.length)
-                img(src: images[i].url, alt: images[i].alt, classes: 'adm-journey-step-img')
+                img(
+                  src: images[i].url,
+                  alt: images[i].alt,
+                  classes: 'adm-journey-step-img',
+                  // Editors have set a focal point on all four of these in
+                  // the Studio; without this the crop silently centred and
+                  // ignored them.
+                  styles: switch (images[i].objectPosition) {
+                    final position? => Styles(raw: {'object-position': position}),
+                    null => null,
+                  },
+                )
               else
-                PhotoPlaceholder('', height: 60.px),
+                // No explicit height — an inline one would beat the shared
+                // aspect-ratio rule below and make this step shorter than
+                // its siblings.
+                PhotoPlaceholder(''),
             ]),
           ]),
       ]),
@@ -116,7 +130,6 @@ class Admissions extends AsyncStatelessComponent {
 
   static Component _tuitionCallout() {
     return div(classes: 'adm-tuition', [
-      div(classes: 'adm-tuition-value', [.text('\$0')]),
       div([
         div(classes: 'adm-tuition-title', [.text('Services provided at no direct cost to families')]),
         div(classes: 'adm-tuition-desc', [
@@ -275,15 +288,26 @@ class Admissions extends AsyncStatelessComponent {
       lineHeight: 1.5.em,
     ),
     css('.adm-journey-step-photo').styles(width: 100.percent),
+    // A ratio, not the fixed 90px this used to carry. At the 398px column
+    // that height made a 4.42:1 letterbox, and three of the four photos are
+    // between 1:1 and 1.5:1, so under a third of each one survived the crop.
+    // A ratio also stays correct when the grid drops to one wider column on
+    // mobile, where a fixed height goes squat again.
     css('.adm-journey-step-img').styles(
       display: .block,
       width: 100.percent,
-      height: 90.px,
       radius: .all(.circular(Radii.sm)),
-      raw: {'object-fit': 'cover'},
+      raw: {'aspect-ratio': '16 / 9', 'object-fit': 'cover'},
+    ),
+    // Two classes, so this beats `.photo-placeholder`'s own 140px base rule
+    // and a photo-less step keeps the same shape as its siblings.
+    css('.adm-journey-step-photo .photo-placeholder').styles(
+      height: .auto,
+      raw: {'aspect-ratio': '16 / 9'},
     ),
 
-    // $0 tuition callout
+    // No-direct-cost callout. The leading "$0" figure this used to carry was
+    // dropped — the same softening of the cost claim as Step 27.
     css('.adm-tuition').styles(
       display: .flex,
       padding: .symmetric(vertical: 24.px, horizontal: 28.px),
@@ -292,13 +316,6 @@ class Admissions extends AsyncStatelessComponent {
       alignItems: .center,
       gap: .all(20.px),
       backgroundColor: AppColors.navyDark,
-    ),
-    css('.adm-tuition-value').styles(
-      color: AppColors.yellow,
-      fontFamily: .list([headingFontFamily, FontFamilies.serif]),
-      fontSize: 2.25.rem,
-      fontWeight: .w700,
-      raw: {'flex': 'none'},
     ),
     css('.adm-tuition-title').styles(
       color: Colors.white,
