@@ -242,11 +242,18 @@ class SupportUs extends AsyncStatelessComponent {
     // Sits in the grid's `auto` track, so it needs an explicit width —
     // otherwise a full-size upload would set the track width itself and
     // squeeze the copy column to nothing.
+    //
+    // `height: auto`, not a 4:3 `cover` box. The photo is a wide shot of one
+    // engraved brick (774x416, 1.86:1); forcing it to 4:3 cropped ~28% off
+    // the sides, which cut the "T" from "Tomorrow" and the "!" from
+    // "Today!" — the engraving is the entire point of the shot. Letting the
+    // image keep its own proportions also means a replacement upload of any
+    // shape shows whole, the same reasoning as `.detail-hero-image`.
     css('.su-brick-photo').styles(
       display: .block,
-      width: 320.px,
+      width: 380.px,
+      height: .auto,
       radius: .all(.circular(Radii.lg)),
-      raw: {'aspect-ratio': '4 / 3', 'object-fit': 'cover'},
     ),
     css('.su-brick-body').styles(
       display: .flex,
