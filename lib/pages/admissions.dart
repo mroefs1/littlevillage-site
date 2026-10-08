@@ -65,32 +65,50 @@ class Admissions extends AsyncStatelessComponent {
   }
 
   static Component _journey(List<PageImage> images) {
+    // Copy supplied by the Admissions department, 2026-10-08. `paras` is a
+    // list because step 3 is two paragraphs in the source document.
     const steps = [
       (
         n: '1',
         title: 'Reach out to us',
-        desc:
-            "Fill out the request form or call. We'll listen, answer questions, and point you to the right "
-            "starting place — Early Intervention (under 3) or your district's CPSE (3+).",
+        paras: [
+          "Feel free to reach out to us. We'll listen, answer questions, and point you in the right "
+              "direction, whether that be Early Intervention (Birth-3) or your school district's CPSE "
+              "(3-5 yrs old) or CSE (ages 5 and up).",
+        ],
       ),
       (
         n: '2',
         title: 'Evaluation & referral',
-        desc:
-            "A free evaluation determines your child's needs and results in an IFSP or IEP. Your county or "
-            "district can refer your child to Little Village — you can request us by name.",
+        paras: [
+          'Once a referral is received through Early Intervention or through your school district, a '
+              'multidisciplinary evaluation will be completed at no cost to you. These evaluations will '
+              "assess your child's individual needs. Pending completion of these evaluations your EI Team "
+              'or CPSE/CSE team will determine eligibility for services and/or program placement.',
+          'In CPSE, if a center-based special education preschool program is recommended for your child, '
+              "your district will send your child's packet to various programs, including but not limited "
+              'to The Hagedorn Little Village School. At the school-age level, if the CSE determines that '
+              'your child meets eligibility for an out-of-district school placement, a referral will be '
+              'sent to Little Village.',
+        ],
       ),
       (
         n: '3',
-        title: 'Visit & meet the team',
-        desc: "Tour the school, meet teachers and therapists, and see the classrooms.",
+        title: 'Visit our program',
+        paras: [
+          'You are more than welcome to contact us to schedule a general Open House tour of our program.',
+          "Following receipt of your child's packet, our Admissions Department may call to schedule a "
+              'screening with your child for possible placement, pending an appropriate opening.',
+        ],
       ),
       (
         n: '4',
-        title: 'Placement & first day',
-        desc:
-            "Once placement is approved, we handle the logistics — including transportation — and welcome "
-            "your child in. And we stay in touch with you every step after.",
+        title: 'Placement & beyond',
+        paras: [
+          'Once placement is secured, we will work as a team with you and your school district to handle '
+              'all of the logistics, including transportation. Our staff who will be working with your '
+              'child on a daily basis will keep in touch with you every step of the way!',
+        ],
       ),
     ];
     return div(classes: 'adm-journey', [
@@ -101,7 +119,7 @@ class Admissions extends AsyncStatelessComponent {
             div(classes: 'adm-journey-step-badge', [.text(step.n)]),
             div(classes: 'adm-journey-step-body', [
               div(classes: 'adm-journey-step-title', [.text(step.title)]),
-              div(classes: 'adm-journey-step-desc', [.text(step.desc)]),
+              for (final para in step.paras) div(classes: 'adm-journey-step-desc', [.text(para)]),
             ]),
             div(classes: 'adm-journey-step-photo', [
               if (i < images.length)
@@ -143,16 +161,21 @@ class Admissions extends AsyncStatelessComponent {
   }
 
   static Component _faq() {
+    // Copy supplied by the Admissions department, 2026-10-08. Note the fifth
+    // item is new, and that answers 3 and 4 correct who does what: the school
+    // district coordinates transport and owns the placement conversation, not
+    // the school.
     const items = [
       {
-        'question': "What's the difference between EI and CPSE?",
+        'question': 'What is the difference between EI and CPSE?',
         'answer':
-            'Early Intervention (EI) serves children from birth to age 3. CPSE (Committee on Preschool Special '
-            "Education) takes over from age 3 through kindergarten entry, run through your school district. "
-            'We work with families through both.',
+            'Early Intervention (EI) serves children from birth to age 3. The School District\'s CPSE Dept. '
+            '(Committee on Preschool Special Education) handles all evaluations/services from age 3 through '
+            '5 years of age. We work with families every step of the way to help with the EI-CPSE transition '
+            'process.',
       },
       {
-        'question': 'Do I need a diagnosis before I contact you?',
+        'question': 'Does my child need a diagnosis before I contact you?',
         'answer':
             "No. If you have a concern about your child's development, that's reason enough to reach out. "
             "We'll help you understand the evaluation process.",
@@ -160,14 +183,22 @@ class Admissions extends AsyncStatelessComponent {
       {
         'question': 'Is transportation provided?',
         'answer':
-            'Yes. Once your child is placed with us, we coordinate transportation to and from school at no '
-            'cost to your family.',
+            'Yes, for those children who are found eligible for a program placement through CPSE or CSE. '
+            'Once your child is placed with us, your school district will help coordinate bus transportation '
+            'to and from our program, at no cost to you.',
       },
       {
         'question': 'What if my child is already in another program?',
         'answer':
-            "That's okay — we can still help. Reach out and we'll talk through your options, including "
-            'whether a transfer makes sense for your child.',
+            "That's okay — we can still help to answer any questions you may have in taking the next steps. "
+            "If you feel your child's current placement is not an appropriate fit, your next step would be to "
+            "reach out to your school district's CPSE or CSE Departments to discuss other possible options.",
+      },
+      {
+        'question': 'Are there any out-of-pocket costs that I need to be aware of?',
+        'answer':
+            'No, not at all. There are no out-of-pocket costs to you for any EI or CPSE evaluations or for '
+            "your child's CPSE program placement, if found eligible.",
       },
     ];
     return div(classes: 'adm-faq', [
