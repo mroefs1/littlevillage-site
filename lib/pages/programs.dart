@@ -36,8 +36,8 @@ class Programs extends StatelessComponent {
       const SeoMeta(
         title: 'Programs & Enrollment | $siteName',
         description:
-            'One continuum of special education at no direct cost to families, from Early Intervention '
-            'through elementary school, with therapy built into every program.',
+            'HLVS programs for children with autism and developmental delays: one continuum from Early '
+            'Intervention through elementary, with therapy built into every program.',
         path: '/programs',
       ),
       ContentPage(

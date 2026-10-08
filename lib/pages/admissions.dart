@@ -5,6 +5,8 @@ import 'package:jaspr_router/jaspr_router.dart';
 import '../components/content_page.dart';
 import '../components/faq_accordion.dart';
 import '../components/photo_placeholder.dart';
+import '../components/seo_meta.dart';
+import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/content_repository.dart';
 import '../sanity/models/page_content.dart';
@@ -16,27 +18,42 @@ class Admissions extends AsyncStatelessComponent {
   Future<Component> build(BuildContext context) async {
     final page = await contentRepository.getPage('admissions');
 
-    return ContentPage(
-      breadcrumb: 'Admissions',
-      title: "We'll walk you through it, step by step.",
-      // No `gallery:` here on purpose — this page's `images` are consumed
-      // positionally by the enrollment-journey steps below, one per step,
-      // so passing them through as well would render every photo twice.
-      heroImage: page?.heroImage,
-      children: [
-        p(classes: 'adm-subtitle', [
-          .text(
-            "Getting services for your child can feel like a maze of acronyms. It isn't, really — and you won't "
-            "do it alone. Here's exactly how it works and where we fit in.",
-          ),
-        ]),
-        _eligibility(),
-        _journey(page?.images ?? const []),
-        _tuitionCallout(),
-        _faq(),
-        _ctaBand(),
-      ],
-    );
+    return .fragment([
+      // This page had no SeoMeta at all until 2026-10-08 - the only content
+      // page on the site without one. It meant no canonical tag (so the
+      // pages.dev copy was indexable alongside the real domain), a bare
+      // "Admissions" title, no Open Graph card when the page is shared, and
+      // the sitewide fallback description.
+      SeoMeta(
+        title: 'Admissions | $siteName',
+        description:
+            'Enrolling at HLVS: eligibility, evaluation and referral through EI, CPSE or CSE, and '
+            'placement for children with autism and developmental delays.',
+        path: '/admissions',
+        image: page?.heroImage?.url,
+      ),
+      ContentPage(
+        breadcrumb: 'Admissions',
+        title: "We'll walk you through it, step by step.",
+        // No `gallery:` here on purpose — this page's `images` are consumed
+        // positionally by the enrollment-journey steps below, one per step,
+        // so passing them through as well would render every photo twice.
+        heroImage: page?.heroImage,
+        children: [
+          p(classes: 'adm-subtitle', [
+            .text(
+              "Getting services for your child can feel like a maze of acronyms. It isn't, really — and you won't "
+              "do it alone. Here's exactly how it works and where we fit in.",
+            ),
+          ]),
+          _eligibility(),
+          _journey(page?.images ?? const []),
+          _tuitionCallout(),
+          _faq(),
+          _ctaBand(),
+        ],
+      ),
+    ]);
   }
 
   static Component _eligibility() {

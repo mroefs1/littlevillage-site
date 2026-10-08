@@ -32,8 +32,8 @@ class About extends AsyncStatelessComponent {
       const SeoMeta(
         title: 'About Us | $siteName',
         description:
-            'Hagedorn Little Village School, part of the Jack Joel Center for Special Children, has served '
-            'Long Island families with developmental delays and disabilities since 1953.',
+            'HLVS - the Hagedorn Little Village School, Jack Joel Center for Special Children - has served '
+            'Long Island families with autism and developmental delays since 1953.',
         path: '/about',
       ),
       ContentPage(
