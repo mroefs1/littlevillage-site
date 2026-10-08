@@ -6,6 +6,7 @@ import '../components/icons.dart';
 import '../components/photo_placeholder.dart';
 import '../components/quick_links.dart';
 import '../components/seo_meta.dart';
+import '../constants/links.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/image_url.dart';
@@ -330,11 +331,12 @@ class Home extends StatelessComponent {
         ),
         div(classes: 'current-families-links', [
           Link(to: '/parent-association', child: .text('↳ Parent Association')),
-          // Both of these pointed at /current-families, which was wrong for
-          // Summer Recreation and out of date for Careers (which has had its
-          // own page since Step 20).
+          // Summer Recreation pointed at /current-families, which was wrong.
           Link(to: '/programs/summer-carp', child: .text('↳ Summer Recreation')),
-          Link(to: '/careers', child: .text('↳ Careers & staff portal')),
+          // Was "Careers & staff portal" -> /careers. No staff portal exists;
+          // the half of the label people actually came for is webmail, and
+          // Careers is still reachable from the About dropdown and the footer.
+          a(href: staffEmailUrl, target: Target.blank, [.text('↳ Staff Email')]),
         ]),
       ]),
     ]);

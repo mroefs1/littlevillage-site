@@ -5,6 +5,7 @@ import 'package:jaspr_router/jaspr_router.dart';
 import '../components/content_page.dart';
 import '../components/icons.dart';
 import '../components/seo_meta.dart';
+import '../constants/links.dart';
 import '../constants/seo.dart';
 import '../constants/theme.dart';
 import '../sanity/content_repository.dart';
@@ -31,9 +32,9 @@ final Uri _calendarEmbedUri = Uri.https('calendar.google.com', '/calendar/embed'
 // feature cards (calendar / documents), the calendar embed, a documents
 // list backed by the `doc` Sanity type (unused until now), and a static
 // quick-links band. No parent portal — not a planned feature (see
-// CLAUDE.md's "Data layer"). Summer Recreation / Careers have no Sanity
-// content type yet, so those stay stub links — Parent Association links to
-// its real page (Batch 10).
+// CLAUDE.md's "Data layer"). The band's three links all resolve now: Parent
+// Association and Summer Recreation to their own pages, and Staff Email
+// off-site to webmail.
 class CurrentFamilies extends AsyncStatelessComponent {
   const CurrentFamilies({super.key});
 
@@ -100,8 +101,10 @@ class CurrentFamilies extends AsyncStatelessComponent {
           ]),
           div(classes: 'cf-quicklinks', [
             Link(to: '/parent-association', child: .text('↳ Parent Association')),
-            a(href: '#', [.text('↳ Summer Recreation')]),
-            a(href: '#', [.text('↳ Careers & staff portal')]),
+            // Both were dead `#` links; these now match the homepage's own
+            // Current Families band.
+            Link(to: '/programs/summer-carp', child: .text('↳ Summer Recreation')),
+            a(href: staffEmailUrl, target: Target.blank, [.text('↳ Staff Email')]),
           ]),
         ],
       ),

@@ -151,10 +151,18 @@ class _MobileNavState extends State<MobileNav> {
       ),
       if (hasDropdown)
         div(classes: 'nav-dropdown-menu', [
-          for (final child in children)
-            Link(to: child['path'] as String, classes: 'nav-dropdown-link', child: .text(child['label'] as String)),
+          for (final child in children) _dropdownLink(child['path'] as String, child['label'] as String),
         ]),
     ]);
+  }
+
+  // An absolute URL is off-site (Staff Email's webmail), so it gets a plain
+  // anchor opening in a new tab instead of a router `Link`.
+  static Component _dropdownLink(String path, String label) {
+    if (path.startsWith('http')) {
+      return a(href: path, target: Target.blank, classes: 'nav-dropdown-link', [.text(label)]);
+    }
+    return Link(to: path, classes: 'nav-dropdown-link', child: .text(label));
   }
 
   bool _isActive(String path, List<String> aliasPaths) {

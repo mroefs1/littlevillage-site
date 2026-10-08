@@ -2,6 +2,7 @@ import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
+import '../constants/links.dart';
 import '../constants/theme.dart';
 import '../sanity/models/program.dart';
 import '../sanity/models/site_settings.dart';
@@ -55,6 +56,9 @@ class Header extends StatelessComponent {
       {'label': 'Data Privacy and Security', 'path': '/data-privacy-and-security'},
       {'label': 'Career Opportunities', 'path': '/careers'},
       {'label': 'Accessibility', 'path': '/accessibility'},
+      // Off-site (Outlook Web Access), so it is deliberately absent from the
+      // About aliases below — it never makes the About item look active.
+      {'label': 'Staff Email', 'path': staffEmailUrl},
     ];
 
     // Nav data is handed to `MobileNav` (the @client hydration boundary for

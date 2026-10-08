@@ -2,6 +2,7 @@ import 'package:jaspr/dom.dart';
 import 'package:jaspr/jaspr.dart';
 import 'package:jaspr_router/jaspr_router.dart';
 
+import '../constants/links.dart';
 import '../constants/theme.dart';
 import '../sanity/models/site_settings.dart';
 import 'social_icons.dart';
@@ -49,7 +50,7 @@ class Footer extends StatelessComponent {
           (label: 'Donate', path: '/support-us'),
           (label: 'Careers', path: '/careers'),
           (label: 'Accessibility', path: '/accessibility'),
-          (label: 'Parent portal', path: '#'),
+          (label: 'Staff Email', path: staffEmailUrl),
         ]),
       ]),
     ]);
@@ -58,7 +59,14 @@ class Footer extends StatelessComponent {
   static Component _footerColumn(String title, List<({String label, String path})> links) {
     return div(classes: 'footer-column', [
       span(classes: 'footer-column-title', [.text(title)]),
-      for (final link in links) Link(to: link.path, child: .text(link.label)),
+      // An absolute URL is an off-site destination, so it gets a plain anchor
+      // opening in a new tab (the pattern every other external link here
+      // follows) rather than a router `Link`.
+      for (final link in links)
+        if (link.path.startsWith('http'))
+          a(href: link.path, target: Target.blank, [.text(link.label)])
+        else
+          Link(to: link.path, child: .text(link.label)),
     ]);
   }
 
