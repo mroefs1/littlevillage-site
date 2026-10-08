@@ -2,9 +2,9 @@
 
 Replacement website for littlevillage.org (The Hagedorn Little Village School), moving off WordPress. Static marketing/content site: programs, staff, news, events, contact.
 
-**Status:** Steps 1-31 are complete and pushed to the Cloudflare Pages preview. Only Step 9d (custom domain cutover, deferred to launch week) remains. Full history of that work - every batch, correction, and verification note - is archived in `docs/archive/completed-batches.md`. This file covers active work, standing conventions, and known open items only.
+**Status:** Steps 1-33 are complete and pushed. Only Step 9d (custom domain cutover) remains, and it is Mike's to run, not Claude's. Full history of that work - every batch, correction, and verification note - is archived in `docs/archive/completed-batches.md`. This file covers active work, standing conventions, and known open items only.
 
-**Launch target: mid-September 2026, at an in-person event.** Until then, all work targets the `littlevillage-site.pages.dev` preview only. Custom domain cutover and DNS changes are explicitly out of scope until launch week - do not touch DNS or add the custom domain to the Cloudflare Pages project before then, even if asked to "finish" the deploy pipeline.
+**Launch: 2026-10-08**, brought forward from the original mid-September target because the GoDaddy bill renews that Saturday. Custom domain cutover and DNS changes are permanently out of scope for Claude - see "Step 9d" below. Do not touch DNS or add the custom domain to the Cloudflare Pages project, even if asked to "finish" the deploy pipeline; Mike does that himself.
 
 **Full plan and rationale:** see the "Little Village Site Rebuild - Jaspr + Sanity" Notion page.
 
@@ -99,12 +99,14 @@ None of these are blockers; each was raised and left as a decision or a small fo
 
 **Before launch, for a human:** programmatic accessibility checks are a proxy, not a screen-reader test. Someone should spend twenty minutes on the site with VoiceOver or NVDA - and if any family or staff member uses a screen reader daily, their feedback is worth more than every automated sweep run so far.
 
-## Deferred until launch week (mid-September 2026): Step 9d - Custom Domain Cutover
+## Step 9d - Custom Domain Cutover: Mike's, not Claude's
 
-Do not start this step under any circumstances until explicitly told launch is imminent. Note: this is separate from the Resend subdomain (`send.littlevillage.org`) already set up for the contact form - that's isolated and doesn't touch the site's main A/CNAME records.
+**Claude does not do this step, at any point, however imminent launch is.** Clarified 2026-10-08: Mike handles the Cloudflare custom domain and the GoDaddy DNS himself. Claude's role is limited to writing up instructions or answering a question **if asked** - no dashboard changes, no DNS records, no adding the custom domain to the Pages project. This replaces the earlier "deferred until launch week" framing, which wrongly implied Claude would eventually run it.
 
-- [ ] **9d.1 - Production custom domain** - add littlevillage.org as a custom domain on the Cloudflare Pages project.
-- [ ] **9d.2 - DNS cutover at GoDaddy** - update DNS to point at Cloudflare.
+Note: this is separate from the Resend subdomain (`send.littlevillage.org`) already set up for the contact form - that's isolated and doesn't touch the site's main A/CNAME records.
+
+- [ ] **9d.1 - Production custom domain** (Mike) - add littlevillage.org as a custom domain on the Cloudflare Pages project.
+- [ ] **9d.2 - DNS cutover at GoDaddy** (Mike) - update DNS to point at Cloudflare.
 
 **Two things will reset at cutover, both harmless and both expected** - worth knowing before anyone reports them as bugs. The `googtrans` cookie is domain-scoped and the splash screen's `localStorage` dismissal is origin-scoped, so a language choice and a dismissed splash won't carry over from `pages.dev`. Visitors simply choose once more.
 
