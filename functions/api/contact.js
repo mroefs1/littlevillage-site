@@ -1,6 +1,14 @@
 const TURNSTILE_VERIFY_URL = 'https://challenges.cloudflare.com/turnstile/v0/siteverify';
 const TURNSTILE_ACTION = 'contact-form';
-const ALLOWED_HOSTNAME = 'littlevillage-site.pages.dev';
+// Turnstile reports the hostname the widget was solved on, and a token is
+// only accepted from one of these. The production domains were added for the
+// 2026-10-08 cutover; `pages.dev` stays so the preview keeps working, and so
+// a rollback to it doesn't also break the form.
+const ALLOWED_HOSTNAMES = [
+  'littlevillage.org',
+  'www.littlevillage.org',
+  'littlevillage-site.pages.dev',
+];
 
 const RESEND_API_URL = 'https://api.resend.com/emails';
 const FROM_ADDRESS = 'Little Village School <contact@send.littlevillage.org>';
@@ -26,9 +34,14 @@ async function verifyTurnstile(token, remoteIp, secret) {
   const response = await fetch(TURNSTILE_VERIFY_URL, { method: 'POST', body: params });
   const result = await response.json();
 
+  // Suffix matching covers Pages preview deployments (<hash>.littlevillage-site
+  // .pages.dev). It is anchored on a leading dot so `notlittlevillage.org`
+  // cannot pass as a suffix of `littlevillage.org`.
   const hostnameOk =
-    result.hostname === ALLOWED_HOSTNAME ||
-    (typeof result.hostname === 'string' && result.hostname.endsWith(`.${ALLOWED_HOSTNAME}`));
+    typeof result.hostname === 'string' &&
+    ALLOWED_HOSTNAMES.some(
+      (allowed) => result.hostname === allowed || result.hostname.endsWith(`.${allowed}`)
+    );
 
   return result.success === true && result.action === TURNSTILE_ACTION && hostnameOk;
 }
