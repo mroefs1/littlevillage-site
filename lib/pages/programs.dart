@@ -37,7 +37,7 @@ class Programs extends StatelessComponent {
         title: 'Programs & Enrollment | $siteName',
         description:
             'One continuum of special education at no direct cost to families, from Early Intervention '
-            'through elementary school, with on-site therapy built into every program.',
+            'through elementary school, with therapy built into every program.',
         path: '/programs',
       ),
       ContentPage(
@@ -46,7 +46,7 @@ class Programs extends StatelessComponent {
         children: [
           p(classes: 'prog-subtitle', [
             .text(
-              "Every program pairs learning with on-site therapy, built around your child's Individualized "
+              "Every program pairs learning with therapy, built around your child's Individualized "
               "Education Program (IEP) or Individualized Family Service Plan (IFSP).",
             ),
           ]),
@@ -79,9 +79,15 @@ class Programs extends StatelessComponent {
     );
   }
 
+  // "On-site" was dropped from this page on 2026-10-08: it isn't true of the
+  // Related Services division, which also delivers in the home and in
+  // day-care settings. The Sanity copy for Early Intervention and Elementary
+  // already said so ("in the family's home, in a childcare setting, at a
+  // community location, or at HLVS") - it was this hardcoded marketing copy
+  // that had drifted.
   static Component _therapiesStrip() {
     return div(classes: 'prog-therapies', [
-      div(classes: 'prog-therapies-title', [.text('On-site therapy, woven into every program')]),
+      div(classes: 'prog-therapies-title', [.text('Therapies, woven into every program')]),
       // Not linked, unlike the pills on the individual program pages — this
       // strip is a summary, not a per-program service list. Vision & Hearing
       // Services was dropped here in Step 25: the Therapeutic Services page
