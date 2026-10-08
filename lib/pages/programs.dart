@@ -36,8 +36,8 @@ class Programs extends StatelessComponent {
       const SeoMeta(
         title: 'Programs & Enrollment | $siteName',
         description:
-            'One continuum of tuition-free special education, from Early Intervention through elementary school, '
-            'with on-site therapy built into every program.',
+            'One continuum of special education at no direct cost to families, from Early Intervention '
+            'through elementary school, with on-site therapy built into every program.',
         path: '/programs',
       ),
       ContentPage(

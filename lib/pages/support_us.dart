@@ -34,7 +34,7 @@ class SupportUs extends AsyncStatelessComponent {
           p(classes: 'su-subtitle', [
             .text(
               'Your gift helps us provide life-changing early intervention, preschool, and school-age programs '
-              'to children with disabilities — tuition-free. Thank you for your support.',
+              'to children with disabilities — at no direct cost to families. Thank you for your support.',
             ),
           ]),
           _giving(siteSettings.donateUrl),

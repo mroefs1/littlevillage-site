@@ -6,9 +6,9 @@ const siteName = 'The Hagedorn Little Village School';
 const siteBaseUrl = 'https://www.littlevillage.org';
 
 const defaultMetaDescription =
-    'Hagedorn Little Village School provides tuition-free special education, '
-    'Early Intervention, preschool, and elementary programs for children with '
-    'developmental delays and disabilities on Long Island.';
+    'Hagedorn Little Village School provides special education, Early Intervention, '
+    'preschool, and elementary programs for children with developmental delays and '
+    'disabilities on Long Island, at no direct cost to families.';
 
 /// Shortens Sanity body text to a meta-description-friendly length, breaking
 /// on a word boundary instead of mid-word.

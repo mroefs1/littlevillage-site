@@ -67,6 +67,7 @@ class About extends AsyncStatelessComponent {
       (label: 'Board Members', path: '/board'),
       (label: 'Compliance', path: '/compliance'),
       (label: 'Data Privacy and Security', path: '/data-privacy-and-security'),
+      (label: 'Careers', path: '/careers'),
       (label: 'Accessibility', path: '/accessibility'),
     ];
     return div(classes: 'about-subnav', [
@@ -79,7 +80,11 @@ class About extends AsyncStatelessComponent {
       (value: '1953', label: 'founded'),
       (value: '50+', label: 'years serving Long Island'),
       (value: 'Birth–12', label: 'EI → Elementary'),
-      (value: '\$0', label: 'cost to families'),
+      // The "$0" tile was dropped on 2026-10-08, for the same reason the
+      // Admissions callout lost its own "$0" in Step 33: the bare figure is a
+      // stronger cost claim than the site makes anywhere else, and the
+      // programs are publicly funded rather than free. The claim now lives
+      // only in prose, as "at no direct cost to families".
     ];
     return div(classes: 'about-stats', [
       for (final stat in stats)
