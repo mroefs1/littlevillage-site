@@ -162,15 +162,15 @@ class Home extends StatelessComponent {
         h2(classes: 'home-section-title', [.text('Educational Programs')]),
         if (intro != null) p(classes: 'home-section-intro', [.text(intro)]),
         div(classes: 'home-cards programs-cards', [
-        for (final program in ordered)
-          _card(
-            eyebrow: program.ageRange ?? '',
-            title: program.title,
-            blurb: program.cardBlurb ?? fallbackBlurbs[program.slug] ?? '',
-            path: '/programs/${program.slug}',
-            imageUrl: program.imageUrl,
-            imageAlt: program.title,
-          ),
+          for (final program in ordered)
+            _card(
+              eyebrow: program.ageRange ?? '',
+              title: program.title,
+              blurb: program.cardBlurb ?? fallbackBlurbs[program.slug] ?? '',
+              path: '/programs/${program.slug}',
+              imageUrl: program.imageUrl,
+              imageAlt: program.title,
+            ),
         ]),
       ]),
     ]);
@@ -191,16 +191,16 @@ class Home extends StatelessComponent {
       div(classes: 'home-section-inner', [
         h2(classes: 'home-section-title', [.text('Services & Support')]),
         div(classes: 'home-cards services-cards', [
-        for (final card in cards)
-          _card(
-            eyebrow: card.eyebrow,
-            title: card.title,
-            blurb: card.blurb,
-            path: card.path,
-            imageUrl: card.image?.url,
-            imageAlt: card.image?.alt,
-            objectPosition: card.image?.objectPosition,
-          ),
+          for (final card in cards)
+            _card(
+              eyebrow: card.eyebrow,
+              title: card.title,
+              blurb: card.blurb,
+              path: card.path,
+              imageUrl: card.image?.url,
+              imageAlt: card.image?.alt,
+              objectPosition: card.image?.objectPosition,
+            ),
         ]),
       ]),
     ]);
@@ -393,8 +393,7 @@ class Home extends StatelessComponent {
         width: 100.percent,
         height: 100.percent,
         raw: {
-          'background-image':
-              'linear-gradient(180deg, rgba(20, 60, 85, 0.70), rgba(20, 60, 85, 0.88))',
+          'background-image': 'linear-gradient(180deg, rgba(20, 60, 85, 0.50), rgba(20, 60, 85, 0.38))',
         },
       ),
       css('.home-hero-copy').styles(
@@ -555,22 +554,19 @@ class Home extends StatelessComponent {
       // the gradient in opposite directions so they read as a pair.
       css('.programs-section').styles(
         raw: {
-          'background-image':
-              'linear-gradient(160deg, ${AppColors.offWhite.value}, ${AppColors.cream.value})',
+          'background-image': 'linear-gradient(160deg, ${AppColors.offWhite.value}, ${AppColors.cream.value})',
         },
       ),
       css('.services-section').styles(
         raw: {
-          'background-image':
-              'linear-gradient(160deg, ${AppColors.cream.value}, ${AppColors.offWhite.value})',
+          'background-image': 'linear-gradient(160deg, ${AppColors.cream.value}, ${AppColors.offWhite.value})',
         },
       ),
 
       // News & events — two equal columns on one tinted band.
       css('.news-events-section').styles(
         raw: {
-          'background-image':
-              'linear-gradient(160deg, ${AppColors.offWhite.value}, ${AppColors.cream.value})',
+          'background-image': 'linear-gradient(160deg, ${AppColors.offWhite.value}, ${AppColors.cream.value})',
         },
       ),
       css('.home-news-events').styles(
@@ -604,7 +600,9 @@ class Home extends StatelessComponent {
           textDecoration: TextDecoration.none,
           backgroundColor: Colors.white,
         ),
-        css('&:hover').styles(border: .all(color: AppColors.lineDark, width: 1.px)),
+        css('&:hover').styles(
+          border: .all(color: AppColors.lineDark, width: 1.px),
+        ),
         css('&:hover .home-row-title').styles(color: AppColors.coral),
       ]),
       css('.home-thumb').styles(
