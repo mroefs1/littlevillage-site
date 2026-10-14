@@ -42,7 +42,7 @@ class About extends AsyncStatelessComponent {
         children: [
           p(classes: 'about-subtitle', [
             .text(
-              'Hagedorn Little Village School, part of the Jack Joel Center for Special Children, has served '
+              'The Hagedorn Little Village School, Jack Joel Center for Special Children, has served '
               'Long Island families with developmental delays and disabilities since 1953.',
             ),
           ]),
