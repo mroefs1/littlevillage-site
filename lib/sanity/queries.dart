@@ -266,3 +266,17 @@ const String splashPromoQuery = '''
   }
 }
 ''';
+
+// The live emergency notification, if any. Same selection as the Flutter app
+// (`~/dev/hlvs/app/lib/services/sanity_service.dart`): only unexpired
+// documents, and when two overlap, the one that runs longest wins - so both
+// surfaces always show the same notice. `now()` is the build's clock; the
+// browser re-checks expiry itself (see `emergency_banner.dart`).
+const String emergencyNotificationQuery = '''
+*[_type == "emergency_notification" && expiration > now()] | order(expiration desc)[0]{
+  title,
+  text,
+  expiration,
+  more_info_link
+}
+''';

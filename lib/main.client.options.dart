@@ -10,6 +10,8 @@ import 'package:littlevillage_site/components/accessibility_panel.dart'
     deferred as _accessibility_panel;
 import 'package:littlevillage_site/components/contact_form.dart'
     deferred as _contact_form;
+import 'package:littlevillage_site/components/emergency_banner.dart'
+    deferred as _emergency_banner;
 import 'package:littlevillage_site/components/faq_accordion.dart'
     deferred as _faq_accordion;
 import 'package:littlevillage_site/components/language_switcher.dart'
@@ -46,6 +48,15 @@ ClientOptions get defaultClientOptions => ClientOptions(
     'contact_form': ClientLoader(
       (p) => _contact_form.ContactForm(),
       loader: _contact_form.loadLibrary,
+    ),
+    'emergency_banner': ClientLoader(
+      (p) => _emergency_banner.EmergencyBanner(
+        title: p['title'] as String,
+        text: p['text'] as String,
+        expiresMs: p['expiresMs'] as int,
+        moreInfoLink: p['moreInfoLink'] as String?,
+      ),
+      loader: _emergency_banner.loadLibrary,
     ),
     'faq_accordion': ClientLoader(
       (p) => _faq_accordion.FaqAccordion(

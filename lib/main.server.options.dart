@@ -16,6 +16,8 @@ import 'package:littlevillage_site/components/contact_form.dart'
 import 'package:littlevillage_site/components/content_page.dart'
     as _content_page;
 import 'package:littlevillage_site/components/cta_band.dart' as _cta_band;
+import 'package:littlevillage_site/components/emergency_banner.dart'
+    as _emergency_banner;
 import 'package:littlevillage_site/components/faq_accordion.dart'
     as _faq_accordion;
 import 'package:littlevillage_site/components/footer.dart' as _footer;
@@ -86,6 +88,11 @@ ServerOptions get defaultServerOptions => ServerOptions(
     _contact_form.ContactForm: ClientTarget<_contact_form.ContactForm>(
       'contact_form',
     ),
+    _emergency_banner.EmergencyBanner:
+        ClientTarget<_emergency_banner.EmergencyBanner>(
+          'emergency_banner',
+          params: __emergency_bannerEmergencyBanner,
+        ),
     _faq_accordion.FaqAccordion: ClientTarget<_faq_accordion.FaqAccordion>(
       'faq_accordion',
       params: __faq_accordionFaqAccordion,
@@ -115,6 +122,7 @@ ServerOptions get defaultServerOptions => ServerOptions(
     ..._contact_form.ContactForm.styles,
     ..._content_page.ContentPage.styles,
     ..._cta_band.CtaBand.styles,
+    ..._emergency_banner.EmergencyBanner.styles,
     ..._faq_accordion.FaqAccordion.styles,
     ..._footer.Footer.styles,
     ..._header.Header.styles,
@@ -147,6 +155,14 @@ ServerOptions get defaultServerOptions => ServerOptions(
   ],
 );
 
+Map<String, Object?> __emergency_bannerEmergencyBanner(
+  _emergency_banner.EmergencyBanner c,
+) => {
+  'title': c.title,
+  'text': c.text,
+  'expiresMs': c.expiresMs,
+  'moreInfoLink': c.moreInfoLink,
+};
 Map<String, Object?> __faq_accordionFaqAccordion(
   _faq_accordion.FaqAccordion c,
 ) => {'items': c.items, 'initialOpenIndex': c.initialOpenIndex};

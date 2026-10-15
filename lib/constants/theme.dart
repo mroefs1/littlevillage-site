@@ -29,6 +29,10 @@ class AppColors {
   // contact_form.dart. Same reasoning the pre-Step-11 `accent` color was
   // already darkened for, before this restyle replaced it.
   static const coral = Color('#ce3216');
+  // Errors and emergencies only - never a CTA, which is what keeps it
+  // meaning "something is wrong". 6.5:1 against white either way round, so
+  // it works both as error text and under the emergency bar's white text.
+  static const danger = Color('#b3261e');
   static const peach = Color('#fff0e8');
   static const peachDark = Color('#fde3d5');
   static const green = Color('#4e8b75');

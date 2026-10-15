@@ -4,6 +4,7 @@ import 'package:jaspr_router/jaspr_router.dart';
 
 import 'components/footer.dart';
 import 'components/accessibility_panel.dart';
+import 'components/emergency_banner.dart';
 import 'components/header.dart';
 import 'components/splash_screen.dart';
 import 'constants/theme.dart';
@@ -73,12 +74,33 @@ class App extends AsyncStatelessComponent {
     // it appears on every route; `shouldRender` keeps an off, expired or
     // half-configured promo out of the build entirely, so the common case
     // emits no markup, no boot script and no island at all.
+    final now = DateTime.now().toUtc();
+
+    // A snow day or closure notice, as a red bar on every page. Same
+    // render-or-nothing handling as the splash below.
+    final emergencyNotice = await contentRepository.getEmergencyNotification();
+    final emergency = emergencyNotice != null && emergencyNotice.shouldRender(now) ? emergencyNotice : null;
+
     final splashPromo = await contentRepository.getSplashPromo();
-    final splash = splashPromo != null && splashPromo.shouldRender(DateTime.now().toUtc())
+    // Suppressed entirely while an emergency is live: a modal promoting a
+    // fundraiser would cover the closure notice on exactly the visit it
+    // matters. If the emergency expires before the next rebuild the splash
+    // stays off until then - the safe way round.
+    final splash = emergency == null && splashPromo != null && splashPromo.shouldRender(now)
         ? splashPromo
         : null;
 
     return div(classes: 'app-shell', [
+      // Ahead of the skip link, so it is the first thing a screen reader
+      // reads and the first thing anyone sees. Skipping to main content skips
+      // past it, which is right for every page after the first.
+      if (emergency != null)
+        EmergencyBanner(
+          title: emergency.title,
+          text: emergency.text,
+          expiresMs: emergency.expiration!.millisecondsSinceEpoch,
+          moreInfoLink: emergency.moreInfoLink,
+        ),
       a(href: '#main-content', classes: 'skip-link', [.text('Skip to main content')]),
       // Applies saved display preferences before first paint, so a
       // visitor who chose larger text never sees the page at the default

@@ -26,6 +26,9 @@ class AppIcons {
   static const document =
       'M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H'
       '8v-2h8v2zm-3-5V3.5L18.5 9H13z';
+  // Material Symbols `warning`. The emergency bar's alert cue, so the bar is
+  // not marked as urgent by its red alone.
+  static const warning = 'M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z';
   static const groups =
       'M12 12.75c1.63 0 3.07.39 4.24.9 1.08.48 1.76 1.56 1.76 2.73V18H6v-1.61c0-1.18.68-2.26 1.76-2.73 1.'
       '17-.52 2.61-.91 4.24-.91zM4 13c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm1.13 1.1c-.37-.06-.74-.'

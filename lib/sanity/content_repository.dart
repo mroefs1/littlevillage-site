@@ -1,6 +1,7 @@
 import 'client.dart';
 import 'models/careers.dart';
 import 'models/document.dart';
+import 'models/emergency_notification.dart';
 import 'models/event_item.dart';
 import 'models/media.dart';
 import 'models/homepage_content.dart';
@@ -37,6 +38,9 @@ abstract class ContentRepository {
   Future<ParentAssociationInfo?> getParentAssociationInfo();
   Future<List<PaEventItem>> getPaEvents();
   Future<SplashPromo?> getSplashPromo();
+
+  /// The live emergency notification, or null when there isn't one.
+  Future<EmergencyNotification?> getEmergencyNotification();
 
   /// Never returns null: a missing or unpublished `homepage` singleton
   /// yields an empty [Homepage], so the homepage falls back to its built-in
@@ -175,6 +179,13 @@ class SanityContentRepository implements ContentRepository {
     final result = await _client.fetch(splashPromoQuery);
     if (result == null) return null;
     return SplashPromo.fromJson(result as Map<String, dynamic>);
+  }
+
+  @override
+  Future<EmergencyNotification?> getEmergencyNotification() async {
+    final result = await _client.fetch(emergencyNotificationQuery);
+    if (result == null) return null;
+    return EmergencyNotification.fromJson(result as Map<String, dynamic>);
   }
 
   @override

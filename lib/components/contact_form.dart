@@ -16,7 +16,7 @@ enum _SubmitStatus { idle, submitting, success, error }
 // showing a generic error.
 const _requestTypeRequiredMessage = 'Please select General Inquiry or Schedule a Tour.';
 
-const _dangerColor = Color('#b3261e');
+const _dangerColor = AppColors.danger;
 
 // The one interactive (@client) piece of the Contact page - everything else
 // (title, info column) stays static. Fields are uncontrolled (read via
