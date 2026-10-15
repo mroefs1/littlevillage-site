@@ -24,6 +24,7 @@ class SplashPromo {
   final DateTime? eventDate;
   final String? eventLocation;
   final String? ticketLink;
+  final String? ticketLinkLabel;
   final String? cardImageUrl;
   final String? flyerUrl;
 
@@ -40,6 +41,7 @@ class SplashPromo {
     this.eventDate,
     this.eventLocation,
     this.ticketLink,
+    this.ticketLinkLabel,
     this.cardImageUrl,
     this.flyerUrl,
   });
@@ -59,6 +61,7 @@ class SplashPromo {
       eventDate: _parseDate(event['event_date']),
       eventLocation: event['location'] as String?,
       ticketLink: event['ticket_link'] as String?,
+      ticketLinkLabel: event['ticket_link_label'] as String?,
       cardImageUrl: event['cardImageUrl'] as String?,
       flyerUrl: event['flyerUrl'] as String?,
     );
@@ -75,7 +78,7 @@ class SplashPromo {
 
   String get headline => headlineOverride ?? eventTitle ?? '';
 
-  String get ctaLabel => ctaLabelOverride ?? 'Purchase tickets';
+  String get ctaLabel => ctaLabelOverride ?? ticketLinkLabel ?? 'Purchase tickets';
 
   /// The promoted event's own page, when it has a slug — `app.dart` only
   /// builds a route for events that do.

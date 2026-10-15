@@ -11,6 +11,7 @@ class EventItem {
   final String? cardImageUrl;
   final String description;
   final String? ticketLink;
+  final String? ticketLinkLabel;
   final List<String> photoGalleryUrls;
 
   const EventItem({
@@ -24,6 +25,7 @@ class EventItem {
     this.cardImageUrl,
     required this.description,
     this.ticketLink,
+    this.ticketLinkLabel,
     this.photoGalleryUrls = const [],
   });
 
@@ -39,7 +41,12 @@ class EventItem {
       cardImageUrl: json['cardImageUrl'] as String?,
       description: json['description'] as String,
       ticketLink: json['ticket_link'] as String?,
+      ticketLinkLabel: json['ticket_link_label'] as String?,
       photoGalleryUrls: (json['photoGalleryUrls'] as List<dynamic>? ?? const []).cast<String>(),
     );
   }
+
+  /// The ticket link button's text. Editors set it per event, since a
+  /// fundraiser's link goes to a donation page, not a ticket sale.
+  String get ticketButtonLabel => ticketLinkLabel ?? 'Tickets / RSVP';
 }

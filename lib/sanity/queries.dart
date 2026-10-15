@@ -84,6 +84,7 @@ const String eventListQuery = '''
   "cardImageUrl": card_image.asset->url,
   description,
   ticket_link,
+  ticket_link_label,
   "photoGalleryUrls": photo_gallery[].asset->url
 }
 ''';
@@ -259,6 +260,7 @@ const String splashPromoQuery = '''
     event_date,
     location,
     ticket_link,
+    ticket_link_label,
     "cardImageUrl": card_image.asset->url,
     "flyerUrl": event_flyer.asset->url
   }

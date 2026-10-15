@@ -58,7 +58,7 @@ class EventDetail extends StatelessComponent {
             if (event.ticketLink != null)
               div(classes: 'detail-cta', [
                 a(href: event.ticketLink!, target: Target.blank, classes: 'detail-cta-btn', [
-                  .text('Tickets / RSVP →'),
+                  .text('${event.ticketButtonLabel} →'),
                 ]),
               ]),
             if (event.photoGalleryUrls.isNotEmpty) ...[
