@@ -8,6 +8,7 @@ import '../components/photo_placeholder.dart';
 import '../components/pill_list.dart';
 import '../components/seo_meta.dart';
 import '../constants/seo.dart';
+import '../constants/therapeutic_sections.dart';
 import '../constants/theme.dart';
 import '../sanity/models/program.dart';
 
@@ -88,16 +89,16 @@ class Programs extends StatelessComponent {
   static Component _therapiesStrip() {
     return div(classes: 'prog-therapies', [
       div(classes: 'prog-therapies-title', [.text('Therapies, woven into every program')]),
-      // Not linked, unlike the pills on the individual program pages — this
-      // strip is a summary, not a per-program service list. Vision & Hearing
-      // Services was dropped here in Step 25: the Therapeutic Services page
-      // has no such section, and it was the only entry naming a service the
-      // site doesn't describe anywhere.
-      const PillList([
-        Pill('Speech & Language'),
-        Pill('Occupational Therapy'),
-        Pill('Physical Therapy'),
-        Pill('Counseling & Social Work'),
+      // Each pill deep links into its Therapeutic Services section, same as
+      // the pills on the individual program pages. Vision & Hearing Services
+      // was dropped here in Step 25: the Therapeutic Services page has no
+      // such section, and it was the only entry naming a service the site
+      // doesn't describe anywhere.
+      PillList([
+        Pill('Speech & Language', href: TherapeuticSections.speechLanguage.link),
+        Pill('Occupational Therapy', href: TherapeuticSections.occupationalTherapy.link),
+        Pill('Physical Therapy', href: TherapeuticSections.physicalTherapy.link),
+        Pill('Counseling & Social Work', href: TherapeuticSections.psychologicalSocialWork.link),
       ]),
     ]);
   }
