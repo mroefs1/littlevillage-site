@@ -8,7 +8,7 @@ import 'video_embed.dart';
 
 // Renders Sanity `blockContent` (portable text) into Jaspr markup. Supports
 // exactly what the `blockContent` schema allows — block styles (normal,
-// h1-h4, blockquote), bullet lists, strong/em decorators, link annotations,
+// h1-h4, blockquote, callout), bullet lists, strong/em decorators, link annotations,
 // and inline images (pre-dereferenced to `imageUrl` by the GROQ projection
 // in `queries.dart`) — nothing beyond that needs handling.
 class PortableTextView extends StatelessComponent {
@@ -160,6 +160,10 @@ class PortableTextView extends StatelessComponent {
         return h4(spans);
       case 'blockquote':
         return blockquote(spans);
+      // A highlighted note box. Still a `<p>` underneath, so it reads as
+      // ordinary prose to a screen reader — the box is emphasis, not meaning.
+      case 'callout':
+        return p(classes: 'callout', spans);
       default:
         return p(spans);
     }
@@ -223,6 +227,17 @@ class PortableTextView extends StatelessComponent {
       ),
       css('p').styles(margin: .only(top: 10.px)),
       css('p:first-child').styles(margin: .zero),
+      // Declared after `p`/`p:first-child`, which it ties on specificity, so
+      // its own margin wins; the first-child reset is restated to match.
+      css('p.callout').styles(
+        padding: .symmetric(vertical: 18.px, horizontal: 22.px),
+        margin: .only(top: 20.px),
+        border: .only(left: BorderSide(width: 4.px, color: AppColors.yellow)),
+        radius: .all(.circular(Radii.md)),
+        color: AppColors.navyDark,
+        backgroundColor: AppColors.paleYellow,
+      ),
+      css('p.callout:first-child').styles(margin: .zero),
       css('ul').styles(
         padding: .only(left: 20.px),
         margin: .only(top: 10.px),

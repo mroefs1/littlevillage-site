@@ -10,13 +10,12 @@ import '../sanity/content_repository.dart';
 // Related Services (Step 30) — a standalone `page` document, same shape as
 // Family Services and CPSE Evaluations.
 //
-// The homepage's "Services & Support" row links here, which is why the page
-// exists now: the redesign's third card names Related Services, and pointing
-// a live card at a route that does not resolve is worse than a short page.
-// The content is currently a deliberate placeholder — the department's own
-// documentation is still to come, and when it arrives this is pure content
-// entry in Sanity with no deploy, since the page renders whatever `body`
-// holds.
+// The homepage's "Services & Support" row links here. The body is a callout
+// on where services take place, then the SEIT, Preschool Related Services and
+// Elementary School Itinerant Services cards, copied as-is from the Preschool
+// and Elementary `program` documents. They're deliberately copies, not
+// references, so editing one doesn't update the other. All of it is Sanity
+// content; this component only renders whatever `body` holds.
 class RelatedServices extends AsyncStatelessComponent {
   const RelatedServices({super.key});
 
@@ -30,8 +29,8 @@ class RelatedServices extends AsyncStatelessComponent {
         title: '$title | $siteName',
         description: page != null && !page.body.isEmpty
             ? truncateForMeta(page.body.plainText)
-            : 'Counseling, social work, nursing, adaptive physical education and family training '
-                  'at Hagedorn Little Village School.',
+            : 'Itinerant special education and related services for preschool and elementary '
+                  'children at Hagedorn Little Village School, in the home or at school.',
         path: '/programs/related-services',
       ),
       ContentPage(
